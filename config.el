@@ -3,7 +3,6 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
-
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Typas Liao"
@@ -52,3 +51,11 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(after! markdown
+  (setq markdown-fontify-code-blocks-natively t))
+
+(add-hook! 'prog-mode-hook #'rainbow-delimiters-mode)
+(map! :leader
+      :desc "comment region" "c C-c" #'comment-region
+      :desc "uncomment region" "c u" #'uncomment-region)
