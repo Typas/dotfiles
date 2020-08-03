@@ -52,12 +52,13 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(after! markdown
-  (setq markdown-fontify-code-blocks-natively t))
-
 (add-hook! 'prog-mode-hook #'rainbow-delimiters-mode)
+
 (map! :leader
       :desc "comment region" "c C-c" #'comment-region
       :desc "uncomment region" "c u" #'uncomment-region)
 
 (setq rustic-lsp-server 'rust-analyzer)
+
+(after! org
+  (add-to-list 'org-src-lang-modes '("rs" . rustic)))
