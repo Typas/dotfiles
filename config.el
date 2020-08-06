@@ -61,4 +61,5 @@
 (setq rustic-lsp-server 'rust-analyzer)
 
 (after! org
-  (add-to-list 'org-src-lang-modes '("rs" . rustic)))
+  (add-to-list 'org-src-lang-modes '("rust" . rustic))
+  (add-to-list 'org-src-lang-modes '("toml" . conf-toml)))
