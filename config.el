@@ -58,7 +58,7 @@
       :desc "comment region" "c C-c" #'comment-region
       :desc "uncomment region" "c u" #'uncomment-region)
 
-(setq rustic-lsp-server 'rust-analyzer)
+(setq rustic-lsp-server 'rls)
 
 (after! org
   (add-to-list 'org-src-lang-modes '("rust" . rustic))
