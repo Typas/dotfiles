@@ -50,3 +50,11 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
+
+(use-package lsp-haskell
+  :ensure t
+  :config
+  (setq lsp-haskell-process-path-hie "haskell-language-server-wrapper")
+  ;; Comment/uncomment this line to see interactions between lsp client/server.
+  ;; (setq lsp-log-io t)
+  )
