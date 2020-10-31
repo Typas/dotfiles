@@ -64,3 +64,4 @@
   (add-to-list 'org-src-lang-modes '("rust" . rustic))
   (add-to-list 'org-src-lang-modes '("toml" . conf-toml)))
 
+(setq TeX-engine 'xetex)
