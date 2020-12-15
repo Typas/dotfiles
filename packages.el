@@ -51,14 +51,14 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
-(use-package lsp-haskell
-  :config
-  (setq lsp-haskell-process-path-hie "haskell-language-server-wrapper")
-  ;; Comment/uncomment this line to see interactions between lsp client/server.
-  ;; (setq lsp-log-io t)
-  )
+;; (use-package lsp-haskell
+;;   :config
+;;   (setq lsp-haskell-process-path-hie "haskell-language-server-wrapper")
+;;   ;; Comment/uncomment this line to see interactions between lsp client/server.
+;;   ;; (setq lsp-log-io t)
+;;   )
 
-(use-package lsp-julia
-  :config
-  (setq lsp-julia-default-environment "~/.julia/environments/v1.5")
-  (add-hook 'julia-mode-local-vars-hook #'lsp!) )
+;; (use-package lsp-julia
+;;   :config
+;;   (setq lsp-julia-default-environment "~/.julia/environments/v1.5")
+;;   (add-hook 'julia-mode-local-vars-hook #'lsp!) )
