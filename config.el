@@ -65,3 +65,14 @@
   (add-to-list 'org-src-lang-modes '("toml" . conf-toml)))
 
 (setq TeX-engine 'xetex)
+
+(after! lsp-haskell
+  (setq lsp-haskell-process-path-hie "haskell-language-server-wrapper")
+  ;; Comment/uncomment this line to see interactions between lsp client/server.
+  ;; (setq lsp-log-io t)
+  )
+
+;; (after! lsp-julia
+;;     (setq lsp-julia-default-environment "~/.julia/environments/v1.5")
+;;     (add-hook 'julia-mode-local-vars-hook #'lsp!)
+;;     )
