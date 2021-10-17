@@ -72,7 +72,10 @@
   ;; (setq lsp-log-io t)
   )
 
-;; (after! lsp-julia
-;;     (setq lsp-julia-default-environment "~/.julia/environments/v1.5")
-;;     (add-hook 'julia-mode-local-vars-hook #'lsp!)
-;;     )
+(after! rustic
+  (setq lsp-rust-analyzer-cargo-load-out-dirs-from-check t)
+  (setq lsp-rust-analyzer-proc-macro-enable t))
+
+(after! lsp-julia
+    (setq lsp-julia-default-environment "~/.julia/environments/v1.6")
+    )
