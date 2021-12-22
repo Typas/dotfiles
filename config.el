@@ -75,7 +75,3 @@
 (after! rustic
   (setq lsp-rust-analyzer-cargo-load-out-dirs-from-check t)
   (setq lsp-rust-analyzer-proc-macro-enable t))
-
-(after! lsp-julia
-    (setq lsp-julia-default-environment "~/.julia/environments/v1.6")
-    )
