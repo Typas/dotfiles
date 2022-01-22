@@ -58,20 +58,38 @@
       :desc "comment region" "c C-c" #'comment-region
       :desc "uncomment region" "c u" #'uncomment-region)
 
-(setq rustic-lsp-server 'rust-analyzer)
-
 (after! org
   (add-to-list 'org-src-lang-modes '("rust" . rustic))
   (add-to-list 'org-src-lang-modes '("toml" . conf-toml)))
 
 (setq TeX-engine 'xetex)
 
-(after! lsp-haskell
-  (setq lsp-haskell-process-path-hie "haskell-language-server-wrapper")
-  ;; Comment/uncomment this line to see interactions between lsp client/server.
-  ;; (setq lsp-log-io t)
-  )
-
+(setq rustic-lsp-server 'rust-analyzer)
 (after! rustic
   (setq lsp-rust-analyzer-cargo-load-out-dirs-from-check t)
   (setq lsp-rust-analyzer-proc-macro-enable t))
+
+(setq lsp-clients-clangd-args '("-j=3"
+                                "--background-index"
+                                "--clang-tidy"
+                                "--completion-style=detailed"
+                                "--header-insertion=never"
+                                "--header-insertion-decorators=0"))
+(after! lsp-clangd (set-lsp-priority! 'clangd 2))
+
+(use-package! citre
+  :defer t
+  :init
+  (require 'citre-config)
+  (map! :leader
+        (:prefix "c"
+         :desc "Jump to definition"  "j"  #'citre-jump
+         :desc "Back to reference" "J" #'citre-jump-back
+         :desc "Peek definition" "p" #'citre-peek
+         :desc "Update tags file" "U" #'citre-update-this-tags-file)
+        )
+  (setq citre-project-root-function #'projectile-project-root)
+  (setq citre-default-create-tags-file-location 'package-cache)
+  (setq citre-use-project-root-when-creating-tags t)
+  (setq citre-prompt-language-for-ctags-command t)
+  (setq citre-auto-enable-citre-mode-modes '(prog-mode)))
