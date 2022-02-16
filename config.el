@@ -93,3 +93,7 @@
   (setq citre-use-project-root-when-creating-tags t)
   (setq citre-prompt-language-for-ctags-command t)
   (setq citre-auto-enable-citre-mode-modes '(prog-mode)))
+
+(after! company
+  (company-ctags-auto-setup))
+
