@@ -52,6 +52,13 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+;; Treat underscores as word
+(add-hook! 'python-mode-hook (modify-syntax-entry ?_ "w"))
+(add-hook! 'rustic-mode-hook (modify-syntax-entry ?_ "w"))
+(add-hook! 'c++-mode-hook (modify-syntax-entry ?_ "w"))
+(add-hook! 'c-mode-hook (modify-syntax-entry ?_ "w"))
+(add-hook! 'julia-mode-hook (modify-syntax-entry ?_ "w"))
+
 (add-hook! 'prog-mode-hook #'rainbow-delimiters-mode)
 
 (map! :leader
