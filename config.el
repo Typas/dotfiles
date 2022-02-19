@@ -62,8 +62,13 @@
 (add-hook! 'prog-mode-hook #'rainbow-delimiters-mode)
 
 (map! :leader
-      :desc "comment region" "c C-c" #'comment-region
-      :desc "uncomment region" "c u" #'uncomment-region)
+      "c c" nil
+      "c C" nil)
+(map! :leader
+      :desc "Compile" "c C-c" #'compile
+      :desc "Recompile" "c C-r" #'recompile
+      :desc "Comment region" "c c" #'comment-region
+      :desc "Uncomment region" "c u" #'uncomment-region)
 
 (after! org
   (add-to-list 'org-src-lang-modes '("rust" . rustic))
@@ -82,25 +87,24 @@
                                 "--completion-style=detailed"
                                 "--header-insertion=never"
                                 "--header-insertion-decorators=0"))
-(after! lsp-clangd (set-lsp-priority! 'clangd 2))
+;; (after! lsp-clangd (set-lsp-priority! 'clangd 2))
 
-(use-package! citre
-  :defer t
-  :init
-  (require 'citre-config)
-  (map! :leader
-        (:prefix "c"
-         :desc "Jump to definition"  "j"  #'citre-jump
-         :desc "Back to reference" "J" #'citre-jump-back
-         :desc "Peek definition" "p" #'citre-peek
-         :desc "Update tags file" "U" #'citre-update-this-tags-file)
-        )
-  (setq citre-project-root-function #'projectile-project-root)
-  (setq citre-default-create-tags-file-location 'package-cache)
-  (setq citre-use-project-root-when-creating-tags t)
-  (setq citre-prompt-language-for-ctags-command t)
-  (setq citre-auto-enable-citre-mode-modes '(prog-mode)))
+;; (use-package! citre
+;;   :defer t
+;;   :init
+;;   (require 'citre-config)
+;;   (map! :leader
+;;         (:prefix "c"
+;;          :desc "Jump to definition"  "j"  #'citre-jump
+;;          :desc "Back to reference" "J" #'citre-jump-back
+;;          :desc "Peek definition" "p" #'citre-peek
+;;          :desc "Update tags file" "U" #'citre-update-this-tags-file)
+;;         )
+;;   (setq citre-project-root-function #'projectile-project-root)
+;;   (setq citre-default-create-tags-file-location 'package-cache)
+;;   (setq citre-use-project-root-when-creating-tags t)
+;;   (setq citre-prompt-language-for-ctags-command t)
+;;   (setq citre-auto-enable-citre-mode-modes '(prog-mode)))
 
-(after! company
-  (company-ctags-auto-setup))
-
+;; (after! company
+;;   (company-ctags-auto-setup))
