@@ -81,6 +81,10 @@
   (setq lsp-rust-analyzer-cargo-load-out-dirs-from-check t)
   (setq lsp-rust-analyzer-proc-macro-enable t))
 
+(after! projectile
+  (add-to-list 'projectile-project-root-files-bottom-up "Cargo.toml")
+  )
+
 
 (after! eglot
   (setq eldoc-echo-area-use-multiline-p 3
