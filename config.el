@@ -81,30 +81,55 @@
   (setq lsp-rust-analyzer-cargo-load-out-dirs-from-check t)
   (setq lsp-rust-analyzer-proc-macro-enable t))
 
-(setq lsp-clients-clangd-args '("-j=3"
-                                "--background-index"
-                                "--clang-tidy"
-                                "--completion-style=detailed"
-                                "--header-insertion=never"
-                                "--header-insertion-decorators=0"))
-;; (after! lsp-clangd (set-lsp-priority! 'clangd 2))
 
-;; (use-package! citre
-;;   :defer t
-;;   :init
-;;   (require 'citre-config)
-;;   (map! :leader
-;;         (:prefix "c"
-;;          :desc "Jump to definition"  "j"  #'citre-jump
-;;          :desc "Back to reference" "J" #'citre-jump-back
-;;          :desc "Peek definition" "p" #'citre-peek
-;;          :desc "Update tags file" "U" #'citre-update-this-tags-file)
-;;         )
-;;   (setq citre-project-root-function #'projectile-project-root)
-;;   (setq citre-default-create-tags-file-location 'package-cache)
-;;   (setq citre-use-project-root-when-creating-tags t)
-;;   (setq citre-prompt-language-for-ctags-command t)
-;;   (setq citre-auto-enable-citre-mode-modes '(prog-mode)))
+(after! eglot
+  (setq eldoc-echo-area-use-multiline-p 3
+        eldoc-echo-area-display-truncation-message nil)
+  )
 
-;; (after! company
-;;   (company-ctags-auto-setup))
+(use-package! citre
+  :defer t
+  :init
+  (require 'citre-config)
+  (map! :leader
+        (:prefix "C-c"
+         :desc "Jump to definition"  "j"  #'citre-jump
+         :desc "Back to reference" "b" #'citre-jump-back
+         :desc "Peek definition" "p" #'citre-peek
+         :desc "Update tags file" "u" #'citre-update-this-tags-file)
+        )
+  (setq citre-project-root-function #'projectile-project-root)
+  (setq citre-default-create-tags-file-location 'package-cache)
+  (setq citre-use-project-root-when-creating-tags t)
+  (setq citre-prompt-language-for-ctags-command t)
+  (setq citre-auto-enable-citre-mode-modes '(prog-mode))
+
+  ;; some copied from https://github.com/universal-ctags/citre/wiki/Use-Citre-together-with-lsp-mode
+
+  (define-advice xref--create-fetcher (:around (-fn &rest -args) fallback)
+    (let ((fetcher (apply -fn -args))
+          (citre-fetcher
+           (let ((xref-backend-functions '(citre-xref-backend t)))
+             (apply -fn -args))))
+      (lambda ()
+        (or (with-demoted-errors "%s, fallback to citre"
+              (funcall fetcher))
+            (funcall citre-fetcher)))))
+
+  (defun lsp-citre-capf-function ()
+    "A capf backend that tries lsp first, then Citre."
+    (let ((lsp-result (lsp-completion-at-point)))
+      (if (and lsp-result
+               (try-completion
+                (buffer-substring (nth 0 lsp-result)
+                                  (nth 1 lsp-result))
+                (nth 2 lsp-result)))
+          lsp-result
+        (citre-completion-at-point))))
+
+  (defun enable-lsp-citre-capf-backend ()
+    "Enable the lsp + Citre capf backend in current buffer."
+    (add-hook 'completion-at-point-functions #'lsp-citre-capf-function nil t))
+
+  (add-hook 'citre-mode-hook #'enable-lsp-citre-capf-backend)
+  )
