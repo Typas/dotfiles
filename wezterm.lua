@@ -43,6 +43,7 @@ return {
   font = wezterm.font_with_fallback({
       {
         family="Fira Code",
+        weight=450,
         stretch="SemiCondensed", -- hope one day this will happen
         harfbuzz_features={"ss05", "ss03", "ss02", "ss08", "ss06", "cv02", "cv10", "cv16"}
       },
