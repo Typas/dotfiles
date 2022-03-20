@@ -39,7 +39,7 @@ return {
   },
 
   -- fonts --
-  font_size = 12.0,
+  font_size = 14.0,
   font = wezterm.font_with_fallback({
       {
         family="Fira Code",
