@@ -47,10 +47,13 @@ return {
         harfbuzz_features={"ss01", "ss05", "ss03", "ss02", "ss08", "ss06", "cv02", "cv10", "cv16"}
       },
       {
+        family="Noto Serif CJK TC",
+        weight="Medium",
+      },
+      {
         family="JuliaMono",
         harfbuzz_features={"zero", "ss01"},
       },
-      "Noto Sans Mono CJK TC",
       {
         family="Noto Sans Mono",
         stretch="SemiCondensed",
@@ -62,7 +65,7 @@ return {
       intensity = "Bold",
       font = wezterm.font_with_fallback({
           {
-            family="Noto Sans Mono CJK TC",
+            family="Noto Serif CJK TC",
             weight="Bold",
             style="Normal",
           },
@@ -79,8 +82,8 @@ return {
       intensity = "Normal",
       font = wezterm.font_with_fallback({
           {
-            family="Noto Sans Mono CJK TC",
-            weight="Regular",
+            family="Noto Serif CJK TC",
+            weight="Medium",
             style="Normal",
           },
           {
@@ -96,8 +99,8 @@ return {
       intensity = "Half",
       font = wezterm.font_with_fallback({
           {
-            family="Noto Sans Mono CJK TC",
-            weight="Regular",
+            family="Noto Serif CJK TC",
+            weight="Light",
             style="Normal",
           },
           {
@@ -112,8 +115,8 @@ return {
       italic = true,
       font = wezterm.font_with_fallback({
           {
-            family="Noto Sans Mono CJK TC",
-            weight="Regular",
+            family="Noto Serif CJK TC",
+            weight="Medium",
             style="Normal",
           },
           {
@@ -133,18 +136,13 @@ return {
             harfbuzz_features={"ss01", "ss05", "ss03", "ss02", "ss08", "ss06", "cv02", "cv10", "cv16"}
           },
           {
-            family="Noto Sans Mono CJK TC",
+            family="Noto Serif CJK TC",
             weight="Bold",
           },
           {
             family="JuliaMono",
             weight="DemiBold",
             harfbuzz_features={"zero", "ss01"},
-          },
-          {
-            family="Noto Sans Mono",
-            weight="DemiBold",
-            stretch="SemiCondensed",
           },
       }),
     },
@@ -155,14 +153,13 @@ return {
             family="Fira Code Retina",
             harfbuzz_features={"ss01", "ss05", "ss03", "ss02", "ss08", "ss06", "cv02", "cv10", "cv16"}
           },
-          "Noto Sans Mono CJK TC",
+          {
+            family="Noto Serif CJK TC",
+            weight="Medium",
+          },
           {
             family="JuliaMono",
             harfbuzz_features={"zero", "ss01"},
-          },
-          {
-            family="Noto Sans Mono",
-            stretch="SemiCondensed",
           },
       }),
     },
@@ -175,7 +172,7 @@ return {
             harfbuzz_features={"ss01", "ss05", "ss03", "ss02", "ss08", "ss06", "cv02", "cv10", "cv16"}
           },
           {
-            family="Noto Sans Mono CJK TC",
+            family="Noto Serif CJK TC",
             weight="Light",
           },
           {
