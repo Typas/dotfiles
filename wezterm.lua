@@ -48,7 +48,7 @@ return {
       },
       {
         family="JuliaMono",
-        harfbuff_features={"zero", "ss01"},
+        harfbuzz_features={"zero", "ss01"},
       },
       "Noto Sans Mono CJK TC",
       {
@@ -65,7 +65,7 @@ return {
             family="JuliaMono",
             weight="DemiBold",
             style="Italic",
-            harfbuff_features={"zero", "ss01", "ss06", "ss08"},
+            harfbuzz_features={"zero", "ss01", "ss06", "ss08"},
           },
           {
             family="Noto Sans Mono CJK TC",
@@ -82,7 +82,7 @@ return {
             family="JuliaMono",
             weight="Regular",
             style="Italic",
-            harfbuff_features={"zero", "ss01", "ss06", "ss08"},
+            harfbuzz_features={"zero", "ss01", "ss06", "ss08"},
           },
           {
             family="Noto Sans Mono CJK TC",
@@ -99,7 +99,7 @@ return {
             family="JuliaMono",
             weight="Light",
             style="Italic",
-            harfbuff_features={"zero", "ss01", "ss06", "ss08"},
+            harfbuzz_features={"zero", "ss01", "ss06", "ss08"},
           },
           {
             family="Noto Sans Mono CJK TC",
@@ -115,7 +115,7 @@ return {
             family="JuliaMono",
             weight="Regular",
             style="Italic",
-            harfbuff_features={"zero", "ss01", "ss06", "ss08"},
+            harfbuzz_features={"zero", "ss01", "ss06", "ss08"},
           },
           {
             family="Noto Sans Mono CJK TC",
@@ -135,7 +135,7 @@ return {
           {
             family="JuliaMono",
             weight="DemiBold",
-            harfbuff_features={"zero", "ss01"},
+            harfbuzz_features={"zero", "ss01"},
           },
           {
             family="Noto Sans Mono CJK TC",
@@ -157,7 +157,7 @@ return {
           },
           {
             family="JuliaMono",
-            harfbuff_features={"zero", "ss01"},
+            harfbuzz_features={"zero", "ss01"},
           },
           "Noto Sans Mono CJK TC",
           {
@@ -177,7 +177,7 @@ return {
           {
             family="JuliaMono",
             weight="Light",
-            harfbuff_features={"zero", "ss01"},
+            harfbuzz_features={"zero", "ss01"},
           },
           {
             family="Noto Sans Mono CJK TC",
