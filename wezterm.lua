@@ -62,6 +62,11 @@ return {
             weight="DemiBold",
             style="Italic",
           },
+          {
+            family="Noto Sans Mono CJK TC",
+            weight="Bold",
+            style="Normal",
+          },
       }),
     },
     {
@@ -73,6 +78,11 @@ return {
             weight="Regular",
             style="Italic",
           },
+          {
+            family="Noto Sans Mono CJK TC",
+            weight="Regular",
+            style="Normal",
+          },
       }),
     },
     {
@@ -83,7 +93,12 @@ return {
             family="SF Mono",
             weight="Light",
             style="Italic",
-          }
+          },
+          {
+            family="Noto Sans Mono CJK TC",
+            weight="Light", -- actually Regular I think
+            style="Normal",
+          },
       }),
     },
     {
@@ -93,6 +108,11 @@ return {
             family="SF Mono",
             weight="Regular",
             style="Italic",
+          },
+          {
+            family="Noto Sans Mono CJK TC",
+            weight="Regular",
+            style="Normal",
           },
       }),
     },
@@ -106,7 +126,7 @@ return {
           },
           {
             family="Noto Sans Mono CJK TC",
-            weight="DemiBold",
+            weight="Bold",
           },
           {
             family="Noto Sans Mono",
