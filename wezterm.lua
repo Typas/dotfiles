@@ -102,6 +102,7 @@ return {
           {
             family="Fira Code",
             weight="DemiBold",
+            harfbuzz_features={"ss05", "ss03", "ss02", "ss08", "ss06", "cv02", "cv10", "cv16"}
           },
           {
             family="Noto Sans Mono CJK TC",
@@ -119,6 +120,7 @@ return {
       font = wezterm.font_with_fallback({
           {
             family="Fira Code Retina",
+            harfbuzz_features={"ss05", "ss03", "ss02", "ss08", "ss06", "cv02", "cv10", "cv16"}
           },
           "Noto Sans Mono CJK TC",
           {
@@ -133,6 +135,7 @@ return {
           {
             family="FiraCode",
             weight="Light",
+            harfbuzz_features={"ss05", "ss03", "ss02", "ss08", "ss06", "cv02", "cv10", "cv16"}
           },
           {
             family="Noto Sans Mono CJK TC",
