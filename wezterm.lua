@@ -82,7 +82,7 @@ return {
             family="Noto Sans Mono CJK TC",
             weight="Regular",
             style="Normal",
-          },
+          }
       }),
     },
     {
@@ -96,9 +96,9 @@ return {
           },
           {
             family="Noto Sans Mono CJK TC",
-            weight="Light", -- actually Regular I think
+            weight="Regular",
             style="Normal",
-          },
+          }
       }),
     },
     {
@@ -113,7 +113,7 @@ return {
             family="Noto Sans Mono CJK TC",
             weight="Regular",
             style="Normal",
-          },
+          }
       }),
     },
     {
