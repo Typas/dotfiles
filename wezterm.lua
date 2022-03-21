@@ -42,21 +42,106 @@ return {
   font_size = 14.0,
   font = wezterm.font_with_fallback({
       {
-        family="Fira Code",
-        weight=450,
+        family="Fira Code Retina",
         stretch="SemiCondensed", -- hope one day this will happen
         harfbuzz_features={"ss05", "ss03", "ss02", "ss08", "ss06", "cv02", "cv10", "cv16"}
       },
       "Noto Sans Mono CJK TC",
-      "Noto Sans Mono",
+      {
+        family="Noto Sans Mono",
+        stretch="SemiCondensed",
+      },
   }),
   font_rules = {
+    {
+      italic = true,
+      intensity = "Bold",
+      font = wezterm.font_with_fallback({
+          {
+            family="SF Mono",
+            weight="DemiBold",
+            style="Italic",
+          },
+      }),
+    },
+    {
+      italic = true,
+      intensity = "Normal",
+      font = wezterm.font_with_fallback({
+          {
+            family="SF Mono",
+            weight="Regular",
+            style="Italic",
+          },
+      }),
+    },
+    {
+      italic = true,
+      intensity = "Half",
+      font = wezterm.font_with_fallback({
+          {
+            family="SF Mono",
+            weight="Light",
+            style="Italic",
+          }
+      }),
+    },
     {
       italic = true,
       font = wezterm.font_with_fallback({
           {
             family="SF Mono",
+            weight="Regular",
             style="Italic",
+          },
+      }),
+    },
+    {
+      intensity = "Bold",
+      font = wezterm.font_with_fallback({
+          {
+            family="Fira Code",
+            weight="DemiBold",
+          },
+          {
+            family="Noto Sans Mono CJK TC",
+            weight="DemiBold",
+          },
+          {
+            family="Noto Sans Mono",
+            weight="DemiBold",
+            stretch="SemiCondensed",
+          },
+      }),
+    },
+    {
+      intensity = "Normal",
+      font = wezterm.font_with_fallback({
+          {
+            family="Fira Code Retina",
+          },
+          "Noto Sans Mono CJK TC",
+          {
+            family="Noto Sans Mono",
+            stretch="SemiCondensed",
+          },
+      }),
+    },
+    {
+      intensity = "Half",
+      font = wezterm.font_with_fallback({
+          {
+            family="FiraCode",
+            weight="Light",
+          },
+          {
+            family="Noto Sans Mono CJK TC",
+            weight="Light",
+          },
+          {
+            family="Noto Sans Mono",
+            weight="Light",
+            stretch="SemiCondensed",
           },
       }),
     },
