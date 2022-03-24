@@ -1,6 +1,7 @@
+--- modded from https://github.com/bew/dotfiles/blob/main/gui/wezterm/lib/mystdlib.lua
 local wezterm = require 'wezterm';
 
-return {
+local conf_misc = {
   color_scheme = "OneHalfLight",
 
   -- tab bar appearance --
@@ -38,154 +39,15 @@ return {
     }
   },
 
-  -- fonts --
-  font_size = 14.0,
-  font = wezterm.font_with_fallback({
-      {
-        family="Fira Code Retina",
-        stretch="SemiCondensed", -- hope one day this will happen
-        harfbuzz_features={"ss01", "ss05", "ss03", "ss02", "ss08", "ss06", "cv02", "cv10", "cv16"}
-      },
-      {
-        family="Noto Serif CJK TC",
-        weight="Medium",
-      },
-      {
-        family="JuliaMono",
-        harfbuzz_features={"zero", "ss01"},
-      },
-      {
-        family="Noto Sans Mono",
-        stretch="SemiCondensed",
-      },
-  }),
-  font_rules = {
-    {
-      italic = true,
-      intensity = "Bold",
-      font = wezterm.font_with_fallback({
-          {
-            family="Noto Serif CJK TC",
-            weight="Bold",
-            style="Normal",
-          },
-          {
-            family="JuliaMono",
-            weight="DemiBold",
-            style="Italic",
-            harfbuzz_features={"zero", "ss01", "ss06", "ss08"},
-          },
-      }),
-    },
-    {
-      italic = true,
-      intensity = "Normal",
-      font = wezterm.font_with_fallback({
-          {
-            family="Noto Serif CJK TC",
-            weight="Medium",
-            style="Normal",
-          },
-          {
-            family="JuliaMono",
-            weight="Regular",
-            style="Italic",
-            harfbuzz_features={"zero", "ss01", "ss06", "ss08"},
-          },
-      }),
-    },
-    {
-      italic = true,
-      intensity = "Half",
-      font = wezterm.font_with_fallback({
-          {
-            family="Noto Serif CJK TC",
-            weight="Light",
-            style="Normal",
-          },
-          {
-            family="JuliaMono",
-            weight="Light",
-            style="Italic",
-            harfbuzz_features={"zero", "ss01", "ss06", "ss08"},
-          },
-      }),
-    },
-    {
-      italic = true,
-      font = wezterm.font_with_fallback({
-          {
-            family="Noto Serif CJK TC",
-            weight="Medium",
-            style="Normal",
-          },
-          {
-            family="JuliaMono",
-            weight="Regular",
-            style="Italic",
-            harfbuzz_features={"zero", "ss01", "ss06", "ss08"},
-          },
-      }),
-    },
-    {
-      intensity = "Bold",
-      font = wezterm.font_with_fallback({
-          {
-            family="Fira Code",
-            weight="DemiBold",
-            harfbuzz_features={"ss01", "ss05", "ss03", "ss02", "ss08", "ss06", "cv02", "cv10", "cv16"}
-          },
-          {
-            family="Noto Serif CJK TC",
-            weight="Bold",
-          },
-          {
-            family="JuliaMono",
-            weight="DemiBold",
-            harfbuzz_features={"zero", "ss01"},
-          },
-      }),
-    },
-    {
-      intensity = "Normal",
-      font = wezterm.font_with_fallback({
-          {
-            family="Fira Code Retina",
-            harfbuzz_features={"ss01", "ss05", "ss03", "ss02", "ss08", "ss06", "cv02", "cv10", "cv16"}
-          },
-          {
-            family="Noto Serif CJK TC",
-            weight="Medium",
-          },
-          {
-            family="JuliaMono",
-            harfbuzz_features={"zero", "ss01"},
-          },
-      }),
-    },
-    {
-      intensity = "Half",
-      font = wezterm.font_with_fallback({
-          {
-            family="Fira Code",
-            weight="Light",
-            harfbuzz_features={"ss01", "ss05", "ss03", "ss02", "ss08", "ss06", "cv02", "cv10", "cv16"}
-          },
-          {
-            family="Noto Serif CJK TC",
-            weight="Light",
-          },
-          {
-            family="JuliaMono",
-            weight="Light",
-            harfbuzz_features={"zero", "ss01"},
-          },
-          {
-            family="Noto Sans Mono",
-            weight="Light",
-            stretch="SemiCondensed",
-          },
-      }),
-    },
-  },
+  -- Never hold on close
+  exit_behavior = "Close",
 }
+
+local conf_table = require "conf-lib".conf_table
+local full_config = conf_table.merge_all(
+  conf_misc,
+  require("conf-fonts"),
+  {} -- so the last table can have an ending comma for git diffs
+)
+
+return full_config
