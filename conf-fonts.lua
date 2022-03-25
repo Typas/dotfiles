@@ -1,35 +1,28 @@
---- Moddified from https://github.com/bew/dotfiles/blob/main/gui/wezterm/lib/mystdlib.lua
+--- Moddified from https://github.com/bew/dotfiles/blob/main/gui/wezterm/
 local wezterm = require "wezterm"
 
 local conf = {}
 
 -- Disable annoying default behaviors
-conf.adject_window_size_when_changing_font_size = false
+conf.adjust_window_size_when_changing_font_size = false
 
-conf.font_size = 14.0
+conf.font_size = 13.0
 
 local function fira_code(weight)
   local font = {}
-  weight = weight or "Retina"
 
-  if weight == "Retina" then
-    font.family = "Fira Code Retina"
-  else
-    font.family = "Fira Code"
-    font.weight = weight
-  end
+  font.family = "Fira Code" -- no longer use retina weight
+  font.weight = weight or "Regular"
   font.stretch = "SemiCondensed" -- hope one day this will happen
-  font.harfbuzz_features = {"ss01", "ss02", "ss03", "ss05", "ss06", "ss08", "cv02", "cv10", "cv16"}
+  font.harfbuzz_features = {"ss02", "ss03","ss05", "ss08", "cv10"}
 
   return font
 end
 
-local function noto_tc(weight)
-  weight = weight or "Medium"
-
+local function noto_cjk(weight)
   return {
     family = "Noto Serif CJK TC",
-    weight = weight,
+    weight = weight or "Medium",
     style = "Normal",
   }
 end
@@ -39,15 +32,16 @@ local function julia_mono(weight, style)
 
   font.family = "JuliaMono"
   font.weight = weight or "Regular"
+  font.stretch = "SemiCondensed" -- hope one day this will happen
   font.style = style or "Normal"
-  font.harfbuzz_features = {"zero", "ss01", "ss06", "ss08"}
+  font.harfbuzz_features = {"zero", "ss01", "ss03", "ss06", "ss08"}
 
   return font
 end
 
 conf.font = wezterm.font_with_fallback({
     fira_code(),
-    noto_tc(),
+    noto_cjk(),
     julia_mono(),
 })
 
@@ -57,7 +51,7 @@ conf.font_rules = {
     intensity = "Bold",
     font = wezterm.font_with_fallback({
         julia_mono("DemiBold", "Italic"),
-        noto_tc("Bold"),
+        noto_cjk("Bold"),
     }),
   },
   {
@@ -65,21 +59,21 @@ conf.font_rules = {
     intensity = "Half",
     font = wezterm.font_with_fallback({
         julia_mono("Light", "Italic"),
-        noto_tc("Regular"),
+        noto_cjk("Light"),
     }),
   },
   {
     italic = true,
     font = wezterm.font_with_fallback({
         julia_mono("Regular", "Italic"),
-        noto_tc(),
+        noto_cjk(),
     }),
   },
   {
     intensity = "Bold",
     font = wezterm.font_with_fallback({
         fira_code("DemiBold"),
-        noto_tc("Bold"),
+        noto_cjk("Bold"),
         julia_mono("DemiBold"),
     }),
   },
@@ -87,7 +81,7 @@ conf.font_rules = {
     intensity = "Half",
     font = wezterm.font_with_fallback({
         fira_code("Light"),
-        noto_tc("Regular"),
+        noto_cjk("Light"),
         julia_mono("Light"),
     }),
   },
