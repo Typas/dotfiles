@@ -39,6 +39,23 @@ local color_tab_new_hover = {
   intensity = "Normal",
 }
 
+function cjk_count(title)
+  local chars = {utf8.codepoint(title, 1, -1)}
+  local count = 0
+
+  for _, c in pairs(chars) do
+    if c >= 0x2e80 and c <= 0xffff then
+      count = count + 1
+    elseif c >= 0x20000 and c <= 0x2fa1f then
+      count = count + 1
+    elseif c >= 0x30000 and c <= 0x3134f then
+      count = count + 1
+    end
+  end
+
+  return count
+end
+
 wezterm.on(
   "format-tab-title",
   function(tab, tabs, panes, config, hover, max_width)
@@ -57,7 +74,7 @@ wezterm.on(
     local available_chars = max_width - 3
     local title_chars = string.len(title)
     if title_chars > available_chars then
-      title = ".." .. string.sub(title, title_chars - available_chars + 3)
+      title = ".." .. string.sub(title, title_chars - available_chars + cjk_count(title) + 3)
     end
     -- title = wezterm.truncate_left(title, available_chars)
 
