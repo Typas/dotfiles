@@ -40,10 +40,9 @@ local color_tab_new_hover = {
 }
 
 function cjk_count(title)
-  local chars = {utf8.codepoint(title, 1, -1)}
   local count = 0
 
-  for _, c in pairs(chars) do
+  for _, c in utf8.codes(title) do
     if c >= 0x2e80 and c <= 0xffff then
       count = count + 1
     elseif c >= 0x20000 and c <= 0x2fa1f then
@@ -72,11 +71,7 @@ wezterm.on(
 
     local title = tab.active_pane.title
     local available_chars = max_width - 3
-    local title_chars = string.len(title)
-    if title_chars > available_chars then
-      title = ".." .. string.sub(title, title_chars - available_chars + cjk_count(title) + 3)
-    end
-    -- title = wezterm.truncate_left(title, available_chars)
+    local title = wezterm.truncate_left(title, available_chars)
 
     return {
       {Background={Color=color_tab.background}},
