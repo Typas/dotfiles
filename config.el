@@ -64,6 +64,8 @@
 
 (add-hook! 'prog-mode-hook #'rainbow-delimiters-mode)
 
+(map! :map evil-normal-state-map
+      "q" nil)
 (map! :leader
       "c c" nil
       "c C" nil)
@@ -72,6 +74,8 @@
       :desc "Recompile" "c C-r" #'recompile
       :desc "Comment region" "c c" #'comment-region
       :desc "Uncomment region" "c u" #'uncomment-region)
+
+(set-file-template! "\\.tex$" :trigger "__tex" :mode 'latex-mode)
 
 (after! org
   (add-to-list 'org-src-lang-modes '("rust" . rustic))
@@ -92,6 +96,8 @@
 (after! eglot
   (setq eldoc-echo-area-use-multiline-p 3
         eldoc-echo-area-display-truncation-message nil)
+  (add-to-list 'eglot-server-programs
+               '((latex-mode tex-mode context-mode texinfo-mode bibtex-mode) . ("texlab")))
   )
 
 (use-package! citre

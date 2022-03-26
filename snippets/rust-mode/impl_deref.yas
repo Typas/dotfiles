@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: impl_deref
+# uuid: implderef
+# key: implderef
+# --
+impl std::ops::Deref for ${1:Type} {
+    type Target = ${2:Type};
+    fn deref(&self) -> &Self::Target {
+        &self.$0
+    }
+}

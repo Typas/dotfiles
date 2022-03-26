@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: impl Error for Type { fn source(...) }
+# uuid: error
+# --

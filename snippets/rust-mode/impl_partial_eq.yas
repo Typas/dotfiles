@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: impl_partial_eq
+# uuid: impl_partial_eq
+# key: implpeq
+# --
+impl PartialEq for ${1:Type} {
+    fn eq(&self, other: &Self) -> bool {
+        $0
+    }
+}

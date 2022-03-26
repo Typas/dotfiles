@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: merge
+# key: merge
+# --
+std::merge(std::begin(${1:container}), std::end($1),
+std::begin(${2:another}), std::end($2), std::begin(${3:destination}));

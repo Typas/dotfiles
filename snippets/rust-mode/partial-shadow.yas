@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: impl PartialEq for Type
+# uuid: partial
+# --

@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: while let PATTERN = EXPR { ... }
+# uuid: whilel
+# --

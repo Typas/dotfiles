@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: impl_deref_mut
+# uuid: implderefmut
+# key: implderefmut
+# --
+impl std::ops::DerefMut for ${1:Type} {
+    type Target = ${2:Type};
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.$0
+    }
+}

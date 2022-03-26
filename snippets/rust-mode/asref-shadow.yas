@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: impl AsRef<Type> for Type
+# uuid: asref
+# --

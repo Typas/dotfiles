@@ -1,0 +1,3 @@
+# -*- mode: snippet -*-
+# name: impl Display for Type { fn fmt (...) }
+# --
