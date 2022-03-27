@@ -7,21 +7,23 @@
 
 \typeout{-- Package: ``secdepth'' \fileversion\space <\filedate> --}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{nosec}[\filedate\space\fileversion]
+\ProvidesPackage{secdepth}[\filedate\space\fileversion]
+
+% options
+\newcommand{\secnumberdepth}{0}
+\DeclareOption{1}{\renewcommand{\secnumberdepth}{1}}
+\DeclareOption{2}{\renewcommand{\secnumberdepth}{2}}
+\DeclareOption{3}{\renewcommand{\secnumberdepth}{3}}
+\DeclareOption{4}{\renewcommand{\secnumberdepth}{4}}
+\DeclareOption{5}{\renewcommand{\secnumberdepth}{5}}
+\DeclareOption{6}{\renewcommand{\secnumberdepth}{6}}
+\ProcessOptions
 
 % load common use packages
 \RequirePackage{titlesec}
 
 % settings
-\newcommand{\sn}{0}
-\DeclareOption{1}{\renewcommand{\sn}{1}}
-\DeclareOption{2}{\renewcommand{\sn}{2}}
-\DeclareOption{3}{\renewcommand{\sn}{3}}
-\DeclareOption{4}{\renewcommand{\sn}{4}}
-\DeclareOption{5}{\renewcommand{\sn}{5}}
-\DeclareOption{6}{\renewcommand{\sn}{6}}
-
-\setcounter{secnumdepth}{\sn}
+\setcounter{secnumdepth}{\secnumberdepth}
 \titleformat{\section}{\Large\bfseries}{\thesection.\,}{1em}{}
 \titleformat{\subsection}{\large\bfseries}{\thesubsection.\,}{1em}{}
 
