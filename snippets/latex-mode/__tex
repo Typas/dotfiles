@@ -5,15 +5,12 @@
 \documentclass[12pt,a4paper,xetex]{article}
 \usepackage{preamble}
 \usepackage{math}
-\usepackage{nosecnum}
+\usepackage{secdepth}
 \usepackage{code}
 \usepackage{graphicx} % includegraphics
 \usepackage{caption} % includegraphics
 \usepackage{booktabs} % table
 \usepackage{titlesec} % change section style
-\setcounter{secnumdepth}{3} % titlesec
-\titleformat{\section}{\Large\bfseries}{\thesection.\,}{1em}{} % titlesec
-\titleformat{\subsection}{\large\bfseries}{\thesubsection\,}{1em}{} % titlesec
 
 \title{$1}
 \date{\today}
