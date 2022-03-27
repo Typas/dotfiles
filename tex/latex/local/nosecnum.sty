@@ -1,0 +1,23 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% nosecnum.sty
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\fileversion{0.1}
+\def\filedate{2022/3/28}
+
+\typeout{-- Package: ``nosecnum'' \fileversion\space <\filedate> --}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{nosec}[\filedate\space\fileversion]
+
+% load common use packages
+\RequirePackage{titlesec}
+
+% settings
+\newcommand{\sn}{0}
+
+\setcounter{secnumdepth}{\sn}
+\titleformat{\section}{\Large\bfseries}{\thesection.\,}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection.\,}{1em}{}
+
+% Terminator
+\endinput

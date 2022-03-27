@@ -1,0 +1,35 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% math.sty
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\fileversion{0.1}
+\def\filedate{2022/3/28}
+
+\typeout{-- Package: ``math'' \fileversion\space <\filedate> --}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{math}[\filedate\space\fileversion]
+
+% load common use packages
+\RequirePackage{mathtools}
+\RequirePackage{unicode-math}
+\RequirePackage{diffcoeff}
+
+% settings
+
+\@ifclassloaded{beamer} {
+  \setmathfont{Fira Math}
+} {
+  \setmathfont{XITS Math}
+}
+\unimathsetup{
+  math-style=ISO,
+  bold-style=ISO,
+  mathrm=sym,
+  mathit=sym,
+  mathsf=sym,
+  mathbf=sym,
+  mathtt=sym
+}
+
+% Terminator
+\endinput

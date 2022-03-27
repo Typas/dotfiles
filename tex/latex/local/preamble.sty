@@ -1,0 +1,30 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% preamble.sty
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\fileversion{0.1}
+\def\filedate{2022/3/28}
+
+\typeout{-- Package: ``preamble'' \fileversion\space <\filedate> --}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{preamble}[\filedate\space\fileversion]
+
+
+% load common use packages
+\RequirePackage{xeCJK}
+\RequirePackage{parskip}
+\RequirePackage{fontspec}
+
+% settings
+\setmainfont{XITS}
+\setsansfont{Fira Sans}
+\setCJKmainfont{Noto Serif CJK TC} % xeCJK
+\setCJKsansfont{Noto Sans CJK TC} % xeCJK
+\setlength{\parskip}{.5em} % parskip
+\setlength{\parindent}{2em} % parskip
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt
+\linespread{1.36}
+
+% Terminator
+\endinput
