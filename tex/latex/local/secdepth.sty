@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% nosecnum.sty
+%%% secdepth.sty
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \def\fileversion{0.1}
 \def\filedate{2022/3/28}
 
-\typeout{-- Package: ``nosecnum'' \fileversion\space <\filedate> --}
+\typeout{-- Package: ``secdepth'' \fileversion\space <\filedate> --}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{nosec}[\filedate\space\fileversion]
 
@@ -14,6 +14,12 @@
 
 % settings
 \newcommand{\sn}{0}
+\DeclareOption{1}{\renewcommand{\sn}{1}}
+\DeclareOption{2}{\renewcommand{\sn}{2}}
+\DeclareOption{3}{\renewcommand{\sn}{3}}
+\DeclareOption{4}{\renewcommand{\sn}{4}}
+\DeclareOption{5}{\renewcommand{\sn}{5}}
+\DeclareOption{6}{\renewcommand{\sn}{6}}
 
 \setcounter{secnumdepth}{\sn}
 \titleformat{\section}{\Large\bfseries}{\thesection.\,}{1em}{}
