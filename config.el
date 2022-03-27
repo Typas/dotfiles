@@ -76,6 +76,7 @@
       :desc "Uncomment region" "c u" #'uncomment-region)
 
 (set-file-template! "\\.tex$" :trigger "__tex" :mode 'latex-mode)
+(set-file-template! "/beamer\\.tex$" :trigger "__beamer.tex" :mode 'latex-mode)
 
 (after! org
   (add-to-list 'org-src-lang-modes '("rust" . rustic))

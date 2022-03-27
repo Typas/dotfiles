@@ -1,8 +1,8 @@
 # -*- mode: snippet -*-
 # group: file templates
-# name: Latex header
+# name: Latex beamer header
 # --
-\documentclass[12pt,a4paper,xetex]{article}
+\documentclass[xetex, 12pt]{beamer}
 \usepackage{amsmath}
 \usepackage{unicode-math}
 \usepackage{xeCJK}
@@ -17,10 +17,7 @@
 \usepackage[vlined]{algorithm2e} % pseudo codes
 % \usepackage{tabularray} % table for LaTeX3
 ${1:\usepackage\{booktabs\} % table}
-${2:\usepackage\{titlesec\} % change section style
-\setcounter\{secnumdepth\}\{$3\} % titlesec
-\titleformat\{\section\}\{\Large\bfseries\}\{\thesection.\,\}\{1em\}\{\} % titlesec
-\titleformat\{\subsection\}\{\large\bfseries\}\{\thesubsection\,\}\{1em\}\{\} % titlesec}
+\usetheme{Copenhagen}
 \setmainfont{XITS}
 \setmathfont{XITS Math}
 \setmonofont[
@@ -42,14 +39,23 @@ ItalicFont={Noto Sans CJK TC Light}
 \XeTeXlinebreakskip = 0pt plus 1pt
 \linespread{1.36}
 
-\title{$4}
+\title{$2}
+% \subtitle{}
 \date{\today}
-\author{$5}
+\author{$3}
+
+% \logo{\includegraphics[height=1cm]{logo-file-here}}
 
 \begin{document}
-\maketitle
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{${4:Frame Title}}
 
 $0
+
+\end{frame}
 
 \end{document}
 
