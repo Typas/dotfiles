@@ -10,7 +10,6 @@
 \usepackage{graphicx} % includegraphics
 \usepackage{caption} % includegraphics
 \usepackage{booktabs} % table
-\usepackage{titlesec} % change section style
 
 \title{$1}
 \date{\today}
