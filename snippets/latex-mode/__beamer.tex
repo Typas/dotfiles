@@ -2,16 +2,23 @@
 # group: file templates
 # name: Latex beamer header
 # --
-\documentclass[xetex, 12pt]{beamer}
-\usepackage{preamble}
-\usepackage{code}
-\usepackage{math}
+\documentclass[12pt,xetex]{beamer}
+\usepackage${4:[${1:algo,}${2:code,}${3:math}]}{preamble}
+\usepackage{graphicx} % includegraphics
+\usepackage{booktabs} % table
+\usepackage{tikz}     % graph location
 \usetheme{Copenhagen}
 
-\title{$1}
+\title{$5}
 % \subtitle{}
 \date{\today}
-\author{$2}
+\author{$6}
+
+\usebackgroundtemplate{%
+  \tikz[overlay, remember picture] \node[opacity=0.3, at = (current page.center)] {
+    \includegraphics[height=\paperheight, width=\paperwidth]{${7:background-file-here}}
+  };
+}
 
 % \logo{\includegraphics[height=1cm]{logo-file-here}}
 
@@ -20,10 +27,19 @@
 \frame{\titlepage}
 
 \begin{frame}
-\frametitle{${4:Frame Title}}
+\frametitle{${8:Frame Title}}
 
 $0
 
+\end{frame}
+
+\usebackgroundtemplate{%
+  \tikz[overlay, remember picture] \node[at = (current page.center)] {
+    \includegraphics[height=\paperheight, width=\paperwidth]{$7}
+  };
+}
+\begin{frame}[plain]
+  Thank you for listening.
 \end{frame}
 
 \end{document}

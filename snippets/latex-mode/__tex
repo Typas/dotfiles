@@ -3,17 +3,14 @@
 # name: Latex header
 # --
 \documentclass[12pt,a4paper,xetex]{article}
-\usepackage{preamble}
-\usepackage{math}
-\usepackage{secdepth}
-\usepackage{code}
+\usepackage${4:[${1:algo,}${2:code,}${3:math}]}{preamble}
 \usepackage{graphicx} % includegraphics
 \usepackage{caption} % includegraphics
 \usepackage{booktabs} % table
 
-\title{$1}
+\title{$5}
 \date{\today}
-\author{$2}
+\author{$6}
 
 \begin{document}
 \maketitle
