@@ -1,0 +1,40 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% preamble-algo.sty
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\fileversion{0.1}
+\def\filedate{2022/3/29}
+
+\typeout{-- Package: ``preamble-algo'' \fileversion\space <\filedate> --}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{preamble-algo}[\filedate\space\fileversion]
+
+% load common use packages
+\@ifclassloaded{beamer} { % pseudo codes
+  % \RequirePackage{algorithmicx}
+  \RequirePackage[vlined]{algorithm2e}
+} {
+  \RequirePackage[vlined]{algorithm2e}
+}
+\RequirePackage{unicode-math}
+
+% settings
+
+\@ifclassloaded{beamer} {
+  \setmathfont{Fira Math}
+} {
+  \setmathfont{XITS Math}
+}
+
+\unimathsetup{
+  math-style=ISO,
+  bold-style=ISO,
+  mathrm=sym,
+  mathit=sym,
+  mathsf=sym,
+  mathbf=sym,
+  mathtt=sym
+}
+
+% Terminator
+\endinput

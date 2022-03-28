@@ -1,16 +1,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% code.sty
+%%% preamble-code.sty
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\fileversion{0.1}
-\def\filedate{2022/3/28}
+\def\fileversion{0.2}
+\def\filedate{2022/3/29}
 
-\typeout{-- Package: ``code'' \fileversion\space <\filedate> --}
+\typeout{-- Package: ``preamble-code'' \fileversion\space <\filedate> --}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{code}[\filedate\space\fileversion]
+\ProvidesPackage{preamble-code}[\filedate\space\fileversion]
 
 % load common use packages
-\RequirePackage[vlined]{algorithm2e} % pseudo codes
 \RequirePackage{minted} % code listing
 \RequirePackage{xeCJK}
 \RequirePackage{xcolor}
@@ -30,6 +29,24 @@ BoldFont={Noto Sans CJK TC Bold},
 BoldItalicFont={Noto Sans CJK TC Medium},
 ItalicFont={Noto Sans CJK TC Light}
 ]{Noto Sans CJK TC} % xeCJK
+
+\@ifclassloaded{beamer} {
+  \setminted{
+    beameroverlays=true,
+    fontsize=\scriptsize
+  }
+} {
+  \setminted{
+    frame=lines,
+    linenos,
+    fontsize=\footnotesize
+  }
+}
+
+\setminted{
+  breaklines,
+  framesep=2mm,
+}
 
 % Terminator
 \endinput
