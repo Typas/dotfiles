@@ -10,12 +10,7 @@
 \ProvidesPackage{preamble-algo}[\filedate\space\fileversion]
 
 % load common use packages
-\@ifclassloaded{beamer} { % pseudo codes
-  % \RequirePackage{algorithmicx}
-  \RequirePackage[vlined]{algorithm2e}
-} {
-  \RequirePackage[vlined]{algorithm2e}
-}
+\RequirePackage{pseudo}
 \RequirePackage{unicode-math}
 
 % settings
@@ -35,6 +30,13 @@
   mathbf=sym,
   mathtt=sym
 }
+
+\pseudoset{
+  label=\footnotesize\arabic*,
+  kw,
+  indent-length=1em
+}
+
 
 % Terminator
 \endinput

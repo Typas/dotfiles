@@ -4,3 +4,10 @@
 tmp/
 
 .auctex-auto/
+
+/*
+!/tex/
+/tex/*
+!/tex/latex/
+/tex/latex/*
+!/tex/latex/local
