@@ -77,14 +77,6 @@ return {
 
   use_fancy_tab_bar = false,
 
-  tab_bar_style = {
-    active_tab_left = "",
-    active_tab_right = "",
-    inactive_tab_left = "",
-    inactive_tab_right = "",
-    inactive_tab_hover_left = "",
-    inactive_tab_hover_right = "",
-  },
   colors = {
     tab_bar = {
       background = color_tab_bar_background,

@@ -3,7 +3,7 @@ local wezterm = require 'wezterm'
 
 local conf_misc = {
   color_scheme = "OneHalfLight",
-  automatcially_reload_config = true,
+  automatically_reload_config = false,
   window_padding = {
     left = 2, right = 2,
     top = 2, bottom = 2,
