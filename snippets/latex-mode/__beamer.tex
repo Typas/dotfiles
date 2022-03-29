@@ -16,8 +16,12 @@
 
 \usebackgroundtemplate{%
   \tikz[overlay, remember picture] \node[opacity=0.3, at = (current page.center)] {
-    \includegraphics[height=\paperheight, width=\paperwidth]{${7:background-file-here}}
-  };
+    \includegraphics[
+    height=\paperheight,
+    width=\paperwidth,
+    keepaspectratio]{
+    ${7:background-file-here}
+    }};
 }
 
 % \logo{\includegraphics[height=1cm]{logo-file-here}}
@@ -35,7 +39,12 @@ $0
 
 \usebackgroundtemplate{%
   \tikz[overlay, remember picture] \node[at = (current page.center)] {
-    \includegraphics[height=\paperheight, width=\paperwidth]{$7}
+    \includegraphics[
+    height=\paperheight,
+    width=\paperwidth,
+    keepaspectratio]{
+    $7
+    };
   };
 }
 \begin{frame}[plain]
