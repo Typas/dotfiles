@@ -55,3 +55,4 @@
                                         ;(unpin! t)
 
 (package! evil-escape :disable t)
+(package! doom-snippets :ignore t)

@@ -1,3 +1,0 @@
-# -*- mode: snippet -*-
-# name: impl FromStr for Type { fn from_str(...) }
-# --

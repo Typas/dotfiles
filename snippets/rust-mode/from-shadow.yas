@@ -1,3 +1,0 @@
-# -*- mode: snippet -*-
-# name: impl From<From> for Type { fn from(...) }
-# --
