@@ -54,6 +54,7 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+(when IS-MAC (setq dired-use-ls-dired nil))
 
 ;; Treat underscores as word
 (add-hook! 'python-mode-hook (modify-syntax-entry ?_ "w"))
@@ -77,6 +78,7 @@
 
 (set-file-template! "\\.tex$" :trigger "__tex" :mode 'latex-mode)
 (set-file-template! "/beamer\\.tex$" :trigger "__beamer.tex" :mode 'latex-mode)
+(set-file-template! "\\.gitignore$" :trigger "__" :mode 'gitignore-mode)
 
 (after! org
   (add-to-list 'org-src-lang-modes '("rust" . rustic))

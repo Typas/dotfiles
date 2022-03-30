@@ -1,6 +1,5 @@
 # -*- mode: snippet -*-
 # group: file templates
-# name: Latex header
 # --
 \documentclass[12pt,a4paper,xetex]{article}
 \usepackage${4:[${1:algo,}${2:code,}${3:math}]}{preamble}
