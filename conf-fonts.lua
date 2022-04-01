@@ -6,6 +6,8 @@ local conf = {}
 -- Disable annoying default behaviors
 conf.adjust_window_size_when_changing_font_size = false
 
+conf.line_height = 1.1
+
 conf.font_size = 13.0
 
 local function fira_code(weight)
@@ -14,16 +16,17 @@ local function fira_code(weight)
   font.family = "Fira Code" -- no longer use retina weight
   font.weight = weight or "Regular"
   font.stretch = "SemiCondensed" -- hope one day this will happen
-  font.harfbuzz_features = {"ss02", "ss03","ss05", "ss08", "cv10"}
+  font.harfbuzz_features = {"ss01", "ss02", "ss03","ss05", "ss08"}
 
   return font
 end
 
 local function noto_cjk(weight)
   return {
-    family = "Noto Serif CJK TC",
-    weight = weight or "Medium",
+    family = "Noto Sans CJK TC",
+    weight = weight or "Regular",
     style = "Normal",
+    -- scale = 1.2, -- when cjk is defined
   }
 end
 
@@ -34,7 +37,7 @@ local function julia_mono(weight, style)
   font.weight = weight or "Regular"
   font.stretch = "SemiCondensed" -- hope one day this will happen
   font.style = style or "Normal"
-  font.harfbuzz_features = {"zero", "ss01", "ss03", "ss06", "ss08"}
+  font.harfbuzz_features = {"ss01", "ss03", "ss06", "ss08"}
 
   return font
 end
@@ -59,7 +62,7 @@ conf.font_rules = {
     intensity = "Half",
     font = wezterm.font_with_fallback({
         julia_mono("Light", "Italic"),
-        noto_cjk("Light"),
+        noto_cjk("Thin"),
     }),
   },
   {
@@ -81,7 +84,7 @@ conf.font_rules = {
     intensity = "Half",
     font = wezterm.font_with_fallback({
         fira_code("Light"),
-        noto_cjk("Light"),
+        noto_cjk("Thin"),
         julia_mono("Light"),
     }),
   },
