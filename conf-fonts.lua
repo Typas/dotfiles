@@ -26,7 +26,7 @@ local function noto_cjk(weight)
     family = "Noto Sans CJK TC",
     weight = weight or "Regular",
     style = "Normal",
-    -- scale = 1.2, -- when cjk is defined
+    scale = 1.2, -- matches width
   }
 end
 
