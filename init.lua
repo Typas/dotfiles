@@ -1,4 +1,4 @@
-require("basic.settings")
-require("basic.keybinds")
-require("basic.config")
-require("basic.plugins")
+require("core.settings")
+require("core.keybinds")
+require("core.config")
+require("core.plugins")

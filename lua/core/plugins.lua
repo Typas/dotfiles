@@ -51,6 +51,7 @@ packer.startup(
     use {
       "folke/which-key.nvim",
     }
+    
 
     use {
       "nvim-telescope/telescope.nvim",
@@ -63,6 +64,19 @@ packer.startup(
       requires = { "kyazdani42/nvim-web-devicons", opt = true },
       config = function()
         require("lualine").setup()
+      end
+    }
+
+    use {
+      "ms-jpq/coq_nvim",
+    }
+
+    use {
+      "windwp/nvim-autopairs",
+      config = function()
+        require("nvim-autopairs").setup({
+          check_ts = true,
+        })
       end
     }
 
