@@ -5,6 +5,9 @@
 *.log
 tmp/
 
+# universal tags
+.tags/
+
 # tex tmp files
 *.aux
 *.log
