@@ -1,0 +1,20 @@
+*~
+\#*#
+.DS_Store
+.idea
+*.log
+tmp/
+
+# tex tmp files
+*.aux
+*.log
+_minted-*/
+*.synctex.gz
+*.nav
+*.toc
+*.vrb
+*.snm
+*.out
+.auctex-auto/
+
+plugin/
