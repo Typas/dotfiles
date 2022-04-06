@@ -9,8 +9,6 @@
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
                                         ;(package! some-package)
 
-(package! color-theme-sanityinc-tomorrow)
-(package! apropospriate-theme)
 (package! citre)
 (package! company-ctags)
 
