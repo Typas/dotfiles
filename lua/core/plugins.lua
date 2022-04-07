@@ -63,7 +63,21 @@ packer.startup(
       "nvim-lualine/lualine.nvim",
       requires = { "kyazdani42/nvim-web-devicons", opt = true },
       config = function()
-        require("lualine").setup()
+        require("lualine").setup({
+          options = {
+            icons_enabled = false,
+            component_separators = {left = "|", right = "|"},
+            section_separators = {left = "", right = ""},
+          },
+          sections = {
+            lualine_a = {{
+              "mode",
+              fmt = function(str)
+                return str:sub(1, 1)
+              end
+            }},
+          },
+        })
       end
     }
 
@@ -75,7 +89,7 @@ packer.startup(
       "windwp/nvim-autopairs",
       config = function()
         require("nvim-autopairs").setup({
-          check_ts = true,
+          -- check_ts = true,
         })
       end
     }
