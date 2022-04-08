@@ -1,5 +1,5 @@
 --- modded from https://github.com/bew/dotfiles/blob/main/gui/wezterm/
-local wezterm = require 'wezterm'
+local wezterm = require "wezterm"
 
 local conf_misc = {
   color_scheme = "OneHalfLight",
