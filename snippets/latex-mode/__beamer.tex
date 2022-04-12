@@ -14,15 +14,15 @@
 \date{\today}
 \author{$6}
 
-\usebackgroundtemplate{%
-  \tikz[overlay, remember picture] \node[opacity=0.3, at = (current page.center)] {
-    \includegraphics[
-    height=\paperheight,
-    width=\paperwidth,
-    keepaspectratio]{
-    ${7:background-file-here}
-    }};
-}
+%\usebackgroundtemplate{%
+%  \tikz[overlay, remember picture] \node[opacity=0.3, at = (current page.center)] {
+%    \includegraphics[
+%    height=\paperheight,
+%    width=\paperwidth,
+%    keepaspectratio]{
+%    ${7:background-file-here}
+%    }};
+% }
 
 % \logo{\includegraphics[height=1cm]{logo-file-here}}
 
@@ -30,26 +30,25 @@
 
 \frame{\titlepage}
 
-\begin{frame}
-\frametitle{${8:Frame Title}}
+\begin{frame}{${8: Frame Title}}
 
 $0
 
 \end{frame}
 
-\usebackgroundtemplate{%
-  \tikz[overlay, remember picture] \node[at = (current page.center)] {
-    \includegraphics[
-    height=\paperheight,
-    width=\paperwidth,
-    keepaspectratio]{
-    $7
-    };
-  };
-}
-\begin{frame}[plain]
-  Thank you for listening.
-\end{frame}
+%\usebackgroundtemplate{%
+%  \tikz[overlay, remember picture] \node[at = (current page.center)] {
+%    \includegraphics[
+%    height=\paperheight,
+%    width=\paperwidth,
+%    keepaspectratio]{
+%    $7
+%    };
+%  };
+% }
+% \begin{frame}[plain]
+%   Thank you for listening.
+% \end{frame}
 
 \end{document}
 
