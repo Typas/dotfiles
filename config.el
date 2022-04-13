@@ -26,6 +26,24 @@
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one-light)
 
+;; font settings
+(setq doom-font
+                    (font-spec
+                           :family "Fira Code"
+                           :slant 'normal
+                           :weight 'semi-light
+                           :size 13.0
+                           :otf '(DFLT nil (zero ss01 ss02 ss03 ss05 ss08)))
+                    )
+(set-face-font 'italic (font-spec :family "JuliaMono" :slant 'italic :weight 'normal))
+(set-face-font 'bold-italic (font-spec :family "JuliaMono" :slant 'italic :weight 'semi-bold))
+(set-fontset-font t 'symbol (font-spec :family "JuliaMono") nil 'append)
+(dolist (charset '(kana han cjk-misc bopomofo))
+ (set-fontset-font t charset (font-spec :family "Noto Sans CJK TC" :weight 'bold :slant 'normal)) )
+(setq face-font-rescale-alist '(("Noto Sans CJK TC" . 1.2)))
+
+(set-face-attribute 'default nil :font (font-spec))
+
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/Documents/org/")
