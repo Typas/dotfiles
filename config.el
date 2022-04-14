@@ -27,22 +27,26 @@
 (setq doom-theme 'doom-solarized-light)
 
 ;; font settings
-(setq doom-font
-                    (font-spec
-                           :family "Fira Code"
-                           :slant 'normal
-                           :weight 'semi-light
-                           :size 13.0
-                           :otf '(DFLT nil (zero ss01 ss02 ss03 ss05 ss08)))
-                    )
-(set-face-font 'italic (font-spec :family "JuliaMono" :slant 'italic :weight 'normal))
-(set-face-font 'bold-italic (font-spec :family "JuliaMono" :slant 'italic :weight 'semi-bold))
-(set-fontset-font t 'symbol (font-spec :family "JuliaMono") nil 'append)
-(dolist (charset '(kana han cjk-misc bopomofo))
- (set-fontset-font t charset (font-spec :family "Noto Sans CJK TC" :weight 'bold :slant 'normal)) )
-(setq face-font-rescale-alist '(("Noto Sans CJK TC" . 1.2)))
+(defun init-cjk-fonts ()
+  (dolist (charset '(kana han cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font)
+                      charset (font-spec :family "Noto Sans CJK TC")))
+  (setq face-font-rescale-alist '(("Noto Sans CJK TC" . 1.2))))
 
-(set-face-attribute 'default nil :font (font-spec))
+(setq doom-font
+      (font-spec
+       :family "Fira Code"
+       :slant 'normal
+       :weight 'semi-light
+       :size 13.0
+       :otf '(DFLT nil (ss01 ss02 ss03 ss05 ss08))))
+
+(setq doom-variable-pitch-font (font-spec :family "Noto Serif CJK TC"))
+
+(add-hook 'doom-init-ui-hook 'init-cjk-fonts)
+
+;; native lazy compilation
+(setq native-comp-deferred-compilation t)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
