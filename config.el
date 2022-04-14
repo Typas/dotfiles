@@ -24,28 +24,33 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-solarized-light)
+(setq doom-theme 'doom-solarized-light
+      ;; doom-themes-enable-bold nil
+      doom-themes-enable-italic nil)
 
 ;; font settings
+(defun init-unicode-fonts ()
+  (set-fontset-font t 'unicode (font-spec :family "JuliaMono") nil 'prepend))
+
 (defun init-cjk-fonts ()
   (dolist (charset '(kana han cjk-misc bopomofo))
     (set-fontset-font (frame-parameter nil 'font)
                       charset (font-spec :family "Noto Sans CJK TC")))
-  (setq face-font-rescale-alist '(("Noto Sans CJK TC" . 1.2))))
+  ;; (setq face-font-rescale-alist '(("Noto Sans CJK TC" . 1.2)))
+  )
 
 (setq doom-font
       (font-spec
-       :family "Fira Code"
-       :slant 'normal
-       :weight 'regular
-       :size 13.0
-       :otf '(DFLT DFLT (ss01 ss02 ss03 ss05 ss08))))
-
-(setq doom-unicode-font (font-spec :family "Noto Sans CJK TC"))
+       :name "Inconsolata" ;; Fira Code again once stylistic sets supported
+       ;; :weight 'semi-light
+       :size 15.0
+       ;; :otf '(opentype nil (ss01 ss02 ss03 ss05 ss08))
+       ))
 
 (setq doom-variable-pitch-font (font-spec :family "Noto Sans CJK TC"))
 
 (add-hook 'doom-init-ui-hook 'init-cjk-fonts)
+(add-hook 'doom-init-ui-hook 'init-unicode-fonts)
 
 ;; native lazy compilation
 (setq native-comp-deferred-compilation t)
