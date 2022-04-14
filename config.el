@@ -37,16 +37,20 @@
       (font-spec
        :family "Fira Code"
        :slant 'normal
-       :weight 'semi-light
+       :weight 'regular
        :size 13.0
-       :otf '(DFLT nil (ss01 ss02 ss03 ss05 ss08))))
+       :otf '(DFLT DFLT (ss01 ss02 ss03 ss05 ss08))))
 
-(setq doom-variable-pitch-font (font-spec :family "Noto Serif CJK TC"))
+(setq doom-unicode-font (font-spec :family "Noto Sans CJK TC"))
+
+(setq doom-variable-pitch-font (font-spec :family "Noto Sans CJK TC"))
 
 (add-hook 'doom-init-ui-hook 'init-cjk-fonts)
 
 ;; native lazy compilation
 (setq native-comp-deferred-compilation t)
+;; i just don't want to see warning anymore
+(setq native-comp-async-report-warnings-errors nil)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
