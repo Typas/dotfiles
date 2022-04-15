@@ -29,28 +29,29 @@
       doom-themes-enable-italic nil)
 
 ;; font settings
-(defun init-unicode-fonts ()
-  (set-fontset-font t 'unicode (font-spec :family "JuliaMono") nil 'prepend))
-
-(defun init-cjk-fonts ()
-  (dolist (charset '(kana han cjk-misc bopomofo))
-    (set-fontset-font (frame-parameter nil 'font)
-                      charset (font-spec :family "Noto Sans CJK TC")))
+(defun init-cjk-fonts () ;; only available for gui
+  (set-fontset-font t 'unicode
+                    (font-spec :family "Noto Sans CJK TC") nil 'prepend)
   ;; (setq face-font-rescale-alist '(("Noto Sans CJK TC" . 1.2)))
   )
 
+(defun init-unicode-fonts ()
+  (set-fontset-font t 'unicode
+                    (font-spec :family "JuliaMono") nil 'prepend))
+
+(add-hook 'doom-init-ui-hook 'init-cjk-fonts)
+(add-hook 'doom-init-ui-hook 'init-unicode-fonts)
+
 (setq doom-font
       (font-spec
-       :name "Inconsolata" ;; Fira Code again once stylistic sets supported
+       :family "Inconsolata" ;; Fira Code again once stylistic sets supported
        ;; :weight 'semi-light
-       :size 15.0
+       :size (cond (IS-MAC 16.0) (IS-LINUX 15.0))
        ;; :otf '(opentype nil (ss01 ss02 ss03 ss05 ss08))
        ))
 
 (setq doom-variable-pitch-font (font-spec :family "Noto Sans CJK TC"))
 
-(add-hook 'doom-init-ui-hook 'init-cjk-fonts)
-(add-hook 'doom-init-ui-hook 'init-unicode-fonts)
 
 ;; native lazy compilation
 (setq native-comp-deferred-compilation t)
