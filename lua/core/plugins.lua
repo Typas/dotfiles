@@ -8,17 +8,18 @@ packer.startup(
     use "wbthomason/packer.nvim"
 
     use {
-      "rmehri01/onenord.nvim",
+      "NTBBloodbath/doom-one.nvim",
       config = function()
-        require("onenord").setup({
-          borders = true,
-          styles = {
-            comments = "italic",
-            strings = "NONE",
-            keywords = "NONE",
-            functions = "NONE",
-            variables = "NONE",
-          },
+        require("doom-one").setup({
+            terminal_colors = false,
+            italic_comments = false,
+            enable_treesitter = true,
+            transparent_background = false,
+            plugins_integrations = {
+              gitsigns = true,
+              telescope = true,
+              whichkey = true,
+            },
         })
       end
     }
@@ -90,7 +91,7 @@ packer.startup(
       "windwp/nvim-autopairs",
       config = function()
         require("nvim-autopairs").setup({
-          -- check_ts = true,
+          check_ts = true,
         })
       end
     }
