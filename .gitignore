@@ -5,3 +5,7 @@ tmp/
 
 custom.el
 .yas-compiled-snippets.el
+
+# universal tags
+.tags/
+.tags

@@ -8,6 +8,10 @@
 (setq user-full-name "Typas Liao"
       user-mail-address "typascake@gmail.com")
 
+(set-file-template! "\\.tex$" :trigger "__tex" :mode 'latex-mode)
+(set-file-template! "/beamer\\.tex$" :trigger "__beamer.tex" :mode 'latex-mode)
+(set-file-template! "\\.gitignore$" :trigger "__" :mode 'gitignore-mode)
+
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -25,11 +29,10 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-solarized-light
-      ;; doom-themes-enable-bold nil
       doom-themes-enable-italic nil)
 
 ;; font settings
-(defun init-cjk-fonts () ;; only available for gui
+(defun init-cjk-fonts ()
   (set-fontset-font t 'unicode
                     (font-spec :family "Noto Sans CJK TC") nil 'prepend)
   ;; (setq face-font-rescale-alist '(("Noto Sans CJK TC" . 1.2)))
@@ -96,6 +99,9 @@
 
 (map! :map evil-normal-state-map
       "q" nil)
+(map! :map evil-insert-state-map
+      "C-p" nil
+      "C-n" nil)
 (map! :leader
       "c c" nil
       "c C" nil)
@@ -104,10 +110,6 @@
       :desc "Recompile" "c C-r" #'recompile
       :desc "Comment region" "c c" #'comment-region
       :desc "Uncomment region" "c u" #'uncomment-region)
-
-(set-file-template! "\\.tex$" :trigger "__tex" :mode 'latex-mode)
-(set-file-template! "/beamer\\.tex$" :trigger "__beamer.tex" :mode 'latex-mode)
-(set-file-template! "\\.gitignore$" :trigger "__" :mode 'gitignore-mode)
 
 (after! org
   (add-to-list 'org-src-lang-modes '("rust" . rustic))
@@ -121,26 +123,18 @@
   (setq lsp-rust-analyzer-proc-macro-enable t))
 
 (after! projectile
-  (add-to-list 'projectile-project-root-files-bottom-up "Cargo.toml")
-  )
-
-
-(after! eglot
-  (setq eldoc-echo-area-use-multiline-p 3
-        eldoc-echo-area-display-truncation-message nil)
-  (add-to-list 'eglot-server-programs
-               '((latex-mode tex-mode context-mode texinfo-mode bibtex-mode) . ("texlab")))
-  )
+  (add-to-list 'projectile-project-root-files-bottom-up "Cargo.toml"))
 
 (use-package! citre
   :defer t
   :init
   (require 'citre-config)
   (map! :leader
-        (:prefix "C-c"
-         :desc "Jump to definition"  "j"  #'citre-jump
+        (:prefix "c"
+         :desc "Jump to definition" "j" #'citre-jump
          :desc "Back to reference" "b" #'citre-jump-back
-         :desc "Peek definition" "p" #'citre-peek
+         :desc "Peek definition" "p" #'citre-peek)
+        (:prefix "p"
          :desc "Update tags file" "u" #'citre-update-this-tags-file)
         )
   (setq citre-project-root-function #'projectile-project-root)
@@ -149,32 +143,24 @@
   (setq citre-prompt-language-for-ctags-command t)
   (setq citre-auto-enable-citre-mode-modes '(prog-mode))
 
-  ;; some copied from https://github.com/universal-ctags/citre/wiki/Use-Citre-together-with-lsp-mode
+  :config
+  (defun company-citre (-command &optional -arg &rest _ignored)
+    "Completion backend of Citre.  Execute COMMAND with ARG and IGNORED."
+    (interactive (list 'interactive))
+    (cl-case -command
+      (interactive (company-begin-backend 'company-citre))
+      (prefix (and (bound-and-true-p citre-mode)
+                   (or (citre-get-symbol) 'stop)))
+      (meta (citre-get-property 'signature -arg))
+      (annotation (citre-capf--get-annotation -arg))
+      (candidates (all-completions -arg (citre-capf--get-collection -arg)))
+      (ignore-case (not citre-completion-case-sensitive))))
 
-  (define-advice xref--create-fetcher (:around (-fn &rest -args) fallback)
-    (let ((fetcher (apply -fn -args))
-          (citre-fetcher
-           (let ((xref-backend-functions '(citre-xref-backend t)))
-             (apply -fn -args))))
-      (lambda ()
-        (or (with-demoted-errors "%s, fallback to citre"
-              (funcall fetcher))
-            (funcall citre-fetcher)))))
+  (setq company-backends '((company-capf company-citre :with company-yasnippet :separate)))
+  (setq +lsp-company-backends
+        '(company-yasnippet company-capf company-citre company-files company-dabbrev)))
 
-  (defun lsp-citre-capf-function ()
-    "A capf backend that tries lsp first, then Citre."
-    (let ((lsp-result (lsp-completion-at-point)))
-      (if (and lsp-result
-               (try-completion
-                (buffer-substring (nth 0 lsp-result)
-                                  (nth 1 lsp-result))
-                (nth 2 lsp-result)))
-          lsp-result
-        (citre-completion-at-point))))
+;; some annoying company settings
 
-  (defun enable-lsp-citre-capf-backend ()
-    "Enable the lsp + Citre capf backend in current buffer."
-    (add-hook 'completion-at-point-functions #'lsp-citre-capf-function nil t))
-
-  (add-hook 'citre-mode-hook #'enable-lsp-citre-capf-backend)
-  )
+(after! company
+  (add-to-list 'company-transformers #'delete-dups))
