@@ -2,7 +2,7 @@
 local wezterm = require "wezterm"
 
 local conf_misc = {
-  color_scheme = "Builtin Solarized Light",
+  color_scheme = "OneHalfLight",
   automatically_reload_config = false,
   window_padding = {
     left = 2, right = 2,
