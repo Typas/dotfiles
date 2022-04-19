@@ -1,13 +1,12 @@
 # -*- mode: snippet -*-
-# name: impl_fromstr
-# uuid: impl_fromstr
-# key: implfromstr
+# name: impl FromStr
+# key: impl-from-str
 # --
 impl FromStr for ${1:Type} {
     type Err = ${2:Error};
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        `%`$3
+        $3
         Ok(Self{$0})
     }
 }

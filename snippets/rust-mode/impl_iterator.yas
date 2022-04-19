@@ -1,7 +1,6 @@
 # -*- mode: snippet -*-
-# name: impl_iterator
-# uuid: impl_iterator
-# key: impliter
+# name: impl Iterator
+# key: impl-iter
 # --
 impl Iterator for ${1:Type} {
     type Item = ${2:Type};

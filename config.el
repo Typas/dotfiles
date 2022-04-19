@@ -156,9 +156,9 @@
       (candidates (all-completions -arg (citre-capf--get-collection -arg)))
       (ignore-case (not citre-completion-case-sensitive))))
 
-  (setq company-backends '((company-capf company-citre :with company-yasnippet :separate)))
+  ;; (setq company-backends '((company-capf company-citre :with company-yasnippet :separate)))
   (setq +lsp-company-backends
-        '(company-yasnippet company-capf company-citre company-files company-dabbrev)))
+        '(:separate company-capf company-yasnippet company-citre)))
 
 ;; some annoying company settings
 

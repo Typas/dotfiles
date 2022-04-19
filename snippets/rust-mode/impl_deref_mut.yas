@@ -1,7 +1,6 @@
 # -*- mode: snippet -*-
-# name: impl_deref_mut
-# uuid: implderefmut
-# key: implderefmut
+# name: impl DerefMut
+# key: impl-deref-mut
 # --
 impl std::ops::DerefMut for ${1:Type} {
     type Target = ${2:Type};

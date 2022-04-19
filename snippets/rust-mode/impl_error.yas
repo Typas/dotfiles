@@ -1,7 +1,6 @@
 # -*- mode: snippet -*-
-# name: impl_error
-# uuid: impl_error
-# key: implerror
+# name: impl Error
+# key: impl-error
 # --
 impl std::error::Error for ${1:Type} {
     fn source(&self) -> Option<&(dyn std::error::Error + 'static) {
