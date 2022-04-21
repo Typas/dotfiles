@@ -1,9 +1,15 @@
+/config/nvim/plugin/
+
+# temporary files
 *~
 \#*#
 .DS_Store
 .idea
 *.log
 tmp/
+
+# backup
+*.bak
 
 # universal tags
 .tags/
@@ -20,4 +26,3 @@ _minted-*/
 *.snm
 *.out
 .auctex-auto/
-/config/nvim/plugin/
