@@ -1,0 +1,4 @@
+style = "yas"
+margin = 80
+whitespace_typedefs = true
+indent_submodule = true
