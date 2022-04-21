@@ -20,3 +20,4 @@ _minted-*/
 *.snm
 *.out
 .auctex-auto/
+/config/nvim/plugin/
