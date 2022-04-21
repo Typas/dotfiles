@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: function documentation
+# key: fndoc
+# --
+/**
+ * @brief      ${1:function description}
+ *
+ * @details    ${2:detailed description}
+ *
+ * @param      ${3:parameters description}
+ *
+ * @return     ${4:return type}
+ */
+$0

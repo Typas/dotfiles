@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: #include "..."
+# key: incl
+# condition: (doom-snippets-bolp)
+# --
+#include "${1:local header}"
+$0
