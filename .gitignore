@@ -6,6 +6,8 @@
 !/texmf/tex/latex/
 /texmf/tex/latex/*
 !/texmf/tex/latex/local
+custom.el
+.yas-compiled-snippets.el
 
 # temporary files
 *~

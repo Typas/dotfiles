@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: simple class
+# key: sclass
+# --
+class ${1:Name} {
+public:
+    ${1:$(yas-c++-class-name yas-text)}(); // constructor
+    ${2:virtual ~${1:$(yas-c++-class-name yas-text)}();} // destructor
+    $0
+private:
+};

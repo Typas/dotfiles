@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: find
+# key: find
+# --
+auto snip_pos = std::find(std::begin(${1:container}), std::end($1), ${2:value});
+if (pos != std::($1)) {
+    $0
+}

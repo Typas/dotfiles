@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: code
+# key: code
+# --
+\begin{minted}{${1:lang}}
+  $0
+\end{minted}

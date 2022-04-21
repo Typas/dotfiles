@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Referenced Label
+# key: label
+# --
+[${1:Ref label}]: ${2:URL} $3
+$0

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: listing code file
+# key: codef
+# --
+
+\inputminted{${1:lang}}{${2:filename}}
+$0
