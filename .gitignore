@@ -1,4 +1,11 @@
+# program specific
 /config/nvim/plugin/
+/texmf/*
+!/texmf/tex/
+/texmf/tex/*
+!/texmf/tex/latex/
+/texmf/tex/latex/*
+!/texmf/tex/latex/local
 
 # temporary files
 *~
@@ -26,10 +33,3 @@ _minted-*/
 *.snm
 *.out
 .auctex-auto/
-
-/texmf/*
-/texmf/!/tex/
-/texmf/tex/*
-/texmf/!/tex/latex/
-/texmf/tex/latex/*
-/texmf/!/tex/latex/local
