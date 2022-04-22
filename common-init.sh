@@ -37,13 +37,13 @@ echo "texmf/ sync"
 #######################
 mkdir -p "$HOME/texmf/tex/latex"
 cd "$HOME/texmf/tex/latex" || exit
-ln -s "$LOCATION/texmf/tex/latex/local" .
+ln -sf "$LOCATION/texmf/tex/latex/local" .
 cd "$LOCATION" || exit
 
 echo "doom.d/ sync"
 ##########################
 cd "$HOME" || exit
-ln -s "$LOCATION/doom.d" ".doom.d"
+ln -sf "$LOCATION/doom.d" ".doom.d"
 cd "$LOCATION" || exit
 
 echo "doom emacs installation"
