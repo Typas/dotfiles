@@ -19,7 +19,7 @@ echo "home directory sync"
 cd "$HOME" || exit
 for f in "$LOCATION/home/".*
 do
-    ln -s "$f" .
+    ln -sf "$f" .
 done
 cd "$LOCATION" || exit
 
@@ -29,7 +29,7 @@ mkdir -p "$HOME/.config"
 cd "$HOME/.config" || exit
 for d in "$LOCATION/config/"*/
 do
-    ln -s "$d" .
+    ln -sf "$d" .
 done
 cd "$LOCATION" || exit
 
@@ -50,4 +50,4 @@ echo "doom emacs installation"
 ##############################
 git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
 "$HOME/.emacs.d/bin/doom" install
-
+"$HOME/.emacs.d/bin/doom" sync
