@@ -4,6 +4,9 @@ LOCATION=$(pwd)
 # fedora-specific
 bash "$LOCATION/rust-analyzer-linux-update.sh"
 
-sudo dnf -y install "$(cat "$LOCATION/package.list")"
+while read -r line
+do
+sudo dnf install "$line"
+done < "$LOCATION/package.list"
 
 bash "$LOCATION/common-init.sh"
