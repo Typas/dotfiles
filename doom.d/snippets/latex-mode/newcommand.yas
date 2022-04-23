@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: new command
-# key: cmd
-# --
-\newcommand{\\${1:cmd_name}}${2:[${3:0}]}{$0}
