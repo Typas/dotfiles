@@ -32,22 +32,3 @@ do
     ln -sf "$d" .
 done
 cd "$LOCATION" || exit
-
-echo "texmf/ sync"
-#######################
-mkdir -p "$HOME/texmf/tex/latex"
-cd "$HOME/texmf/tex/latex" || exit
-ln -sf "$LOCATION/texmf/tex/latex/local" .
-cd "$LOCATION" || exit
-
-echo "doom.d/ sync"
-##########################
-cd "$HOME" || exit
-ln -sf "$LOCATION/doom.d" ".doom.d"
-cd "$LOCATION" || exit
-
-echo "doom emacs installation"
-##############################
-git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
-"$HOME/.emacs.d/bin/doom" install
-"$HOME/.emacs.d/bin/doom" sync

@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: Referenced Image
-# key: img
-# --
-![${1:Alt Text}][${2: Ref Label}] $0

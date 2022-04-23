@@ -1,7 +1,6 @@
 cargo-update
 bat
 exa
-dust
-fd
 ripgrep
 zoxide
+du-dust

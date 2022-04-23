@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: #include <...>
-# key: incs
-# condition: (doom-snippets-bolp)
-# --
-#include <${1:header}>
-$0

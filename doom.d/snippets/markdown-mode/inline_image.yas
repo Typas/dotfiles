@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: Inline Image Link
-# key: inimg
-# --
-![$1](${2:URL} $3) $0
