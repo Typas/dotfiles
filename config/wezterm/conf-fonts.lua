@@ -37,7 +37,7 @@ local function julia_mono(weight, style)
   font.weight = weight or "Regular"
   font.stretch = "SemiCondensed" -- hope one day this will happen
   font.style = style or "Normal"
-  font.harfbuzz_features = {"ss01", "ss03", "ss06", "ss08"}
+  font.harfbuzz_features = {"ss01", "ss03", "ss06", "ss08", "zero"}
 
   return font
 end
