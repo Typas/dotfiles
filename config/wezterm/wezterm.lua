@@ -9,6 +9,10 @@ local conf_misc = {
     left = 2, right = 2,
     top = 2, bottom = 2,
   },
+  keys = {
+    {key="F11", action=wezterm.action.ToggleFullScreen},
+    {key="Enter", mods="ALT", action=wezterm.action.DisableDefaultAssignment},
+  },
 
   -- Never hold on close
   exit_behavior = "Close",
