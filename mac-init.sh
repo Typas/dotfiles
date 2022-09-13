@@ -12,7 +12,7 @@ brew install emacs-plus --with-native-comp --with-memeplex-slim-icon
 
 while read -r line
 do
-    brew install "$line"
+    brew install -y "$line"
 done < "$LOCATION/package.list"
 
 bash "$LOCATION/common-init.sh"
