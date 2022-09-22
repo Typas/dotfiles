@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 LOCATION=$(pwd)
 
+echo "rust-analyzer installation"
+#################################
+bash "$LOCATION/rust-analyzer-linux-update.sh"
+
 echo "common installation"
 ##########################
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+if ! command -v rustup &> /dev/null; then
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+fi
 curl -fsSL https://git.io/zinit-install | sh
 chsh -s "$(which zsh)"
 
