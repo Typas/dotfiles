@@ -2,7 +2,6 @@
 LOCATION=$(pwd)
 
 # fedora-specific
-bash "$LOCATION/rust-analyzer-linux-update.sh"
 
 while read -r line
 do
