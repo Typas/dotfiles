@@ -17,6 +17,7 @@ echo "install cargo packages"
 #############################
 while read -r line
 do
+    echo "Installing $line..."
     "$HOME/.cargo/bin/cargo" install "$line"
 done < "$LOCATION/cargo.list"
 
@@ -25,6 +26,7 @@ echo "home directory sync"
 cd "$HOME" || exit
 for f in "$LOCATION/home/".*
 do
+    echo "Linking $f"
     ln -sf "$f" .
 done
 cd "$LOCATION" || exit
@@ -35,6 +37,7 @@ mkdir -p "$HOME/.config"
 cd "$HOME/.config" || exit
 for d in "$LOCATION/config/"*/
 do
+    echo "Linking $d"
     ln -sf "$d" .
 done
 cd "$LOCATION" || exit
