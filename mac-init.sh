@@ -13,13 +13,16 @@ fi
 
 while read -r line
 do
+    echo "installing $line..."
     brew install "$line"
 done < "$LOCATION/package.list"
 
 # common
+echo "common initialization"
 bash "$LOCATION/common-init.sh"
 
 # mac-specific
+echo "installing emacs"
 if true; then
     brew tap d12frosted/emacs-plus
     brew install emacs-plus --with-native-comp --with-memeplex-slim-icon
