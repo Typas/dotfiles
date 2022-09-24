@@ -14,6 +14,9 @@ local conf_misc = {
     {key="Enter", mods="ALT", action=wezterm.action.DisableDefaultAssignment},
   },
 
+  -- Update, 2 week check
+  check_for_updates_interval_seconds = 1209600,
+
   -- Never hold on close
   exit_behavior = "Close",
 }
