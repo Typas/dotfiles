@@ -81,6 +81,3 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
-# always the last, fk `zle-line-pre-redraw`
-bindkey -d
