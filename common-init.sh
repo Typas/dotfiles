@@ -9,6 +9,8 @@ echo "common installation"
 ##########################
 if ! command -v rustup &> /dev/null; then
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+else
+    rustup update
 fi
 curl -fsSL https://git.io/zinit-install | sh
 chsh -s "$(which zsh)"
