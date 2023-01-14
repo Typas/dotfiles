@@ -16,7 +16,7 @@ local function fira_code(weight)
   font.family = "Fira Code" -- no longer use retina weight
   font.weight = weight or "Regular"
   font.stretch = "SemiCondensed" -- hope one day this will happen
-  font.harfbuzz_features = {"ss01", "ss02", "ss03", "ss05", "ss08"}
+  font.harfbuzz_features = {"ss01", "ss03", "ss05"}
 
   return font
 end
@@ -37,7 +37,7 @@ local function julia_mono(weight, style)
   font.weight = weight or "Regular"
   font.stretch = "SemiCondensed" -- hope one day this will happen
   font.style = style or "Normal"
-  font.harfbuzz_features = {"ss01", "ss03", "ss06", "ss08", "zero"}
+  font.harfbuzz_features = {"cv01", "ss05", "zero"}
 
   return font
 end
