@@ -9,7 +9,7 @@ export OSH="$HOME/.oh-my-bash"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-bash is loaded.
-OSH_THEME="simple"
+export OSH_THEME="simple"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -19,7 +19,7 @@ OSH_THEME="simple"
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="true"
+export DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_OSH_DAYS=13
@@ -28,7 +28,7 @@ DISABLE_AUTO_UPDATE="true"
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
-DISABLE_AUTO_TITLE="true"
+export DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
@@ -62,13 +62,13 @@ DISABLE_AUTO_TITLE="true"
 
 # To disable the uses of "sudo" by oh-my-bash, please set "false" to
 # this variable.  The default behavior for the empty value is "true".
-OMB_USE_SUDO=true
+export OMB_USE_SUDO=true
 
 # Which completions would you like to load? (completions can be found in ~/.oh-my-bash/completions/*)
 # Custom completions may be added to ~/.oh-my-bash/custom/completions/
 # Example format: completions=(ssh git bundler gem pip pip3)
 # Add wisely, as too many completions slow down shell startup.
-completions=(
+export completions=(
   git
   composer
   ssh
@@ -78,7 +78,7 @@ completions=(
 # Custom aliases may be added to ~/.oh-my-bash/custom/aliases/
 # Example format: aliases=(vagrant composer git-avh)
 # Add wisely, as too many aliases slow down shell startup.
-aliases=(
+export aliases=(
   general
 )
 
@@ -86,7 +86,7 @@ aliases=(
 # Custom plugins may be added to ~/.oh-my-bash/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
+export plugins=(
   git
   bashmarks
 )
@@ -129,14 +129,29 @@ source "$OSH"/oh-my-bash.sh
 # alias ohmybash="nvim ~/.oh-my-bash"
 
 # User specific environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+if ! [[ "$PATH" =~ $HOME/.local/bin:$HOME/bin: ]]
 then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
 export PATH
 
-. "$HOME/.cargo/env"
+source "$HOME/.cargo/env"
 
-[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
+[ -f "$HOME"/.ghcup/env ] && source "$HOME"/.ghcup/env # ghcup-env
 
-[ -f "$HOME/.alias" ] && source "$HOME/.alias"
+[ -f "$HOME"/.alias ] && source "$HOME"/.alias
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+case ":$PATH:" in
+    *:"$HOME"/.juliaup/bin:*)
+        ;;
+
+    *)
+        export PATH=$HOME/.juliaup/bin${PATH:+:${PATH}}
+        ;;
+esac
+
+# <<< juliaup initialize <<<

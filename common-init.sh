@@ -8,10 +8,17 @@ bash "$LOCATION/rust-analyzer-linux-update.sh"
 echo "common installation"
 ##########################
 if ! command -v rustup &> /dev/null; then
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 else
     rustup update
 fi
+
+if ! command -v juliaup &> /dev/null; then
+    curl -fsSL https://install.julialang.org | sh -s -- -y
+else
+    juliaup update
+fi
+
 # curl -fsSL https://git.io/zinit-install | sh
 # chsh -s "$(which zsh)"
 if [ ! -d "$HOME/.oh-my-bash" ]
