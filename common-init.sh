@@ -12,8 +12,13 @@ if ! command -v rustup &> /dev/null; then
 else
     rustup update
 fi
-curl -fsSL https://git.io/zinit-install | sh
-chsh -s "$(which zsh)"
+# curl -fsSL https://git.io/zinit-install | sh
+# chsh -s "$(which zsh)"
+if [ ! -d "$HOME/.oh-my-bash" ]
+then
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+    chsh -s "$(which bash)"
+fi
 
 echo "install cargo packages"
 #############################
