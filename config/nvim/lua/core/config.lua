@@ -2,7 +2,7 @@ vim.g.coq_settings = {
   auto_start = "shut-up",
   clients = {
     lsp = {
-      enabled = false,
+      enabled = true,
     },
     snippets = {
       enabled = false,

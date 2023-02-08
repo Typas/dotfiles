@@ -1,103 +1,113 @@
 ---@diagnostic disable: undefined-global
--- https://github.com/wbthomason/packer.nvim
+-- https://github.com/folke/lazy.nvim
 
-local packer = require("packer")
-packer.startup(
-{
-  function()
-    use "wbthomason/packer.nvim"
+return {
+  {
+    "navarasu/onedark.nvim",
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
+    opts = {
+      style = "light",
+      term_colors = false,
+    },
+    config = function()
+      vim.cmd([[colorscheme onedark]])
+    end
+  },
 
-    use {
-      "NTBBloodbath/doom-one.nvim",
-      config = function()
-        require("doom-one").setup({
-            terminal_colors = false,
-            italic_comments = false,
-            enable_treesitter = true,
-            transparent_background = false,
-            plugins_integrations = {
-              gitsigns = true,
-              telescope = true,
-              whichkey = true,
-            },
-        })
-      end
-    }
+  {
+    "NTBBloodbath/doom-one.nvim",
+    lazy = true,
+    init = function()
+      vim.g.doom_one_cursor_coloring = false
+      vim.g.doom_one_terminal_colors = false
+      vim.g.doom_one_italic_comments = true
+      vim.g.doom_one_enable_treesitter = true
+      vim.g.doom_one_diagnostics_text_color = false
+      vim.g.doom_one_transparent_background = false
+      vim.g.doom_one_plugin_gitsigns = true
+      vim.g.doom_one_plugin_telescope = true
+      vim.g.doom_one_plugin_whichkey = true
+    end,
+  },
 
-    use {
-      "lewis6991/gitsigns.nvim",
-      config = function()
-        require("gitsigns").setup()
-      end
-    }
+  {
+    "gpanders/editorconfig.nvim",
+    lazy = true,
+  },
 
-    use {
-      "numToStr/Comment.nvim",
-      config = function()
-        require("Comment").setup({
-          mappings = {
-            extra = false,
-          }
-        })
-      end
-    }
+  {
+    "folke/which-key.nvim",
+    lazy = true,
+  },
 
-    use {
-      "nvim-treesitter/nvim-treesitter",
-      run = ":TSUpdate",
-    }
+  {
+    "lewis6991/gitsigns.nvim",
+    lazy = true,
+    config = true,
+  },
 
-    use "gpanders/editorconfig.nvim"
+  {
+    "numToStr/Comment.nvim",
+    lazy = true,
+    opts = {
+      mappings = {
+        extra = false,
+      },
+    },
+  },
 
-    use {
-      "folke/which-key.nvim",
-    }
-    
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+  },
 
-    use {
-      "nvim-telescope/telescope.nvim",
-    }
+  {
+    "nvim-telescope/telescope.nvim",
+    lazy = true,
+  },
 
-    use "nvim-lua/plenary.nvim"
+  {
+    "nvim-lua/plenary.nvim",
+    lazy = true,
+  },
 
-    use {
-      "nvim-lualine/lualine.nvim",
-      requires = { "kyazdani42/nvim-web-devicons", opt = true },
-      config = function()
-        require("lualine").setup({
-          options = {
-            theme = "onelight",
-            icons_enabled = false,
-            component_separators = {left = "|", right = "|"},
-            section_separators = {left = "", right = ""},
-          },
-          sections = {
-            lualine_a = {{
-              "mode",
-              fmt = function(str)
-                return str:sub(1, 1)
-              end
-            }},
-          },
-        })
-      end
-    }
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = {
+      {
+        "kyazdani42/nvim-web-devicons",
+        lazy = true,
+      },
+    },
+    opts = {
+      options = {
+        theme = "onelight",
+        icons_enabled = false,
+        component_separators = {left = "|", right = "|"},
+        section_separators = {left = "", right = ""},
+      },
+      sections = {
+        lualine_a = {{
+            "mode",
+            fmt = function(str)
+              return str:sub(1, 1)
+            end
+        }},
+      },
+    },
+  },
 
-    use {
-      "ms-jpq/coq_nvim",
-    }
+  {
+    "ms-jpq/coq_nvim",
+    lazy = true,
+  },
 
-    use {
-      "windwp/nvim-autopairs",
-      config = function()
-        require("nvim-autopairs").setup({
-          check_ts = true,
-        })
-      end
-    }
-
-  end
+  {
+    "windwp/nvim-autopairs",
+    lazy = true,
+    opts = {
+      check_ts = true,
+    },
+  },
 }
-)
-
-return packer
