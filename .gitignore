@@ -1,5 +1,6 @@
 # program specific
 /config/nvim/plugin/
+/config/nvim/lazy-lock.json
 /texmf/*
 !/texmf/tex/
 /texmf/tex/*

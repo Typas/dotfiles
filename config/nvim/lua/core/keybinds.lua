@@ -10,17 +10,10 @@ vim.keybinds = {
   opts = {noremap = true},
 }
 
-vim.keybinds.gmap("n", "<ESC>", ":nohlsearch<CR>", vim.keybinds.opts)
-
 -- map keybinds to fit doom emacs
 vim.keybinds.gmap("n", "<leader>wv", ":vsp<CR>", vim.keybinds.opts)
 vim.keybinds.gmap("n", "<leader>ws", ":sp<CR>", vim.keybinds.opts)
 vim.keybinds.gmap("n", "<leader>w", "<C-w>", vim.keybinds.opts)
-
--- packer commands
-vim.keybinds.gmap("n", "<leader>pc", ":PackerCompile<CR>", vim.keybinds.opts)
-vim.keybinds.gmap("n", "<leader>pu", ":PackerUpdate<CR>", vim.keybinds.opts)
-vim.keybinds.gmap("n", "<leader>ps", ":PackerSync<CR>", vim.keybinds.opts)
 
 -- telescope commands
 vim.keybinds.gmap("n", "<leader>ff", ":Telescope find_files<CR>", vim.keybinds.opts)
