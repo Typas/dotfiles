@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 LOCATION=$(pwd)
 
-echo "rust-analyzer installation"
-#################################
-bash "$LOCATION/rust-analyzer-linux-update.sh"
-
 echo "common installation"
 ##########################
 if ! command -v rustup &> /dev/null; then
@@ -17,6 +13,12 @@ if ! command -v juliaup &> /dev/null; then
     curl -fsSL https://install.julialang.org | sh -s -- -y
 else
     juliaup update
+fi
+
+if ! command -v ghcup &> /dev/null; then
+    curl --proto '=https' --tlsv1.2 -sSf https://get-getup.haskell.org | sh -s -- -y
+else
+    ghcup upgrade
 fi
 
 # curl -fsSL https://git.io/zinit-install | sh
@@ -56,5 +58,3 @@ do
 done
 cd "$LOCATION" || exit
 
-echo "install packer.nvim"
-git clone --depth 1 https://github.com/wbthomason/packer.nvim "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim"
