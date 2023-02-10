@@ -1,12 +1,19 @@
 #!/usr/bin/env zsh
 LOCATION=$(pwd)
 
-# install homebrew
+# mac-specific
+echo "installing homebrew"
 if ! command -v brew &> /dev/null; then
     curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash
 fi
 
-# mac-specific
+echo "installing wezterm"
+if ! command -v wezterm &> /dev/null; then
+    brew tap wez/wezterm
+    brew install --cask wez/wezterm/wezterm
+fi
+
+echo "installing wget"
 if ! command -v wget &> /dev/null; then
     brew install wget
 fi
