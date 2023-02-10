@@ -21,9 +21,15 @@ done < "$LOCATION/package.list"
 echo "common initialization"
 bash "$LOCATION/common-init.sh"
 
+echo "installing rust-analyzer"
+brew install rust-analyzer
+
 # mac-specific
 echo "installing emacs"
 if true; then
     brew tap d12frosted/emacs-plus
-    brew install emacs-plus --with-native-comp --with-memeplex-slim-icon
+    brew install emacs-plus\
+        --with-native-comp\
+        --with-memeplex-slim-icon\
+        --with-imagemagick
 fi
