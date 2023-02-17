@@ -30,6 +30,15 @@ local function noto_cjk(weight)
   }
 end
 
+local function lxgw(weight)
+  return {
+    family = "LXGW WenKai Mono TC",
+    weight = weight or "Regular",
+    style = "Normal",
+    scale = 1.2, -- matches width
+  }
+end
+
 local function julia_mono(weight, style)
   local font = {}
 
@@ -54,6 +63,7 @@ conf.font_rules = {
     intensity = "Bold",
     font = wezterm.font_with_fallback({
         julia_mono("DemiBold", "Italic"),
+        lxgw("Bold"),
         noto_cjk("Bold"),
     }),
   },
@@ -62,6 +72,7 @@ conf.font_rules = {
     intensity = "Half",
     font = wezterm.font_with_fallback({
         julia_mono("Light", "Italic"),
+        lxgw("Light"),
         noto_cjk("Thin"),
     }),
   },
@@ -69,6 +80,7 @@ conf.font_rules = {
     italic = true,
     font = wezterm.font_with_fallback({
         julia_mono("Regular", "Italic"),
+        lxgw(),
         noto_cjk(),
     }),
   },
