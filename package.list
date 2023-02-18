@@ -1,6 +1,7 @@
 gcc
 cmake
 git
+curl
 openssh
 zsh
 duf
