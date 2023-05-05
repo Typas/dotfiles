@@ -4,7 +4,7 @@ local wezterm = require "wezterm"
 local conf_misc = {
   color_scheme = "OneHalfLight",
   automatically_reload_config = false,
-  custome_block_glyphs = false,
+  custom_block_glyphs = false,
   window_padding = {
     left = 2, right = 2,
     top = 2, bottom = 2,
