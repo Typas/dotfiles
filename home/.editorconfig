@@ -7,13 +7,13 @@ insert_final_newline = true
 charset = utf-8
 
 # 4 space indentation
-[*.{py,rs,c,cpp,h,v,jl,hh,hpp,cc}]
+[*.{py,rs,c,cpp,h,v,jl,hh,hpp,cc,java}]
 indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
 
 # 2 space indentation
-[*.{toml,yaml, lua}]
+[*.{toml,yaml,lua}]
 indent_style = space
 indent_size = 2
 

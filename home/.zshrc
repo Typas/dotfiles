@@ -63,6 +63,11 @@ fi
 
 # alias
 alias nv="nvim"
+alias oldls="ls"
+alias ls="exa"
+alias ll="exa -l"
+alias lla="exa -al"
+alias la="exa -a"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
