@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 LOCATION=$(pwd)
 
-# fedora-specific
+# opensuse-specific
 echo "system package installations"
-sudo dnf install -y "$(cat "$LOCATION"/package.list)"
-sudo dnf install -y fd-find emacs texlive-xetex
+sudo zypper in -n "$(cat "$LOCATION"/package.list)"
+sudo zypper in -n fd dust emacs texlive-xetex
 
 echo "flatpak installations"
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo

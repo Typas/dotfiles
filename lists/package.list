@@ -1,12 +1,14 @@
 gcc
+clang
 cmake
 git
 curl
 openssh
-zsh
 duf
 fzf
 editorconfig
 neovim
 fontconfig
 p7zip
+hyperfine
+procs
