@@ -16,6 +16,16 @@ then
     go install golang.org/x/tools/gopls@latest
 fi
 
+if command -v ghcup > /dev/null && ! ghcup whereis hls > /dev/null 2> /dev/null
+then
+    ghcup install hls
+fi
+
 # python - pyright?, but should be auto installed
+# use pip show to check
 
 # bash-language-server - install via npm, should be auto installed
+if command -v npm > /dev/null && ! npm view bash-language-server > /dev/null 2> /dev/null
+then
+    npm i -g bash-language-server
+fi
