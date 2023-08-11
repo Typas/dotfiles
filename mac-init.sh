@@ -28,9 +28,9 @@ echo "installing emacs"
 if true; then
     brew tap d12frosted/emacs-plus
     brew install emacs-plus\
-        --with-native-comp\
         --with-memeplex-slim-icon\
-        --with-imagemagick
+        --with-imagemagick\
+        # --with-native-comp
 fi
 
 echo "shell initialization"
