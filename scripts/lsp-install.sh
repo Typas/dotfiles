@@ -23,6 +23,12 @@ fi
 
 # python - pyright?, but should be auto installed
 # use pip show to check
+if command -v pip3 > /dev/null && ! pip3 show pyright > /dev/null 2> /dev/null
+then
+    pip3 install pyright
+fi
+
+
 
 # bash-language-server - install via npm, should be auto installed
 if command -v npm > /dev/null && ! npm view bash-language-server > /dev/null 2> /dev/null
