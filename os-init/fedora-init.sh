@@ -14,6 +14,7 @@ error_exit() {
 cd "$S_LOC" || error_exit
 
 echo "system package installations"
+sudo dnf update
 sudo dnf install -y "$(cat "$D_LOC"/lists/package.list)"
 sudo dnf install -y fd-find emacs texlive-xetex
 
