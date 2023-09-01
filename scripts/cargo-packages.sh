@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+PACKAGES=""
 echo "install cargo packages"
 
 # do nothing if cargo doesn't exist
@@ -8,7 +9,9 @@ if ! command -v cargo > /dev/null; then
 fi
 
 # always install, since I don't know how to check
-PACKAGES="cargo-update"
+if ! cargo install --list | grep cargo-update > /dev/null; then
+    PACKAGES+=" cargo-update"
+fi
 
 if ! command -v bat > /dev/null; then
     PACKAGES+=" bat"
@@ -38,4 +41,7 @@ if ! command -v texlab > /dev/null; then
     PACKAGES+=" texlab"
 fi
 
-cargo install "$PACKAGES"
+if [ "$PACKAGES" ]; then
+    echo "install $PACKAGES"
+    cargo install "$PACKAGES"
+fi

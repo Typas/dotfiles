@@ -1,4 +1,5 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
+S_LOC=$(cd -- "$(dirname -- "{BASH_SOURCE[0]}")" &> /dev/null && pwd)
 
 # clangd should be installed with clang
 
@@ -8,7 +9,7 @@ then
 fi
 
 if command -v julia > /dev/null; then
-    julia "$LOCATION"/scripts/install-lsp-julia.jl
+    julia "$S_LOC"/install-lsp-julia.jl
 fi
 
 if command -v go > /dev/null && ! command -v gopls > /dev/null
