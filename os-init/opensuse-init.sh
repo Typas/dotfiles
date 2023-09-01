@@ -14,6 +14,7 @@ error_exit() {
 cd "$S_LOC" || error_exit
 
 echo "system package installations"
+sudo zypper ref
 sudo zypper in -y "$(cat "$D_LOC"/lists/package.list)"
 sudo zypper in -y fd dust emacs texlive-xetex
 
