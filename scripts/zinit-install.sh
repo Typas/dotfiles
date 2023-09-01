@@ -14,6 +14,9 @@ fi
 zsh -c "$(zinit self-update)"
 
 cd "$HOME" || error_exit
-ln -sf "$S_LOC"/../settings-zsh/.* .
+for setting in "$S_LOC"/../settings-zsh/.*
+do
+    ln -sf $setting .
+done
 
 cd "$LOC" || error_exit
