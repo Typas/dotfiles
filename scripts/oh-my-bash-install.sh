@@ -14,6 +14,9 @@ then
 fi
 
 cd "$HOME" || error_exit
-ln -sf "$S_LOC"/../settings-bash/.* .
+for setting in "$S_LOC"/../settings-bash/.*
+do
+    ln -sf $setting .
+done
 
 cd "$LOC" || error_exit

@@ -1,5 +1,4 @@
 gcc
-clang
 cmake
 git
 curl

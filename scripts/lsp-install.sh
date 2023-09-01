@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# dotfiles location
 S_LOC=$(cd -- "$(dirname -- "{BASH_SOURCE[0]}")" &> /dev/null && pwd)
 
 # clangd should be installed with clang
@@ -28,8 +29,6 @@ if command -v pip3 > /dev/null && ! pip3 show pyright > /dev/null 2> /dev/null
 then
     pip3 install pyright
 fi
-
-
 
 # bash-language-server - install via npm, should be auto installed
 if command -v npm > /dev/null && ! npm view bash-language-server > /dev/null 2> /dev/null
