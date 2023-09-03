@@ -1,0 +1,4 @@
+TypasMonoCJKtc-Bold.ttf
+TypasMonoCJKtc-BoldItalic.ttf
+TypasMonoCJKtc-Italic.ttf
+TypasMonoCJKtc-Regular.ttf

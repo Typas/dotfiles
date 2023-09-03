@@ -2,7 +2,7 @@
 LOC=$(pwd)
 # dotfiles location
 S_LOC=$(cd -- "$(dirname -- "{BASH_SOURCE[0]}")" &> /dev/null && pwd)
-D_LOC="$S_LOC"/../
+D_LOC="$S_LOC"/..
 
 error_exit() {
     echo "something's wrong in common-init, exiting"
@@ -18,6 +18,11 @@ bash rust-install.sh || error_exit
 # always the last
 bash cargo-packages.sh || error_exit
 bash lsp-install.sh || error_exit
+
+echo "fonts installation"
+#########################
+cd "$D_LOC/fonts" || error_exit
+bash font-install-all.sh
 
 echo "home directory sync"
 ##########################

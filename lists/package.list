@@ -11,3 +11,4 @@ fontconfig
 p7zip
 hyperfine
 procs
+wget
