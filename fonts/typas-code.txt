@@ -1,0 +1,10 @@
+TypasCode-Bold.ttf
+TypasCode-BoldItalic.ttf
+TypasCode-Italic.ttf
+TypasCode-Light.ttf
+TypasCode-LightItalic.ttf
+TypasCode-Medium.ttf
+TypasCode-MediumItalic.ttf
+TypasCode-Regular.ttf
+TypasCode-SemiBold.ttf
+TypasCode-SemiBoldItalic.ttf
