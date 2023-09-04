@@ -10,30 +10,43 @@ error_exit() {
     exit 1
 }
 
+prompt() {
+    local available=$(($(tput cols) - ${#1} - 2))
+    local left=$(($available / 2))
+    local right=$(($available - $left))
+
+    test $left -gt 0 && printf -- "=%.0s" $(seq 1 $left)
+    printf " %s " "$1"
+    test $right -gt 0 && printf -- "=%.0s" $(seq 1 $right)
+    echo ""
+}
+
 cd "$S_LOC" || error_exit
 
-echo "installations"
+prompt "installations"
 ####################
 bash rust-install.sh || error_exit
 # always the last
 bash cargo-packages.sh || error_exit
 bash lsp-install.sh || error_exit
 
-echo "fonts installation"
+prompt "fonts installation"
 #########################
 cd "$D_LOC/fonts" || error_exit
 bash font-install-all.sh
 
-echo "home directory sync"
+prompt "home directory sync"
 ##########################
 cd "$HOME" || error_exit
 for f in "$D_LOC/home/".*
 do
-    echo "Linking $f"
-    ln -sf "$f" .
+    if [ "${f##*/}" != "." -a "${f##*/}" != ".." ]; then
+       echo "Linking $f"
+       ln -sf "$f" .
+    fi
 done
 
-echo "config/ sync"
+prompt "config/ sync"
 ###################
 mkdir -p "$HOME/.config"
 cd "$HOME/.config" || error_exit
