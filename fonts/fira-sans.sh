@@ -2,7 +2,7 @@
 
 FONTFILES=($(cat fira-sans.txt))
 TMPPATH=/tmp/FiraSans
-URL="https://github.com/bBoxType/FiraSans.git"
+URL="https://bboxtype.com/downloads/Fira/Download_Folder_FiraSans_4301.zip"
 ZIPFILE="${URL##*/}"
 FONTNAME="Fira Sans"
 
@@ -17,11 +17,11 @@ if [ $# -ne 1 ]; then
 fi
 
 download() {
-    git clone --depth=1 $URL $TMPPATH || error_exit
+    wget -P /tmp "$URL" || error_exit
 }
 
 extract() {
-    :
+    unzip -d "$TMPPATH" "/tmp/$ZIPFILE" || error_exit
 }
 
 install_font() {
