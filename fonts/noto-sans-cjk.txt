@@ -1,1 +1,1 @@
-NotoSansCJK.ttc
+NotoSansCJK-VF.otf.ttc
