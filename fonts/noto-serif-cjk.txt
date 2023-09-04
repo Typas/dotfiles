@@ -1,1 +1,1 @@
-NotoSerifCJK.ttc
+NotoSerifCJK-VF.otf.ttc
