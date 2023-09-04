@@ -8,13 +8,23 @@ error_exit() {
     exit 1
 }
 
-echo "system package installations"
-PACKAGES="fd-find emacs texlive-xetex clang "
-PACKAGES+=$(cat "$D_LOC"/lists/package.list)
-PACKAGES=$(echo "$PACKAGES" | tr " " "\n")
+prompt() {
+    local available=$(($(tput cols) - ${#1} - 2))
+    local left=$(($available / 2))
+    local right=$(($available - $left))
+
+    test $left -gt 0 && printf -- "=%.0s" $(seq 1 $left)
+    printf " %s " "$1"
+    test $right -gt 0 && printf -- "=%.0s" $(seq 1 $right)
+    echo ""
+}
+
+prompt "system package installations"
+PACKAGES=(fd-find emacs texlive-xetex clang)
+PACKAGES+=($(cat "$D_LOC"/lists/package.list))
 sudo dnf update
 sudo dnf install -y "$PACKAGES"
 
-echo "flatpak installations"
+prompt "flatpak installations"
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak install flathub org.wezfurlong.wezterm

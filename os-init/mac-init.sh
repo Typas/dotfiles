@@ -8,17 +8,28 @@ error_exit() {
     exit 1
 }
 
-echo "installing homebrew"
+prompt() {
+    local available=$(($(tput cols) - ${#1} - 2))
+    local left=$(($available / 2))
+    local right=$(($available - $left))
+
+    test $left -gt 0 && printf -- "=%.0s" $(seq 1 $left)
+    printf " %s " "$1"
+    test $right -gt 0 && printf -- "=%.0s" $(seq 1 $right)
+    echo ""
+}
+
+prompt "installing homebrew"
 if ! command -v brew > /dev/null; then
     curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash
 else
     echo "homebrew is already installed"
 fi
 
-echo "updating homebrew"
+prompt "updating homebrew"
 brew update
 
-echo "installing wezterm"
+prompt "installing wezterm"
 if ! command -v wezterm > /dev/null; then
     brew tap wez/wezterm
     brew install --cask wez/wezterm/wezterm
@@ -26,10 +37,9 @@ else
     echo "wezterm is already installed"
 fi
 
-echo "installing packages"
-PACKAGES="wget fd dust "
-PACKAGES+=$(cat "$D_LOC"/lists/package.list)
-PACKAGES=($(echo "$PACKAGES" | tr " " "\n"))
+prompt "installing packages"
+PACKAGES=(wget fd dust)
+PACKAGES+=($(cat "$D_LOC"/lists/package.list))
 for item in "${PACKAGES[@]}"
 do
     echo "checking $item, might be really slow"
@@ -38,7 +48,7 @@ do
     fi
 done
 
-echo "installing emacs"
+prompt "installing emacs"
 if ! brew ls --versions emacs-plus > /dev/null ; then
     brew tap d12frosted/emacs-plus
     brew install emacs-plus\
