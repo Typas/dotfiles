@@ -2,7 +2,7 @@
 
 FONTFILES=($(cat juliamono.txt))
 TMPPATH=/tmp/JuliaMono
-URL="https://github.com/cormullion/juliamono/releases/download/v0.050/JuliaMono-ttf.zip"
+URL="https://github.com/cormullion/juliamono/releases/latest/download/JuliaMono-ttf.zip"
 ZIPFILE="${URL##*/}"
 FONTNAME="JuliaMono"
 
@@ -43,7 +43,10 @@ install_font() {
 
 remove_font() {
     if fc-list | grep -i "$FONTNAME" > /dev/null; then
-        rm -fv $(fc-list | grep -i "$FONTNAME" | awk -F ":" '{print $1}')
+        for ff in ${FONTFILES[@]}; do
+            fontpath=$(find "$TMPPATH" -name "$ff")
+            bash remove-font-file.sh  "$fontpath" || error_exit
+        done
         fc-cache -f
         echo "removed $FONTNAME"
     else

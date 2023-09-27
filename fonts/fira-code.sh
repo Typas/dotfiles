@@ -2,7 +2,7 @@
 
 FONTFILES=($(cat fira-code.txt))
 TMPPATH=/tmp/FiraCode
-URL="https://github.com/tonsky/FiraCode/releases/latest/download/Fira_Code_v6.2.zip"
+URL="https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip"
 ZIPFILE="${URL##*/}"
 FONTNAME="Fira Code"
 
@@ -43,7 +43,10 @@ install_font() {
 
 remove_font() {
     if fc-list | grep -i "$FONTNAME" > /dev/null; then
-        rm -fv $(fc-list | grep -i "$FONTNAME" | awk -F ":" '{print $1}')
+        for ff in ${FONTFILES[@]}; do
+            fontpath=$(find "$TMPPATH" -name "$ff")
+            bash remove-font-file.sh  "$fontpath" || error_exit
+        done
         fc-cache -f
         echo "removed $FONTNAME"
     else
