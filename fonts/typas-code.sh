@@ -43,7 +43,10 @@ install_font() {
 
 remove_font() {
     if fc-list | grep -i "$FONTNAME" > /dev/null; then
-        rm -fv $(fc-list | grep -i "$FONTNAME" | awk -F ":" '{print $1}')
+        for ff in ${FONTFILES[@]}; do
+            fontpath=$(find "$TMPPATH" -name "$ff")
+            bash remove-font-file.sh  "$fontpath" || error_exit
+        done
         fc-cache -f
         echo "removed $FONTNAME"
     else
