@@ -101,6 +101,7 @@ export plugins=(
 #  fi
 
 source "$OSH"/oh-my-bash.sh
+complete -d cd
 
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
