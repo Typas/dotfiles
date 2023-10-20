@@ -78,11 +78,6 @@ export completions=(
 # Custom aliases may be added to ~/.oh-my-bash/custom/aliases/
 # Example format: aliases=(vagrant composer git-avh)
 # Add wisely, as too many aliases slow down shell startup.
-alias oldls='ls'
-alias ls='eza'
-alias ll="eza -l"
-alias lla="eza -al"
-alias la="eza -a"
 export aliases=(
   general
 )
