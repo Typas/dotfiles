@@ -17,8 +17,8 @@ if ! command -v bat > /dev/null; then
     PACKAGES+=" bat"
 fi
 
-if ! command -v exa > /dev/null; then
-    PACKAGES+=" exa"
+if ! command -v eza > /dev/null; then
+    PACKAGES+=" eza"
 fi
 
 if ! command -v rg > /dev/null; then
