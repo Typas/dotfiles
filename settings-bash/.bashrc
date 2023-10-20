@@ -79,7 +79,10 @@ export completions=(
 # Example format: aliases=(vagrant composer git-avh)
 # Add wisely, as too many aliases slow down shell startup.
 alias oldls='ls'
-alias ls='exa'
+alias ls='eza'
+alias ll="eza -l"
+alias lla="eza -al"
+alias la="eza -a"
 export aliases=(
   general
 )
