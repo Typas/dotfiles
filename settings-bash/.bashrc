@@ -141,7 +141,7 @@ then
 fi
 export PATH
 
-source "$HOME/.cargo/env"
+[ -f "$HOME"/.cargo/env ] && source "$HOME"/.cargo/env
 
 [ -f "$HOME"/.ghcup/env ] && source "$HOME"/.ghcup/env # ghcup-env
 
