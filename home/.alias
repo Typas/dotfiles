@@ -1,1 +1,5 @@
 alias nv="nvim"
+alias ls='eza'
+alias ll="eza -l"
+alias lla="eza -al"
+alias la="eza -a"

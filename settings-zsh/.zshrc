@@ -61,16 +61,11 @@ then
     . "$HOME/.profile"
 fi
 
-# alias
-alias nv="nvim"
-alias oldls="ls"
-alias ls="eza"
-alias ll="eza -l"
-alias lla="eza -al"
-alias la="eza -a"
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# alias
+[ -f "$HOME"/.alias ] && source "$HOME"/.alias
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
