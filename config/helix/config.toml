@@ -1,0 +1,41 @@
+theme = "onelight"
+
+[editor]
+middle-click-paste = false
+auto-format = false
+idle-timeout = 300
+completion-replace = false
+bufferline = "never"
+default-line-ending = "lf"
+
+[editor.statusline]
+left = ["mode", "file-name", "file-modification-indicator"]
+center = ["read-only-indicator", "spinner"]
+mode.normal = "N"
+mode.insert = "I"
+mode.select = "S"
+
+[editor.lsp]
+enable = true
+display-messages = false
+auto-signature-help = true
+display-inlay-hints = false
+display-signature-help-docs = true
+snippets = true
+goto-reference-include-declaration = true
+
+[editor.cursor-shape]
+normal = "block"
+insert = "bar"
+select = "block"
+
+[editor.file-picker]
+hidden = false
+
+[editor.whitespace.render]
+tab = "all"
+nbsp = "all"
+
+[editor.soft-wrap]
+enable = true
+wrap-at-text-width = true
