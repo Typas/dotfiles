@@ -1,5 +1,8 @@
 # PATH here to avoid weird thing, .zshenv
 export PATH="$HOME/.local/bin:$PATH"
+if uname -a | grep Darwin > /dev/null; then
+    export PATH="/Library/TeX/texbin:$PATH"
+fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -90,3 +93,7 @@ path=("$HOME"/.juliaup/bin $path)
 export PATH
 
 # <<< juliaup initialize <<<
+
+[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-envexport PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
