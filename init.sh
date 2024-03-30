@@ -36,6 +36,8 @@ case "$OS" in
         zsh os-init/mac-init.sh || error_exit ;;
     fedora | opensuse)
         bash os-init/"$OS"-init.sh || error_exit ;;
+    opensuse-tumbleweed)
+        bash os-init/opensuse-init.sh || error_exit ;;
     *)
         echo "not supported system"
         error_exit
@@ -51,7 +53,7 @@ prompt "shell initialization"
 case "$OS" in
     mac)
         zsh zinit-install.sh || error_exit ;;
-    fedora | opensuse)
+    fedora | opensuse | opensuse-tumbleweed)
         bash oh-my-bash-install.sh || error_exit ;;
 esac
 
