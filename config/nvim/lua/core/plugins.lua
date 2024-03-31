@@ -17,7 +17,7 @@ return {
 
   {
     "NTBBloodbath/doom-one.nvim",
-    lazy = true,
+    lazy = false,
     init = function()
       vim.g.doom_one_cursor_coloring = false
       vim.g.doom_one_terminal_colors = false
@@ -33,23 +33,23 @@ return {
 
   {
     "gpanders/editorconfig.nvim",
-    lazy = true,
+    lazy = false,
   },
 
   {
     "folke/which-key.nvim",
-    lazy = true,
+    lazy = false,
   },
 
   {
     "lewis6991/gitsigns.nvim",
-    lazy = true,
+    lazy = false,
     config = true,
   },
 
   {
     "numToStr/Comment.nvim",
-    lazy = true,
+    lazy = false,
     opts = {
       mappings = {
         extra = false,
@@ -77,7 +77,7 @@ return {
     dependencies = {
       {
         "kyazdani42/nvim-web-devicons",
-        lazy = true,
+        lazy = false,
       },
     },
     opts = {
@@ -100,12 +100,12 @@ return {
 
   {
     "ms-jpq/coq_nvim",
-    lazy = true,
+    lazy = false,
   },
 
   {
     "windwp/nvim-autopairs",
-    lazy = true,
+    lazy = false,
     opts = {
       check_ts = true,
     },
