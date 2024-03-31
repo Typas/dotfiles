@@ -39,9 +39,9 @@ prompt "os-specific initialization"
 case "$OS" in
     mac)
         zsh os-init/mac-init.sh || error_exit ;;
-    fedora | opensuse)
-        bash os-init/"$OS"-init.sh || error_exit ;;
-    opensuse-tumbleweed)
+    fedora)
+        bash os-init/fedora-init.sh || error_exit ;;
+    opensuse*)
         bash os-init/opensuse-init.sh || error_exit ;;
     *)
         echo "not supported system"
@@ -58,7 +58,7 @@ prompt "shell initialization"
 case "$OS" in
     mac)
         zsh zinit-install.sh || error_exit ;;
-    fedora | opensuse | opensuse-tumbleweed)
+    fedora | opensuse*)
         bash oh-my-bash-install.sh || error_exit ;;
 esac
 
