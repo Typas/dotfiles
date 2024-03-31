@@ -23,7 +23,7 @@ prompt "system package installations"
 PACKAGES=(fd dust emacs texlive-xetex clang)
 PACKAGES+=($(cat "$D_LOC"/lists/package.list))
 sudo zypper ref
-sudo zypper in -y "${PACKAGES[@]}"
+sudo zypper in -y ${PACKAGES[@]}
 
 prompt "flatpak installations"
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
