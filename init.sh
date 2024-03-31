@@ -23,11 +23,16 @@ prompt() {
 cd "$D_LOC" || error_exit
 
 # find os name
-if uname -a | grep Darwin > /dev/null; then
-    OS="mac"
-elif uname -a | grep Linux > /dev/null; then
-    OS="$(grep "^ID" /etc/os-release | sed "s/ID=//g")"
-fi
+KERNEL=$(uname -s)
+case $KERNEL in
+    Darwin)
+        OS=mac ;;
+    Linux)
+        OS="$(grep "^ID" /etc/os-release | sed "s/ID=//g")" ;;
+    *)
+        echo "not supported system"
+        error_exit
+esac
 
 prompt "os-specific initialization"
 ###################################
