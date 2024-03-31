@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PACKAGES=""
+CARGO_PACKAGES=()
 echo "install cargo packages"
 
 # do nothing if cargo doesn't exist
@@ -10,38 +10,38 @@ fi
 
 # always install, since I don't know how to check
 if ! cargo install --list | grep cargo-update > /dev/null; then
-    PACKAGES+=" cargo-update"
+    CARGO_PACKAGES+=(cargo-update)
 fi
 
 if ! command -v bat > /dev/null; then
-    PACKAGES+=" bat"
+    CARGO_PACKAGES+=(bat)
 fi
 
 if ! command -v eza > /dev/null; then
-    PACKAGES+=" eza"
+    CARGO_PACKAGES+=(eza)
 fi
 
 if ! command -v rg > /dev/null; then
-    PACKAGES+=" ripgrep"
+    CARGO_PACKAGES+=(ripgrep)
 fi
 
 if ! command -v zoxide > /dev/null; then
-    PACKAGES+=" zoxide"
+    CARGO_PACKAGES+=(zoxide)
 fi
 
 if ! command -v dust > /dev/null; then
-    PACKAGES+=" du-dust"
+    CARGO_PACKAGES+=(du-dust)
 fi
 
 if ! command -v fd > /dev/null; then
-    PACKAGES+=" fd-find"
+    CARGO_PACKAGES+=(fd-find)
 fi
 
 if ! command -v texlab > /dev/null; then
-    PACKAGES+=" texlab"
+    CARGO_PACKAGES+=(texlab)
 fi
 
-if [ "$PACKAGES" ]; then
-    echo "install $PACKAGES"
-    cargo install "$PACKAGES"
+if (( ${#CARGO_PACKAGES[@]} != 0 )) ; then
+    echo "cargo install ${CARGO_PACKAGES[@]}"
+    cargo install ${CARGO_PACKAGES[@]}
 fi

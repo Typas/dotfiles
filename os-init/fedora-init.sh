@@ -23,7 +23,7 @@ prompt "system package installations"
 PACKAGES=(fd-find emacs texlive-xetex clang)
 PACKAGES+=($(cat "$D_LOC"/lists/package.list))
 sudo dnf update
-sudo dnf install -y "${PACKAGES[@]}"
+sudo dnf install -y ${PACKAGES[@]}
 
 prompt "flatpak installations"
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
