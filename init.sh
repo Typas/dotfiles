@@ -11,8 +11,8 @@ error_exit() {
 
 prompt() {
     local available=$(($(tput cols) - ${#1} - 2))
-    local left=$(($available / 2))
-    local right=$(($available - $left))
+    local left=$((available / 2))
+    local right=$((available - left))
 
     test $left -gt 0 && printf -- "=%.0s" $(seq 1 $left)
     printf " %s " "$1"
