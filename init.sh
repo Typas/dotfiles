@@ -28,7 +28,7 @@ case $KERNEL in
     Darwin)
         OS=mac ;;
     Linux)
-        OS="$(grep "^ID" /etc/os-release | sed "s/ID=//g")" ;;
+        OS="$(grep "^ID=" /etc/os-release | sed "s/ID=//g" | sed 's/^"//g' | sed 's/"$//g')" ;;
     *)
         echo "not supported system"
         error_exit
