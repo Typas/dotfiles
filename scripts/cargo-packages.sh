@@ -8,11 +8,6 @@ if ! command -v cargo > /dev/null; then
     exit
 fi
 
-# always install, since I don't know how to check
-if ! cargo install --list | grep cargo-update > /dev/null; then
-    CARGO_PACKAGES+=(cargo-update)
-fi
-
 if ! command -v bat > /dev/null; then
     CARGO_PACKAGES+=(bat)
 fi
