@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 LOC=$(pwd)
+export LOC
 # dotfiles location
 D_LOC=$(cd -- "$(dirname -- "{ZSH_SOURCE[0]}")" &> /dev/null && pwd)
 
@@ -10,8 +11,8 @@ error_exit() {
 
 prompt() {
     local available=$(($(tput cols) - ${#1} - 2))
-    local left=$(($available / 2))
-    local right=$(($available - $left))
+    local left=$((available / 2))
+    local right=$((available - left))
 
     test $left -gt 0 && printf -- "=%.0s" $(seq 1 $left)
     printf " %s " "$1"
@@ -38,7 +39,7 @@ else
 fi
 
 prompt "installing packages"
-PACKAGES=(wget fd dust)
+PACKAGES=(wget fd dust eza)
 PACKAGES+=($(cat "$D_LOC"/lists/package.list))
 for item in "${PACKAGES[@]}"
 do
