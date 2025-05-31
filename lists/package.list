@@ -12,6 +12,5 @@ p7zip
 hyperfine
 procs
 wget
-eza
 ripgrep
 bat

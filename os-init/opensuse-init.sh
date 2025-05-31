@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 LOC=$(pwd)
+export LOC
 # dotfiles location
 D_LOC=$(cd -- "$(dirname -- "{BASH_SOURCE[0]}")" &> /dev/null && pwd)
 
@@ -10,8 +11,8 @@ error_exit() {
 
 prompt() {
     local available=$(($(tput cols) - ${#1} - 2))
-    local left=$(($available / 2))
-    local right=$(($available - $left))
+    local left=$((available / 2))
+    local right=$((available - left))
 
     test $left -gt 0 && printf -- "=%.0s" $(seq 1 $left)
     printf " %s " "$1"
@@ -20,11 +21,11 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd dust emacs texlive-xetex clang)
+PACKAGES=(fd dust emacs texlive-xetex clang eza)
 PACKAGES+=($(cat "$D_LOC"/lists/package.list))
 sudo zypper ref
-sudo zypper in -y ${PACKAGES[@]}
+sudo zypper in -y "${PACKAGES[@]}"
 
 prompt "flatpak installations"
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install flathub org.wezfurlong.wezterm
+flatpak install -y flathub org.wezfurlong.wezterm
