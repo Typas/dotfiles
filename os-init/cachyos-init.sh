@@ -21,7 +21,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(dust emacs-wayland clang flatpak shellcheck)
+PACKAGES=(dust emacs-wayland clang flatpak shellcheck typst)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then

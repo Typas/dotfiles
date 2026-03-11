@@ -32,6 +32,10 @@ if ! command -v fd > /dev/null; then
     CARGO_PACKAGES+=(fd-find)
 fi
 
+if ! command -v typst > /dev/null; then
+    CARGO_PACKAGES+=(typst-cli)
+fi
+
 if (( ${#CARGO_PACKAGES[@]} != 0 )) ; then
     echo "cargo install ${CARGO_PACKAGES[*]}"
     cargo install "${CARGO_PACKAGES[@]}"
