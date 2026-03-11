@@ -105,7 +105,8 @@ complete -d cd
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-export LC_MESSAGES=en_US.UTF-8
+export LC_MESSAGES=en_US.utf8
+export LANGUAGE=en_US
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
