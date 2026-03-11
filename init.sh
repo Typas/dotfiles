@@ -43,6 +43,8 @@ case "$OS" in
         bash os-init/fedora-init.sh || error_exit ;;
     opensuse*)
         bash os-init/opensuse-init.sh || error_exit ;;
+    ubuntu)
+	bash os-init/ubuntu-init.sh || error_exit ;;
     *)
         echo "not supported system"
         error_exit
