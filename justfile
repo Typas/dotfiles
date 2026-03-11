@@ -22,6 +22,7 @@ _os-init os update:
         opensuse*) bash os-init/opensuse-init.sh ;;
         cachyos)   bash os-init/cachyos-init.sh ;;
         ubuntu)    bash os-init/ubuntu-init.sh ;;
+        debian)    bash os-init/debian-init.sh ;;
         *)         echo "unsupported OS: {{os}}"; exit 1 ;;
     esac
 
@@ -57,7 +58,7 @@ haskell:
                 sudo dnf install -y gmp-devel ncurses-devel make pkgconfig gcc-c++ xz ;;
             opensuse*)
                 sudo zypper in -y gmp-devel ncurses-devel make pkg-config gcc-c++ xz ;;
-            ubuntu)
+            ubuntu|debian)
                 sudo apt-get install -y libgmp-dev libncurses-dev make pkg-config g++ xz-utils ;;
         esac
         curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh -s -- -y
@@ -126,5 +127,5 @@ _shell-init os:
     set -euo pipefail
     case "{{os}}" in
         mac)                     zsh scripts/zinit-install.sh ;;
-        fedora|opensuse*|cachyos) bash scripts/oh-my-bash-install.sh ;;
+        fedora|opensuse*|cachyos|debian) bash scripts/oh-my-bash-install.sh ;;
     esac

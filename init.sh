@@ -34,7 +34,7 @@ case "$OS" in
     cachyos)
         sudo pacman -Syu --noconfirm
         ;;
-    ubuntu)
+    ubuntu|debian)
         sudo apt-get update
         ;;
     *)
@@ -49,7 +49,7 @@ if ! command -v just &>/dev/null; then
         fedora)    sudo dnf install -y just ;;
         opensuse*) sudo zypper in -y just ;;
         cachyos)   sudo pacman -S --noconfirm just ;;
-        ubuntu)    sudo apt-get install -y just ;;
+        ubuntu|debian) sudo apt-get install -y just ;;
     esac
 fi
 
