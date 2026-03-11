@@ -21,13 +21,13 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(dust emacs-wayland clang flatpak)
+PACKAGES=(dust emacs-wayland clang flatpak shellcheck)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
     sudo pacman -Syu --noconfirm
 fi
-sudo pacman -S --needed --noconfirm --ask=4 "${PACKAGES[@]}"
+sudo pacman -S --needed --noconfirm --ask=4 "${PACKAGES[@]}" 2>&1 | grep -Ev 'is up to date -- skipping|there is nothing to do'
 
 prompt "flatpak installations"
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo

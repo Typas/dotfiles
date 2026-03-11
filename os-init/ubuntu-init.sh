@@ -21,7 +21,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd-find clang flatpak gcc editorconfig)
+PACKAGES=(fd-find clang flatpak gcc editorconfig shellcheck)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then

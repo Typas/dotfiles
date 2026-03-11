@@ -5,7 +5,6 @@ TMPPATH=/tmp/NotoSansCJK
 URL="https://github.com/notofonts/noto-cjk/releases/download/Sans2.004/01_NotoSansCJK-OTF-VF.zip"
 ZIPFILE="${URL##*/}"
 FONTNAME="Noto Sans CJK"
-. font-path.sh
 
 error_exit() {
     echo "cannot install $FONTNAME"
@@ -26,7 +25,7 @@ extract() {
 }
 
 install_font() {
-    if ! fc-list --path="$FONT_PATH" | grep -i "$FONTNAME" > /dev/null; then
+    if ! fc-list | grep -i "$FONTNAME" > /dev/null; then
         if [ ! -d "$TMPPATH" ]; then
             download || error_exit
             extract || error_exit
