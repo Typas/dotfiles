@@ -2,7 +2,7 @@
 local wezterm = require "wezterm"
 
 local conf_misc = {
-  color_scheme = "OneHalfLight",
+  color_scheme = "ayu_light",
   automatically_reload_config = false,
   custom_block_glyphs = false,
   window_padding = {
@@ -22,6 +22,7 @@ local conf_misc = {
 
   -- Don't start as login shell to avoid /etc/profile.d/ scripts (e.g. gpm.sh tty error)
   default_prog = { "bash" },
+
 }
 
 local conf_table = require "conf-lib".conf_table
