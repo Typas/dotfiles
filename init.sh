@@ -30,7 +30,7 @@ case $KERNEL in
     Linux)
         OS="$(grep "^ID=" /etc/os-release | sed "s/ID=//g" | sed 's/^"//g' | sed 's/"$//g')" ;;
     *)
-        echo "not supported system"
+	echo "not supported system ($KERNEL)"
         error_exit
 esac
 
@@ -43,10 +43,12 @@ case "$OS" in
         bash os-init/fedora-init.sh || error_exit ;;
     opensuse*)
         bash os-init/opensuse-init.sh || error_exit ;;
+    cachyos)
+        bash os-init/cachyos-init.sh || error_exit ;;
     ubuntu)
 	bash os-init/ubuntu-init.sh || error_exit ;;
     *)
-        echo "not supported system"
+	echo "not supported system ($OS)"
         error_exit
 esac
 
@@ -60,7 +62,7 @@ prompt "shell initialization"
 case "$OS" in
     mac)
         zsh zinit-install.sh || error_exit ;;
-    fedora | opensuse*)
+    fedora | opensuse* | cachyos)
         bash oh-my-bash-install.sh || error_exit ;;
 esac
 
