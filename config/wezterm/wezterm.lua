@@ -19,6 +19,9 @@ local conf_misc = {
 
   -- Never hold on close
   exit_behavior = "Close",
+
+  -- Don't start as login shell to avoid /etc/profile.d/ scripts (e.g. gpm.sh tty error)
+  default_prog = { "bash" },
 }
 
 local conf_table = require "conf-lib".conf_table
