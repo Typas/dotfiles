@@ -23,6 +23,11 @@ prompt() {
 
 cd "$S_LOC" || error_exit
 
+prompt "default shell"
+if [ "$SHELL" != "$(which bash)" ]; then
+    sudo usermod -s "$(which bash)" "$USER"
+fi
+
 prompt "installations"
 ####################
 bash rust-install.sh || error_exit
