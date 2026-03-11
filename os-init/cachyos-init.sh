@@ -24,7 +24,9 @@ prompt "system package installations"
 PACKAGES=(dust emacs-wayland clang flatpak)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
-sudo pacman -Syu --noconfirm
+if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
+    sudo pacman -Syu --noconfirm
+fi
 sudo pacman -S --needed --noconfirm --ask=4 "${PACKAGES[@]}"
 
 prompt "flatpak installations"

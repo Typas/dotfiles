@@ -24,7 +24,9 @@ prompt "system package installations"
 PACKAGES=(fd-find clang flatpak gcc editorconfig)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
-sudo apt-get update
+if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
+    sudo apt-get update
+fi
 sudo apt-get install -y "${PACKAGES[@]}"
 if ! command -v fd > /dev/null 2>&1; then 
     mkdir -p ~/.local/bin
