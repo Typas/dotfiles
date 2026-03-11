@@ -27,8 +27,10 @@ else
     echo "homebrew is already installed"
 fi
 
-prompt "updating homebrew"
-brew update
+if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
+    prompt "updating homebrew"
+    brew update
+fi
 
 prompt "installing wezterm"
 if ! command -v wezterm > /dev/null; then

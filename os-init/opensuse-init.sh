@@ -24,7 +24,9 @@ prompt "system package installations"
 PACKAGES=(fd dust emacs clang eza editorconfig)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
-sudo zypper ref
+if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
+    sudo zypper ref
+fi
 sudo zypper in -y "${PACKAGES[@]}"
 
 prompt "flatpak installations"

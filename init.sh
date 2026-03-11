@@ -1,72 +1,58 @@
 #!/usr/bin/env bash
-LOC=$(pwd)
-D_LOC=$(cd -- "$(dirname -- "{BASH_SOURCE[0]}")" &> /dev/null && pwd)
+set -euo pipefail
+
+D_LOC=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+
 OS="unknown"
 
-error_exit() {
-    echo "something's wrong, exiting"
-    cd "$LOC" || exit 1
-    exit 1
-}
-
-prompt() {
-    local available=$(($(tput cols) - ${#1} - 2))
-    local left=$((available / 2))
-    local right=$((available - left))
-
-    test $left -gt 0 && printf -- "=%.0s" $(seq 1 $left)
-    printf " %s " "$1"
-    test $right -gt 0 && printf -- "=%.0s" $(seq 1 $right)
-    echo ""
-}
-
-cd "$D_LOC" || error_exit
-
-# find os name
+# detect OS
 KERNEL=$(uname -s)
 case $KERNEL in
     Darwin)
         OS=mac ;;
     Linux)
-        OS="$(grep "^ID=" /etc/os-release | sed "s/ID=//g" | sed 's/^"//g' | sed 's/"$//g')" ;;
+        OS="$(grep "^ID=" /etc/os-release | sed 's/ID=//;s/^"//;s/"$//')" ;;
     *)
-	echo "not supported system ($KERNEL)"
-        error_exit
+        echo "unsupported system ($KERNEL)"
+        exit 1
 esac
 
-prompt "os-specific initialization"
-###################################
+# update package manager and install just
 case "$OS" in
     mac)
-        zsh os-init/mac-init.sh || error_exit ;;
+        if ! command -v brew &>/dev/null; then
+            curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash
+        fi
+        brew update
+        ;;
     fedora)
-        bash os-init/fedora-init.sh || error_exit ;;
+        sudo dnf update -y
+        ;;
     opensuse*)
-        bash os-init/opensuse-init.sh || error_exit ;;
+        sudo zypper ref
+        ;;
     cachyos)
-        bash os-init/cachyos-init.sh || error_exit ;;
+        sudo pacman -Syu --noconfirm
+        ;;
     ubuntu)
-	bash os-init/ubuntu-init.sh || error_exit ;;
+        sudo apt-get update
+        ;;
     *)
-	echo "not supported system ($OS)"
-        error_exit
+        echo "unsupported system ($OS)"
+        exit 1
 esac
 
-prompt "common initialization"
-##############################
-cd scripts/ || error_exit
-bash common-init.sh || error_exit
+# install just if not present
+if ! command -v just &>/dev/null; then
+    case "$OS" in
+        mac)       brew install just ;;
+        fedora)    sudo dnf install -y just ;;
+        opensuse*) sudo zypper in -y just ;;
+        cachyos)   sudo pacman -S --noconfirm just ;;
+        ubuntu)    sudo apt-get install -y just ;;
+    esac
+fi
 
-prompt "shell initialization"
-#############################
-case "$OS" in
-    mac)
-        zsh zinit-install.sh || error_exit ;;
-    fedora | opensuse* | cachyos)
-        bash oh-my-bash-install.sh || error_exit ;;
-esac
-
-#######
-echo ""
-echo "Done!"
-cd "$LOC" || error_exit
+# hand off to justfile
+cd "$D_LOC"
+just update="false" init

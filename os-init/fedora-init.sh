@@ -25,7 +25,9 @@ prompt "system package installations"
 PACKAGES=(fd-find emacs clang editorconfig)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
-sudo dnf update
+if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
+    sudo dnf update
+fi
 sudo dnf install -y "${PACKAGES[@]}"
 
 prompt "flatpak installations"
