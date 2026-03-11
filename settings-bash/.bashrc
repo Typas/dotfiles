@@ -4,6 +4,8 @@ case $- in
     *) return;;
 esac
 
+[[ $- == *i* ]] && source ~/.local/share/blesh/ble.sh --noattach 2>/dev/null
+
 # Path to your oh-my-bash installation.
 export OSH="$HOME/.oh-my-bash"
 
@@ -157,3 +159,9 @@ case ":$PATH:" in
 esac
 
 # <<< juliaup initialize <<<
+
+# ble.sh attach and keybindings
+if [[ ${BLE_VERSION-} ]]; then
+    ble-bind -m auto_complete -f 'S-TAB' auto_complete/insert
+    ble-attach
+fi
