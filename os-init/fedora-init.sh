@@ -22,7 +22,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd-find emacs clang editorconfig)
+PACKAGES=(fd-find emacs clang editorconfig ShellCheck)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then

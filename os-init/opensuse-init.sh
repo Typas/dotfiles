@@ -21,7 +21,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd dust emacs clang eza editorconfig)
+PACKAGES=(fd dust emacs clang eza editorconfig ShellCheck)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then

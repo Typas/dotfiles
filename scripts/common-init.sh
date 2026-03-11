@@ -33,12 +33,16 @@ prompt "installations"
 bash rust-install.sh || error_exit
 # always the last
 bash cargo-packages.sh || error_exit
-bash lsp-install.sh || error_exit
 
-prompt "fonts installation"
+prompt "required fonts installation"
 #########################
 cd "$D_LOC/fonts" || error_exit
-bash font-install-all.sh
+bash fira-code.sh install
+bash juliamono.sh install
+bash noto-sans-cjk.sh install
+bash noto-serif-cjk.sh install
+bash typas-code.sh install
+bash typas-mono-cjk-tc.sh install
 
 prompt "home directory sync"
 ##########################
