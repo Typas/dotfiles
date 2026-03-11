@@ -21,7 +21,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd dust emacs texlive-xetex clang eza)
+PACKAGES=(fd dust emacs clang eza editorconfig)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
 sudo zypper ref

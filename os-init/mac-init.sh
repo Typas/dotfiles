@@ -39,7 +39,7 @@ else
 fi
 
 prompt "installing packages"
-PACKAGES=(wget fd dust eza)
+PACKAGES=(wget fd dust eza editorconfig)
 PACKAGES+=($(cat "$D_LOC"/lists/package.list))
 for item in "${PACKAGES[@]}"
 do

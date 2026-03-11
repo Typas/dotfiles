@@ -21,7 +21,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd-find emacs texlive-xetex clang flatpak gcc)
+PACKAGES=(fd-find clang flatpak gcc editorconfig)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
 sudo apt-get update

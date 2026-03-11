@@ -22,7 +22,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd-find emacs texlive-xetex clang)
+PACKAGES=(fd-find emacs clang editorconfig)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
 sudo dnf update
