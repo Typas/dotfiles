@@ -17,7 +17,7 @@ if [ $# -ne 1 ]; then
 fi
 
 download() {
-    wget -P /tmp "$URL" || error_exit
+    curl -fL --output-dir /tmp -O "$URL" || error_exit
 }
 
 extract() {

@@ -16,7 +16,8 @@ if [ $# -ne 1 ]; then
 fi
 
 download() {
-    wget -P "$TMPPATH" "$URL" || error_exit
+    mkdir -p "$TMPPATH"
+    curl -fL --output-dir "$TMPPATH" -O "$URL" || error_exit
 }
 
 extract() {
