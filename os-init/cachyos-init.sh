@@ -21,11 +21,11 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd dust emacs texlive-xetex clang eza)
+PACKAGES=(dust emacs-wayland clang flatpak)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
-sudo pacman -Syu
-sudo pacman -S --noconfirm "${PACKAGES[@]}"
+sudo pacman -Syu --noconfirm
+sudo pacman -S --needed --noconfirm --ask=4 "${PACKAGES[@]}"
 
 prompt "flatpak installations"
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo

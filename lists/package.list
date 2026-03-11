@@ -5,7 +5,6 @@ curl
 openssh
 duf
 fzf
-editorconfig
 neovim
 fontconfig
 p7zip
