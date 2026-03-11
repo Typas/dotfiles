@@ -1,6 +1,6 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-FONTFILES=($(cat fira-code.txt))
+mapfile -t FONTFILES < fira-code.txt
 TMPPATH=/tmp/FiraCode
 URL="https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip"
 ZIPFILE="${URL##*/}"
@@ -30,7 +30,7 @@ install_font() {
             download
             extract
         fi
-        for ff in ${FONTFILES[@]}; do
+        for ff in "${FONTFILES[@]}"; do
             fontpath=$(find "$TMPPATH" -name "$ff")
             bash add-font-file.sh "$fontpath" || error_exit
         done
@@ -43,7 +43,7 @@ install_font() {
 
 remove_font() {
     if fc-list | grep -i "$FONTNAME" > /dev/null; then
-        for ff in ${FONTFILES[@]}; do
+        for ff in "${FONTFILES[@]}"; do
             fontpath=$(find "$TMPPATH" -name "$ff")
             bash remove-font-file.sh  "$fontpath" || error_exit
         done

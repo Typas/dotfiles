@@ -37,6 +37,6 @@ if ! command -v texlab > /dev/null; then
 fi
 
 if (( ${#CARGO_PACKAGES[@]} != 0 )) ; then
-    echo "cargo install ${CARGO_PACKAGES[@]}"
-    cargo install ${CARGO_PACKAGES[@]}
+    echo "cargo install ${CARGO_PACKAGES[*]}"
+    cargo install "${CARGO_PACKAGES[@]}"
 fi

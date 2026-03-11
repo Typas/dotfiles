@@ -22,7 +22,8 @@ prompt() {
 
 prompt "system package installations"
 PACKAGES=(fd dust emacs texlive-xetex clang eza)
-PACKAGES+=($(cat "$D_LOC"/lists/package.list))
+mapfile -t extra < "$D_LOC"/lists/package.list
+PACKAGES+=("${extra[@]}")
 sudo zypper ref
 sudo zypper in -y "${PACKAGES[@]}"
 

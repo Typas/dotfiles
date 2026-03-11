@@ -40,7 +40,7 @@ prompt "home directory sync"
 cd "$HOME" || error_exit
 for f in "$D_LOC/home/".*
 do
-    if [ "${f##*/}" != "." -a "${f##*/}" != ".." ]; then
+    if [ "${f##*/}" != "." ] && [ "${f##*/}" != ".." ]; then
        echo "Linking $f"
        ln -sf "$f" .
     fi
