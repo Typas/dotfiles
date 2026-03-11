@@ -3,16 +3,26 @@
 
 return {
   {
-    "navarasu/onedark.nvim",
+    "deparr/tairiki.nvim",
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      require("tairiki").setup({
+        palette = "light",
+        default_dark = "dimmed",
+        default_light = "light",
+      })
+      vim.cmd([[colorscheme tairiki]])
+    end,
+  },
+
+  {
+    "navarasu/onedark.nvim",
+    lazy = true,
     opts = {
       style = "light",
       term_colors = false,
     },
-    config = function()
-      vim.cmd([[colorscheme onedark]])
-    end
   },
 
   {
@@ -98,9 +108,31 @@ return {
     },
   },
 
+  --[[
+      Auto Completion
+      Using saghen/blink.cmp instead of built-in LSP completion
+
+      References:
+      https://gpanders.com/blog/whats-new-in-neovim-0-11/#lspa
+      https://vi.stackexchange.com/questions/46749
+  --]]
   {
-    "ms-jpq/coq_nvim",
+    "saghen/blink.cmp",
     lazy = false,
+    version = "*",
+    opts = {
+      keymap = { preset = "super-tab" },
+      appearance = {
+        nerd_font_variant = "mono",
+      },
+      completion = {
+        documentation = { auto_show = false },
+      },
+      sources = {
+        default = { "lsp", "path", "buffer" },
+      },
+      fuzzy = { implementation = "rust" },
+    },
   },
 
   {
