@@ -1,7 +1,13 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-INS=($(ls *.sh | grep -v font-install-all.sh | grep -v add-font-file.sh | grep -v remove-font-file.sh))
-for installer in ${INS[@]}
+INS=()
+for f in *.sh; do
+    case "$f" in
+        font-install-all.sh|add-font-file.sh|remove-font-file.sh) ;;
+        *) INS+=("$f") ;;
+    esac
+done
+for installer in "${INS[@]}"
 do
     bash "$installer" install
 done

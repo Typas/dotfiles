@@ -23,7 +23,8 @@ prompt() {
 
 prompt "system package installations"
 PACKAGES=(fd-find emacs texlive-xetex clang)
-PACKAGES+=($(cat "$D_LOC"/lists/package.list))
+mapfile -t extra < "$D_LOC"/lists/package.list
+PACKAGES+=("${extra[@]}")
 sudo dnf update
 sudo dnf install -y "${PACKAGES[@]}"
 

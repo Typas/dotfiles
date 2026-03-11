@@ -1,9 +1,8 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-FONTFILES=($(cat inconsolata.txt))
+mapfile -t FONTFILES < inconsolata.txt
 TMPPATH=/tmp/inconsolata
 URL="https://github.com/googlefonts/Inconsolata/releases/download/v3.000/Inconsolata-VF.ttf"
-ZIPFILE="${URL##*/}"
 FONTNAME="Inconsolata"
 
 error_exit() {
@@ -30,7 +29,7 @@ install_font() {
             download
             extract
         fi
-        for ff in ${FONTFILES[@]}; do
+        for ff in "${FONTFILES[@]}"; do
             fontpath=$(find "$TMPPATH" -name "$ff")
             bash add-font-file.sh "$fontpath" || error_exit
         done
@@ -43,7 +42,7 @@ install_font() {
 
 remove_font() {
     if fc-list | grep -i "$FONTNAME" > /dev/null; then
-        for ff in ${FONTFILES[@]}; do
+        for ff in "${FONTFILES[@]}"; do
             fontpath=$(find "$TMPPATH" -name "$ff")
             bash remove-font-file.sh  "$fontpath" || error_exit
         done

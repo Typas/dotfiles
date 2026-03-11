@@ -1,6 +1,6 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-FONTFILES=($(cat noto-serif-cjk.txt))
+mapfile -t FONTFILES < noto-serif-cjk.txt
 TMPPATH=/tmp/NotoSerifCJK
 URL="https://github.com/notofonts/noto-cjk/releases/download/Serif2.002/02_NotoSerifCJK-OTF-VF.zip"
 ZIPFILE="${URL##*/}"
@@ -30,7 +30,7 @@ install_font() {
             download
             extract
         fi
-        for ff in ${FONTFILES[@]}; do
+        for ff in "${FONTFILES[@]}"; do
             fontpath=$(find "$TMPPATH" -name "$ff")
             bash add-font-file.sh "$fontpath" || error_exit
         done
@@ -43,7 +43,7 @@ install_font() {
 
 remove_font() {
     if fc-list | grep -i "$FONTNAME" > /dev/null; then
-        for ff in ${FONTFILES[@]}; do
+        for ff in "${FONTFILES[@]}"; do
             fontpath=$(find "$TMPPATH" -name "$ff")
             bash remove-font-file.sh  "$fontpath" || error_exit
         done

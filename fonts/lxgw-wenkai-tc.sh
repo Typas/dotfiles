@@ -1,6 +1,6 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-FONTFILES=($(cat lxgw-wenkai-tc.txt))
+mapfile -t FONTFILES < lxgw-wenkai-tc.txt
 TMPPATH=/tmp/LXGWWenKaiTC
 URL="https://github.com/lxgw/LxgwWenkaiTC/releases/download/v1.000/lxgw-wenkai-tc-v1.000.zip"
 ZIPFILE="${URL##*/}"
@@ -30,7 +30,7 @@ install_font() {
             download
             extract
         fi
-        for ff in ${FONTFILES[@]}; do
+        for ff in "${FONTFILES[@]}"; do
             fontpath=$(find "$TMPPATH" -name "$ff")
             bash add-font-file.sh "$fontpath" || error_exit
         done
@@ -43,7 +43,7 @@ install_font() {
 
 remove_font() {
     if fc-list | grep -i "$FONTNAME" > /dev/null; then
-        for ff in ${FONTFILES[@]}; do
+        for ff in "${FONTFILES[@]}"; do
             fontpath=$(find "$TMPPATH" -name "$ff")
             bash remove-font-file.sh  "$fontpath" || error_exit
         done
