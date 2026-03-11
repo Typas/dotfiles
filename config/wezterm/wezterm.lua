@@ -2,7 +2,7 @@
 local wezterm = require "wezterm"
 
 local conf_misc = {
-  color_scheme = "ayu_light",
+  color_scheme = "Tomorrow",
   automatically_reload_config = false,
   custom_block_glyphs = false,
   window_padding = {
