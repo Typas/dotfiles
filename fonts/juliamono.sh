@@ -1,6 +1,6 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-FONTFILES=($(cat juliamono.txt))
+mapfile -t FONTFILES < juliamono.txt
 TMPPATH=/tmp/JuliaMono
 URL="https://github.com/cormullion/juliamono/releases/latest/download/JuliaMono-ttf.zip"
 ZIPFILE="${URL##*/}"
@@ -22,17 +22,22 @@ download() {
 
 extract() {
     unzip -d "$TMPPATH" "/tmp/$ZIPFILE" || error_exit
+    rm -f "/tmp/$ZIPFILE"
 }
 
 install_font() {
     if ! fc-list | grep -i "$FONTNAME" > /dev/null; then
         if [ ! -d "$TMPPATH" ]; then
-            download
-            extract
+            download || error_exit
+            extract || error_exit
         fi
-        for ff in ${FONTFILES[@]}; do
+        for ff in "${FONTFILES[@]}"; do
             fontpath=$(find "$TMPPATH" -name "$ff")
-            bash add-font-file.sh "$fontpath" || error_exit
+            if [ -n "$fontpath" ]; then
+                bash add-font-file.sh "$fontpath" || error_exit
+            else
+                echo "font skipped: $ff"
+            fi
         done
         fc-cache -f
         echo "successfully installed $FONTNAME"
@@ -43,10 +48,10 @@ install_font() {
 
 remove_font() {
     if fc-list | grep -i "$FONTNAME" > /dev/null; then
-        for ff in ${FONTFILES[@]}; do
-            fontpath=$(find "$TMPPATH" -name "$ff")
-            bash remove-font-file.sh  "$fontpath" || error_exit
+        for ff in "${FONTFILES[@]}"; do
+            bash remove-font-file.sh  "$ff" || error_exit
         done
+        rm -rf "$TMPPATH"
         fc-cache -f
         echo "removed $FONTNAME"
     else
