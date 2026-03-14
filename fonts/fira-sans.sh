@@ -3,8 +3,7 @@ set -euo pipefail
 
 mapfile -t FONTFILES < fira-sans.txt
 TMPPATH=/tmp/FiraSans
-URL="https://bboxtype.com/downloads/Fira/Download_Folder_FiraSans_4301.zip"
-ZIPFILE="${URL##*/}"
+BASEURL="https://raw.githubusercontent.com/bBoxType/FiraSans/master/Fira_Sans_4_3/Fonts/Fira_Sans_OTF_4301/Normal"
 FONTNAME="Fira Sans"
 
 if [ $# -ne 1 ]; then
@@ -13,22 +12,25 @@ if [ $# -ne 1 ]; then
 fi
 
 download() {
-    curl -fL --output-dir /tmp -O "$URL"
-}
-
-extract() {
-    unzip -d "$TMPPATH" "/tmp/$ZIPFILE"
+    mkdir -p "$TMPPATH"
+    local args=()
+    for ff in "${FONTFILES[@]}"; do
+        if [[ "$ff" == *Italic* ]]; then
+            args+=(-o "$TMPPATH/$ff" "$BASEURL/Italic/$ff")
+        else
+            args+=(-o "$TMPPATH/$ff" "$BASEURL/Roman/$ff")
+        fi
+    done
+    curl -fL --parallel "${args[@]}"
 }
 
 install_font() {
     if ! fc-list | grep -i "$FONTNAME" > /dev/null; then
         if [ ! -d "$TMPPATH" ]; then
             download
-            extract
         fi
         for ff in "${FONTFILES[@]}"; do
-            fontpath=$(find "$TMPPATH" -name "$ff")
-            bash add-font-file.sh "$fontpath"
+            bash add-font-file.sh "$TMPPATH/$ff"
         done
         fc-cache -f
         echo "successfully installed $FONTNAME"
@@ -40,8 +42,7 @@ install_font() {
 remove_font() {
     if fc-list | grep -i "$FONTNAME" > /dev/null; then
         for ff in "${FONTFILES[@]}"; do
-            fontpath=$(find "$TMPPATH" -name "$ff")
-            bash remove-font-file.sh  "$fontpath"
+            bash remove-font-file.sh "$TMPPATH/$ff"
         done
         fc-cache -f
         echo "removed $FONTNAME"
