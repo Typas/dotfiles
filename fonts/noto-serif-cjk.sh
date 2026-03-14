@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 mapfile -t FONTFILES < noto-serif-cjk.txt
 TMPPATH=/tmp/NotoSerifCJK
@@ -6,22 +7,17 @@ URL="https://github.com/notofonts/noto-cjk/releases/download/Serif2.002/02_NotoS
 ZIPFILE="${URL##*/}"
 FONTNAME="Noto Serif CJK"
 
-error_exit() {
-    echo "cannot install $FONTNAME"
-    exit 1
-}
-
 if [ $# -ne 1 ]; then
     echo "usage: ./noto-serif-cjk.sh <in/rm>"
-    error_exit
+    exit 1
 fi
 
 download() {
-    curl -fL --output-dir /tmp -O "$URL" || error_exit
+    curl -fL --output-dir /tmp -O "$URL"
 }
 
 extract() {
-    unzip -d "$TMPPATH" "/tmp/$ZIPFILE" || error_exit
+    unzip -d "$TMPPATH" "/tmp/$ZIPFILE"
 }
 
 install_font() {
@@ -32,7 +28,7 @@ install_font() {
         fi
         for ff in "${FONTFILES[@]}"; do
             fontpath=$(find "$TMPPATH" -name "$ff")
-            bash add-font-file.sh "$fontpath" || error_exit
+            bash add-font-file.sh "$fontpath"
         done
         fc-cache -f
         echo "successfully installed $FONTNAME"
@@ -45,7 +41,7 @@ remove_font() {
     if fc-list | grep -i "$FONTNAME" > /dev/null; then
         for ff in "${FONTFILES[@]}"; do
             fontpath=$(find "$TMPPATH" -name "$ff")
-            bash remove-font-file.sh  "$fontpath" || error_exit
+            bash remove-font-file.sh  "$fontpath"
         done
         fc-cache -f
         echo "removed $FONTNAME"

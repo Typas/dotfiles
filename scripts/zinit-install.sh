@@ -7,7 +7,7 @@ if ! command -v zinit > /dev/null; then
 fi
 zsh -c "$(zinit self-update)"
 
-cd "$HOME" || error_exit
+cd "$HOME"
 for setting in "$D_LOC"/settings-zsh/.*
 do
     ln -sf "$setting" .

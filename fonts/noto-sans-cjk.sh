@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 mapfile -t FONTFILES < noto-sans-cjk.txt
 TMPPATH=/tmp/NotoSansCJK
@@ -6,33 +7,28 @@ URL="https://github.com/notofonts/noto-cjk/releases/download/Sans2.004/01_NotoSa
 ZIPFILE="${URL##*/}"
 FONTNAME="Noto Sans CJK"
 
-error_exit() {
-    echo "cannot install $FONTNAME"
-    exit 1
-}
-
 if [ $# -ne 1 ]; then
     echo "usage: ./noto-sans-cjk.sh <in/rm>"
-    error_exit
+    exit 1
 fi
 
 download() {
-    curl -fL --output-dir /tmp -O "$URL" || error_exit
+    curl -fL --output-dir /tmp -O "$URL"
 }
 
 extract() {
-    unzip -d "$TMPPATH" "/tmp/$ZIPFILE" || error_exit
+    unzip -d "$TMPPATH" "/tmp/$ZIPFILE"
 }
 
 install_font() {
     if ! fc-list | grep -i "$FONTNAME" > /dev/null; then
         if [ ! -d "$TMPPATH" ]; then
-            download || error_exit
-            extract || error_exit
+            download
+            extract
         fi
         for ff in "${FONTFILES[@]}"; do
             fontpath=$(find "$TMPPATH" -name "$ff")
-            bash add-font-file.sh "$fontpath" || error_exit
+            bash add-font-file.sh "$fontpath"
         done
         fc-cache -f
         echo "successfully installed $FONTNAME"
@@ -45,7 +41,7 @@ remove_font() {
     if fc-list | grep -i "$FONTNAME" > /dev/null; then
         for ff in "${FONTFILES[@]}"; do
             fontpath=$(find "$TMPPATH" -name "$ff")
-            bash remove-font-file.sh  "$fontpath" || error_exit
+            bash remove-font-file.sh  "$fontpath"
         done
         fc-cache -f
         echo "removed $FONTNAME"

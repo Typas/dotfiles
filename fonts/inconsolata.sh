@@ -1,23 +1,19 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 mapfile -t FONTFILES < inconsolata.txt
 TMPPATH=/tmp/inconsolata
 URL="https://github.com/googlefonts/Inconsolata/releases/download/v3.000/Inconsolata-VF.ttf"
 FONTNAME="Inconsolata"
 
-error_exit() {
-    echo "cannot install $FONTNAME"
-    exit 1
-}
-
 if [ $# -ne 1 ]; then
     echo "usage: ./inconsolata.sh <in/rm>"
-    error_exit
+    exit 1
 fi
 
 download() {
     mkdir -p "$TMPPATH"
-    curl -fL --output-dir "$TMPPATH" -O "$URL" || error_exit
+    curl -fL --output-dir "$TMPPATH" -O "$URL"
 }
 
 extract() {
@@ -32,7 +28,7 @@ install_font() {
         fi
         for ff in "${FONTFILES[@]}"; do
             fontpath=$(find "$TMPPATH" -name "$ff")
-            bash add-font-file.sh "$fontpath" || error_exit
+            bash add-font-file.sh "$fontpath"
         done
         fc-cache -f
         echo "successfully installed $FONTNAME"
@@ -45,7 +41,7 @@ remove_font() {
     if fc-list | grep -i "$FONTNAME" > /dev/null; then
         for ff in "${FONTFILES[@]}"; do
             fontpath=$(find "$TMPPATH" -name "$ff")
-            bash remove-font-file.sh  "$fontpath" || error_exit
+            bash remove-font-file.sh  "$fontpath"
         done
         fc-cache -f
         echo "removed $FONTNAME"

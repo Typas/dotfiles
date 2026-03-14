@@ -8,12 +8,13 @@ then
 fi
 
 if [ ! -d "$HOME/.local/share/blesh" ]; then
+    rm -rf /tmp/ble.sh
     git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git /tmp/ble.sh
     make -C /tmp/ble.sh install PREFIX="$HOME/.local"
     rm -rf /tmp/ble.sh
 fi
 
-cd "$HOME" || error_exit
+cd "$HOME"
 for setting in "$D_LOC"/settings-bash/.*
 do
     ln -sf "$setting" .
