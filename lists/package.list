@@ -2,7 +2,6 @@ gcc
 cmake
 git
 curl
-openssh
 duf
 fzf
 neovim

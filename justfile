@@ -1,5 +1,7 @@
 # dotfiles setup
 
+root := justfile_directory()
+
 os := if os() == "macos" { "mac" } else { `grep "^ID=" /etc/os-release | sed 's/ID=//;s/^"//;s/"$//'` }
 update := "true"
 
@@ -8,42 +10,42 @@ help:
     @just --list
 
 # Full system setup: OS packages, rust, cargo tools, fonts, symlinks, and shell config
-init: (_os-init os update) _common-init (_shell-init os)
+init: (_os-packages os update) _common-init (_shell-setup os)
     @echo ""
     @echo "Done!"
 
-_os-init os update:
+_os-packages os update:
     #!/usr/bin/env bash
     set -euo pipefail
     export DOTFILES_SKIP_UPDATE={{ if update == "false" { "1" } else { "" } }}
     case "{{os}}" in
-        mac)       zsh os-init/mac-init.sh ;;
-        fedora)    bash os-init/fedora-init.sh ;;
-        opensuse*) bash os-init/opensuse-init.sh ;;
-        cachyos)   bash os-init/cachyos-init.sh ;;
-        ubuntu)    bash os-init/ubuntu-init.sh ;;
-        debian)    bash os-init/debian-init.sh ;;
+        mac)       D_LOC="{{root}}" zsh {{root}}/os-init/mac-init.sh ;;
+        fedora)    D_LOC="{{root}}" bash {{root}}/os-init/fedora-init.sh ;;
+        opensuse*) D_LOC="{{root}}" bash {{root}}/os-init/opensuse-init.sh ;;
+        cachyos)   D_LOC="{{root}}" bash {{root}}/os-init/cachyos-init.sh ;;
+        ubuntu)    D_LOC="{{root}}" bash {{root}}/os-init/ubuntu-init.sh ;;
+        debian)    D_LOC="{{root}}" bash {{root}}/os-init/debian-init.sh ;;
         *)         echo "unsupported OS: {{os}}"; exit 1 ;;
     esac
 
 _common-init:
-    cd scripts && bash common-init.sh
+    cd {{root}}/scripts && D_LOC="{{root}}" bash common-init.sh
 
 # Install Julia via juliaup
 julia:
-    bash scripts/install-julia.sh {{os}}
+    bash {{root}}/scripts/install-julia.sh {{os}}
 
 # Install Haskell via ghcup (with required system dependencies)
 haskell:
-    bash scripts/install-haskell.sh {{os}}
+    bash {{root}}/scripts/install-haskell.sh {{os}}
 
 # Install optional fonts (Fira Sans, Inconsolata, LXGW WenKai TC)
 font:
-    bash scripts/install-fonts.sh
+    bash {{root}}/scripts/install-fonts.sh
 
 # Install LSP servers for available languages
 lsp:
-    bash scripts/install-lsp.sh
+    bash {{root}}/scripts/install-lsp.sh
 
-_shell-init os:
-    bash scripts/shell-init.sh {{os}}
+_shell-setup os:
+    D_LOC="{{root}}" bash {{root}}/scripts/shell-init.sh {{os}}

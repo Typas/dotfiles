@@ -1,13 +1,6 @@
 #!/usr/bin/env bash
-LOC=$(pwd)
-export LOC
-# dotfiles location
-D_LOC=$(cd -- "$(dirname -- "{BASH_SOURCE[0]}")" &> /dev/null && pwd)
-
-error_exit() {
-    echo "something's wrong in opensuse-init.sh"
-    exit 1
-}
+set -euo pipefail
+D_LOC="${D_LOC:?D_LOC must be set}"
 
 prompt() {
     local available=$(($(tput cols) - ${#1} - 2))
@@ -21,7 +14,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd dust emacs clang eza editorconfig ShellCheck)
+PACKAGES=(fd dust emacs clang eza editorconfig ShellCheck openssh)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
