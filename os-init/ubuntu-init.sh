@@ -14,7 +14,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd-find clang flatpak gcc editorconfig shellcheck openssh-client)
+PACKAGES=(fd-find clang flatpak gcc pkg-config libssl-dev editorconfig shellcheck openssh-client)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
