@@ -1,13 +1,6 @@
 #!/usr/bin/env bash
-LOC=$(pwd)
-export LOC
-# dotfiles location
-D_LOC=$(cd -- "$(dirname -- "{BASH_SOURCE[0]}")" &> /dev/null && pwd)
-
-error_exit() {
-    echo "something's wrong in fedora-init.sh"
-    exit 1
-}
+set -euo pipefail
+D_LOC="${D_LOC:?D_LOC must be set}"
 
 #shellcheck disable=SC2004
 prompt() {
@@ -22,7 +15,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd-find emacs clang editorconfig ShellCheck)
+PACKAGES=(fd-find emacs clang editorconfig ShellCheck openssh-clients)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then

@@ -1,13 +1,6 @@
 #!/usr/bin/env zsh
-LOC=$(pwd)
-export LOC
-# dotfiles location
-D_LOC=$(cd -- "$(dirname -- "{ZSH_SOURCE[0]}")" &> /dev/null && pwd)
-
-error_exit() {
-    echo "something's wrong in mac-init.sh"
-    exit 1
-}
+set -euo pipefail
+D_LOC="${D_LOC:?D_LOC must be set}"
 
 prompt() {
     local available=$(($(tput cols) - ${#1} - 2))
@@ -41,7 +34,7 @@ else
 fi
 
 prompt "installing packages"
-PACKAGES=(fd dust eza editorconfig shellcheck typst)
+PACKAGES=(fd dust eza editorconfig shellcheck typst openssh)
 PACKAGES+=($(cat "$D_LOC"/lists/package.list))
 for item in "${PACKAGES[@]}"
 do
