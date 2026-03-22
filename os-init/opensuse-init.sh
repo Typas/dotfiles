@@ -14,7 +14,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd dust emacs clang eza editorconfig ShellCheck openssh)
+PACKAGES=(fd dust emacs clang eza editorconfig ShellCheck openssh typst)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then

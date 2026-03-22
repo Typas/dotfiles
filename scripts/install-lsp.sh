@@ -27,6 +27,11 @@ if ! command -v cargo &>/dev/null; then echo "cargo not found, skipping texlab"
 elif command -v texlab &>/dev/null; then echo "texlab already installed"
 else cargo install texlab; fi &
 
+# tinymist
+if ! command -v cargo &>/dev/null; then echo "cargo not found, skipping tinymist"
+elif command -v tinymist &>/dev/null; then echo "tinymist already installed"
+else cargo install tinymist; fi &
+
 # bash-language-server
 if ! command -v npm &>/dev/null; then echo "npm not found, skipping bash-language-server"
 elif npm view bash-language-server &>/dev/null 2>&1; then echo "bash-language-server already installed"
