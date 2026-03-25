@@ -39,7 +39,7 @@ julia:
 haskell:
     bash {{root}}/scripts/install-haskell.sh {{os}}
 
-# Install optional fonts (Fira Sans, Inconsolata, LXGW WenKai TC)
+# Install optional fonts (Fira Math, Fira Sans, Inconsolata, LXGW WenKai TC)
 font:
     bash {{root}}/scripts/install-fonts.sh
 
