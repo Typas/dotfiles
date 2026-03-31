@@ -24,30 +24,28 @@ wezterm.on("resurrect.error", function(msg)
   wezterm.log_error("resurrect: " .. msg)
 end)
 
-return {
-  keys = {
-    -- Save workspace
-    {
-      key = "s",
-      mods = "ALT|SHIFT",
-      action = wezterm.action_callback(function(win, pane)
-        resurrect.state_manager.save_state(resurrect.workspace_state.get_workspace_state())
-      end),
-    },
-    -- Load workspace via fuzzy finder
-    {
-      key = "l",
-      mods = "ALT|SHIFT",
-      action = wezterm.action_callback(function(win, pane)
-        resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id)
-          local state = resurrect.state_manager.load_state(id, "workspace")
-          resurrect.workspace_state.restore_workspace(state, restore_opts)
-        end, {
-          title = "Load Workspace",
-          is_fuzzy = true,
-          show_state_with_type = "workspace",
-        })
-      end),
-    },
-  },
-}
+local function setup(config)
+  table.insert(config.keys, {
+    key = "s",
+    mods = "ALT|SHIFT",
+    action = wezterm.action_callback(function(win, pane)
+      resurrect.state_manager.save_state(resurrect.workspace_state.get_workspace_state())
+    end),
+  })
+  table.insert(config.keys, {
+    key = "l",
+    mods = "ALT|SHIFT",
+    action = wezterm.action_callback(function(win, pane)
+      resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id)
+        local state = resurrect.state_manager.load_state(id, "workspace")
+        resurrect.workspace_state.restore_workspace(state, restore_opts)
+      end, {
+        title = "Load Workspace",
+        is_fuzzy = true,
+        show_state_with_type = "workspace",
+      })
+    end),
+  })
+end
+
+return { setup = setup }
