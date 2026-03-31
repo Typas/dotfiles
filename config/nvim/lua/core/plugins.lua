@@ -27,7 +27,7 @@ return {
 
   {
     "NTBBloodbath/doom-one.nvim",
-    lazy = false,
+    lazy = true,
     init = function()
       vim.g.doom_one_cursor_coloring = false
       vim.g.doom_one_terminal_colors = false
@@ -74,12 +74,12 @@ return {
 
   {
     "nvim-telescope/telescope.nvim",
-    lazy = true,
+    lazy = false,
   },
 
   {
     "nvim-lua/plenary.nvim",
-    lazy = true,
+    lazy = false,
   },
 
   {
@@ -121,7 +121,7 @@ return {
     lazy = false,
     version = "*",
     opts = {
-      keymap = { preset = "super-tab" },
+      keymap = { preset = "enter" },
       appearance = {
         nerd_font_variant = "mono",
       },
