@@ -30,6 +30,7 @@ local full_config = conf_table.merge_all(
   conf_misc,
   require("conf-fonts"),
   require("conf-tab"),
+  require("conf-rescurrect"),
   {} -- so the last table can have an ending comma for git diffs
 )
 
