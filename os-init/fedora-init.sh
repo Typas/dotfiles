@@ -15,7 +15,10 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd-find emacs clang editorconfig ShellCheck openssh-clients typst)
+prompt "wezterm COPR repo"
+sudo dnf copr enable -y wezfurlong/wezterm-nightly
+
+PACKAGES=(fd-find emacs clang editorconfig ShellCheck openssh-clients typst wezterm)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
@@ -23,6 +26,5 @@ if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
 fi
 sudo dnf install -y "${PACKAGES[@]}"
 
-prompt "flatpak installations"
+prompt "flatpak setup"
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install -y flathub org.wezfurlong.wezterm
