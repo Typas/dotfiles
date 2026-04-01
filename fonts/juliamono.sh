@@ -30,7 +30,7 @@ install_font() {
         for ff in "${FONTFILES[@]}"; do
             fontpath=$(find "$TMPPATH" -name "$ff")
             if [ -n "$fontpath" ]; then
-                bash add-font-file.sh "$fontpath"
+                source ./add-font-file.sh "$fontpath"
             else
                 echo "font skipped: $ff"
             fi
@@ -45,7 +45,7 @@ install_font() {
 remove_font() {
     if fc-list | grep -i "$FONTNAME" > /dev/null; then
         for ff in "${FONTFILES[@]}"; do
-            bash remove-font-file.sh  "$ff"
+            source ./remove-font-file.sh  "$ff"
         done
         rm -rf "$TMPPATH"
         fc-cache -f
