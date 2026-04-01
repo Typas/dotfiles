@@ -20,6 +20,9 @@ local conf_misc = {
   -- Never hold on close
   exit_behavior = "Close",
 
+  -- GNOME Wayland CSD title bar is broken; fall back to XWayland for SSD
+  enable_wayland = not (os.getenv("XDG_CURRENT_DESKTOP") or ""):find("GNOME"),
+
   -- Don't start as login shell to avoid /etc/profile.d/ scripts (e.g. gpm.sh tty error)
   default_prog = { "bash" },
 
