@@ -2,6 +2,8 @@
 set -euo pipefail
 D_LOC="${D_LOC:?D_LOC must be set}"
 
+sudo -v
+
 prompt() {
     local available=$(($(tput cols) - ${#1} - 2))
     local left=$((available / 2))
