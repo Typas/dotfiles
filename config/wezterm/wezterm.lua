@@ -32,10 +32,10 @@ local conf_table = require "conf-lib".conf_table
 local full_config = conf_table.merge_all(
   conf_misc,
   require("conf-fonts"),
-  require("conf-tab"),
   {} -- so the last table can have an ending comma for git diffs
 )
 
+require("conf-tab").setup(full_config)
 require("conf-rescurrect").setup(full_config)
 
 return full_config
