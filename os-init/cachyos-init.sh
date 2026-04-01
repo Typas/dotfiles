@@ -14,7 +14,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(dust emacs-wayland clang flatpak shellcheck typst openssh)
+PACKAGES=(dust emacs-wayland clang flatpak shellcheck typst openssh wezterm)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
@@ -22,6 +22,5 @@ if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
 fi
 sudo pacman -S --needed --noconfirm --ask=4 "${PACKAGES[@]}" 2>&1 | grep -Ev 'is up to date -- skipping|there is nothing to do'
 
-prompt "flatpak installations"
+prompt "flatpak setup"
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install -y flathub org.wezfurlong.wezterm
