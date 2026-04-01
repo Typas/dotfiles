@@ -1,93 +1,90 @@
---- modded from https://github.com/wez/wezterm/issues/647
-local wezterm = require "wezterm"
+--- https://github.com/michaelbrusegard/tabline.wez
+local wezterm = require("wezterm")
 
--- The powerline symbol
-local LEFT_ARROW = utf8.char(0xe0b3)
-local SOLID_LEFT_ARROW = utf8.char(0xe0b2)
-local RIGHT_ARROW = utf8.char(0xe0b1)
-local SOLID_RIGHT_ARROW = utf8.char(0xe0b0)
+local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
 
-local color_tab_bar_background = "#bbbbbb"
+local function scheme_overrides(scheme)
+  local bg = scheme.background
+  local fg = scheme.foreground
+  local ansi = scheme.ansi
+  -- ansi: 1=black 2=red 3=green 4=yellow 5=blue 6=magenta 7=cyan 8=white
+  local blue = ansi[5]
+  local green = ansi[3]
+  local yellow = ansi[4]
 
-local color_tab_inactive = {
-  background = "#bbbbbb",
-  foreground = "#3f3f3f",
-  intensity = "Normal",
-}
+  local l = wezterm.color.parse(bg):laba()
+  local is_light = l > 50
+  local accent_fg = is_light and "#ffffff" or "#000000"
+  local mid_bg = tostring(is_light
+    and wezterm.color.parse(bg):darken(0.12)
+    or wezterm.color.parse(bg):lighten(0.12))
+  local subtle_bg = tostring(is_light
+    and wezterm.color.parse(bg):darken(0.04)
+    or wezterm.color.parse(bg):lighten(0.04))
 
-local color_tab_hover = {
-  background = "#a8a8a8",
-  foreground = "#272727",
-  intensity = "Normal",
-}
-
-local color_tab_active = {
-  background = "#cfcfcf",
-  foreground = "#262626",
-  intensity = "Bold",
-}
-
-local color_tab_new = {
-  background = "#bbbbbb",
-  foreground = "#555555",
-  intensity = "Normal",
-}
-
-local color_tab_new_hover = {
-  background = "#a8a8a8",
-  foreground = "#444444",
-  intensity = "Normal",
-}
-
-wezterm.on(
-  "format-tab-title",
-  function(tab, tabs, panes, config, hover, max_width)
-    local is_tab_hover = hover
-    local is_tab_active = tab.is_active
-
-    if is_tab_active then
-      color_tab = color_tab_active
-    elseif is_tab_hover then
-      color_tab = color_tab_hover
-    else
-      color_tab = color_tab_inactive
-    end
-
-    local title = tab.active_pane.title
-    local available_chars = max_width - 3
-    local title = wezterm.truncate_left(title, available_chars)
-
-    return {
-      {Background={Color=color_tab.background}},
-      {Foreground={Color=color_tab.foreground}},
-      {Text=" "},
-      {Attribute={Intensity=color_tab.intensity}},
-      {Text=title},
-      {Attribute={Intensity="Normal"}},
-      {Text=" "},
-      {Background={Color=color_tab_bar_background}},
-      {Foreground={Color=color_tab.background}},
-      {Text=SOLID_RIGHT_ARROW},
-    }
-  end
-)
-
-return {
-  hide_tab_bar_if_only_one_tab = true,
-
-  use_fancy_tab_bar = false,
-
-  colors = {
-    tab_bar = {
-      background = color_tab_bar_background,
-      new_tab = {
-        bg_color = color_tab_new.background,
-        fg_color = color_tab_new.foreground,
-      },
-      new_tab_hover = {
-        bg_color = color_tab_new_hover.background,
-        fg_color = color_tab_new_hover.foreground,
-      },
+  return {
+    normal_mode = {
+      a = { fg = accent_fg, bg = blue },
+      b = { fg = fg, bg = mid_bg },
+      c = { fg = fg, bg = subtle_bg },
+    },
+    copy_mode = {
+      a = { fg = accent_fg, bg = yellow },
+      b = { fg = fg, bg = mid_bg },
+      c = { fg = fg, bg = subtle_bg },
+    },
+    search_mode = {
+      a = { fg = accent_fg, bg = green },
+      b = { fg = fg, bg = mid_bg },
+      c = { fg = fg, bg = subtle_bg },
+    },
+    tab = {
+      active = { fg = blue, bg = bg },
+      inactive = { fg = fg, bg = mid_bg },
+      inactive_hover = { fg = accent_fg, bg = fg },
     },
   }
-}
+end
+
+local function setup(config)
+  local scheme = wezterm.color.get_builtin_schemes()[config.color_scheme]
+  tabline.setup({
+    options = {
+      icons_enabled = true,
+      theme = config.color_scheme,
+      theme_overrides = scheme_overrides(scheme),
+      section_separators = {
+        left = wezterm.nerdfonts.pl_left_hard_divider,
+        right = wezterm.nerdfonts.pl_right_hard_divider,
+      },
+      component_separators = {
+        left = wezterm.nerdfonts.pl_left_soft_divider,
+        right = wezterm.nerdfonts.pl_right_soft_divider,
+      },
+      tab_separators = {
+        left = wezterm.nerdfonts.pl_left_hard_divider,
+        right = wezterm.nerdfonts.pl_right_hard_divider,
+      },
+    },
+    sections = {
+      tabline_a = { "mode" },
+      tabline_b = { "workspace" },
+      tabline_c = { " " },
+      tab_active = {
+        "index",
+        { "parent", padding = 0 },
+        "/",
+        { "cwd", padding = { left = 0, right = 1 } },
+        { "zoomed", padding = 0 },
+      },
+      tab_inactive = { "index", { "process", padding = { left = 0, right = 1 } } },
+      tabline_x = {},
+      tabline_y = { "datetime" },
+      tabline_z = { "domain" },
+    },
+    extensions = { "resurrect" },
+  })
+  tabline.apply_to_config(config)
+end
+
+return { setup = setup }
