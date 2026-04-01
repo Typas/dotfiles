@@ -4,7 +4,7 @@ local wezterm = require("wezterm")
 local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
 
 local restore_opts = {
-  relative = true,
+  relative = false,
   restore_text = true,
   on_pane_restore = resurrect.tab_state.default_on_pane_restore,
 }
@@ -36,14 +36,25 @@ local function setup(config)
     key = "l",
     mods = "ALT|SHIFT",
     action = wezterm.action_callback(function(win, pane)
-      resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id)
-        local state = resurrect.state_manager.load_state(id, "workspace")
-        resurrect.workspace_state.restore_workspace(state, restore_opts)
-      end, {
-        title = "Load Workspace",
-        is_fuzzy = true,
-        show_state_with_type = "workspace",
-      })
+      resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id, label)
+        local type = string.match(id, "^([^/]+)")
+        id = string.match(id, "([^/]+)$")
+        id = string.match(id, "(.+)%..+$")
+        local state = resurrect.state_manager.load_state(id, type)
+        if type == "workspace" then
+          local opts = {
+            relative = false,
+            restore_text = true,
+            window = win:mux_window(),
+            on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+          }
+          resurrect.workspace_state.restore_workspace(state, opts)
+        elseif type == "window" then
+          resurrect.window_state.restore_window(pane:window(), state, restore_opts)
+        elseif type == "tab" then
+          resurrect.tab_state.restore_tab(pane:tab(), state, restore_opts)
+        end
+      end)
     end),
   })
 end
