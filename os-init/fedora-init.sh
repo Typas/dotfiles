@@ -2,6 +2,8 @@
 set -euo pipefail
 D_LOC="${D_LOC:?D_LOC must be set}"
 
+sudo -v
+
 #shellcheck disable=SC2004
 prompt() {
     local available=$(($(tput cols) - ${#1} - 2))
@@ -16,9 +18,11 @@ prompt() {
 
 prompt "system package installations"
 prompt "wezterm COPR repo"
-sudo dnf copr enable -y wezfurlong/wezterm-nightly
+if ! dnf copr list --enabled 2>/dev/null | grep -q "wezfurlong/wezterm-nightly"; then
+    sudo dnf copr enable -y wezfurlong/wezterm-nightly
+fi
 
-PACKAGES=(fd-find emacs clang editorconfig ShellCheck openssh-clients wezterm)
+PACKAGES=(fd-find emacs clang editorconfig ShellCheck openssh-clients openssl-devel pkg-config wezterm)
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
