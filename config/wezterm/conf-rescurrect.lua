@@ -29,7 +29,9 @@ local function setup(config)
     key = "s",
     mods = "ALT|SHIFT",
     action = wezterm.action_callback(function(win, pane)
+      local workspace = win:active_workspace()
       resurrect.state_manager.save_state(resurrect.workspace_state.get_workspace_state())
+      resurrect.state_manager.write_current_state(workspace, "workspace")
     end),
   })
   table.insert(config.keys, {
@@ -46,6 +48,7 @@ local function setup(config)
             relative = false,
             restore_text = true,
             window = win:mux_window(),
+            close_open_tabs = true,
             on_pane_restore = resurrect.tab_state.default_on_pane_restore,
           }
           resurrect.workspace_state.restore_workspace(state, opts)
