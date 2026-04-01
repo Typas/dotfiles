@@ -2,7 +2,7 @@
 
 if [ $# -ne 1 ]; then
     echo "not valid input"
-    exit 1
+    return 1
 fi
 
 SRC_PATH="$1"

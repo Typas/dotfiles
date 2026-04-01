@@ -20,19 +20,19 @@ fi
 
 prompt "installations"
 ####################
-bash rust-install.sh
+source ./rust-install.sh
 # always the last
-bash cargo-packages.sh
+source ./cargo-packages.sh
 
 prompt "required fonts installation"
 #########################
 cd "$D_LOC/fonts"
-bash fira-code.sh install
-bash juliamono.sh install
-bash noto-sans-cjk.sh install
-bash noto-serif-cjk.sh install
-bash typas-code.sh install
-bash typas-mono-cjk-tc.sh install
+source ./fira-code.sh install
+source ./juliamono.sh install
+source ./noto-sans-cjk.sh install
+source ./noto-serif-cjk.sh install
+source ./typas-code.sh install
+source ./typas-mono-cjk-tc.sh install
 
 prompt "home directory sync"
 ##########################

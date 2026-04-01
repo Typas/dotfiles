@@ -22,7 +22,7 @@ install_font() {
             download
         fi
         for ff in "${FONTFILES[@]}"; do
-            bash add-font-file.sh "$TMPPATH/$ff"
+            source ./add-font-file.sh "$TMPPATH/$ff"
         done
         fc-cache -f
         echo "successfully installed $FONTNAME"
@@ -34,7 +34,7 @@ install_font() {
 remove_font() {
     if fc-list | grep -i "$FONTNAME" > /dev/null; then
         for ff in "${FONTFILES[@]}"; do
-            bash remove-font-file.sh "$TMPPATH/$ff"
+            source ./remove-font-file.sh "$TMPPATH/$ff"
         done
         fc-cache -f
         echo "removed $FONTNAME"

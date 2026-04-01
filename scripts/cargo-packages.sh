@@ -5,7 +5,7 @@ echo "install cargo packages"
 
 # do nothing if cargo doesn't exist
 if ! command -v cargo > /dev/null; then
-    exit
+    return
 fi
 
 if ! command -v bat > /dev/null; then
