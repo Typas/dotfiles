@@ -12,6 +12,14 @@ local conf_misc = {
   keys = {
     {key="F11", action=wezterm.action.ToggleFullScreen},
     {key="Enter", mods="ALT", action=wezterm.action.DisableDefaultAssignment},
+    {key="T", mods="ALT|SHIFT", action=wezterm.action.PromptInputLine {
+      description = "Set tab title (empty to reset)",
+      action = wezterm.action_callback(function(window, _, line)
+        if line then
+          window:active_tab():set_title(line)
+        end
+      end),
+    }},
   },
 
   -- Update, 2 week check
