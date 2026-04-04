@@ -26,7 +26,7 @@ PACKAGES=(fd-find emacs clang editorconfig ShellCheck openssh-clients openssl-de
 mapfile -t extra < "$D_LOC"/lists/package.list
 PACKAGES+=("${extra[@]}")
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
-    sudo dnf update
+    sudo dnf makecache
 fi
 sudo dnf install -y "${PACKAGES[@]}"
 
