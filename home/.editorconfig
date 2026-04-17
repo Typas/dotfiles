@@ -5,18 +5,23 @@ root = true
 end_of_line = lf
 insert_final_newline = true
 charset = utf-8
-
-# 4 space indentation
-[*.{py,rs,c,cpp,h,v,jl,hh,hpp,cc,java}]
-indent_style = space
-indent_size = 4
 trim_trailing_whitespace = true
 
+# 4 space indentation
+[*.{py,rs,c,cpp,h,v,jl,hh,hpp,cc,java,typ,cs,fs,f90,f95,f03,go,hs,kt,asm}]
+indent_style = space
+indent_size = 4
+
 # 2 space indentation
-[*.{toml,yaml,lua}]
+[*.{toml,yaml,lua,yml,md,js,jsx,ts,tsx,html,css,json,xml,scss,less,tex,wat,el,cl,lisp,lsp,clj,cljs,cljc,scm,ss,rkt,bib,cls,sty,toc,sh}]
 indent_style = space
 indent_size = 2
 
 # TAB indentation
 [Makefile]
 indent_style = tab
+
+# Cargo.toml
+[{Cargo.toml,**/Cargo.toml}]
+indent_style = space
+indent_size = 4
