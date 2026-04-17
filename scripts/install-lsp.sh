@@ -13,10 +13,10 @@ install_rust_analyzer() {
     else rustup component add rust-analyzer; fi
 }
 
-# julia lsp
-install_julia_lsp() {
-    if ! command -v julia &>/dev/null; then echo "julia not found, skipping julia LSP"
-    else julia "$SCRIPTS_DIR/install-lsp-julia.jl"; fi
+# JETLS.jl (Julia LSP)
+install_jetls() {
+    if ! command -v julia &>/dev/null; then echo "julia not found, skipping JETLS.jl"
+    else julia -e 'using Pkg; Pkg.Apps.add(; url="https://github.com/aviatesk/JETLS.jl", rev="release")'; fi
 }
 
 # gopls
@@ -63,7 +63,7 @@ install_ruff() {
 }
 
 run_parallel "rust-analyzer" install_rust_analyzer
-run_parallel "julia LSP"     install_julia_lsp
+run_parallel "JETLS.jl"      install_jetls
 run_parallel "gopls"          install_gopls
 run_parallel "hls"            install_hls
 run_parallel "texlab"         install_texlab
