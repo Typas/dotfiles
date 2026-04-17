@@ -17,18 +17,8 @@ prompt() {
 }
 
 prompt "system package installations"
-prompt "wezterm COPR repo"
-if ! dnf copr list --enabled 2>/dev/null | grep -q "wezfurlong/wezterm-nightly"; then
-    sudo dnf copr enable -y wezfurlong/wezterm-nightly
-fi
-
-PACKAGES=(fd-find emacs clang editorconfig ShellCheck openssh-clients openssl-devel pkg-config wezterm)
-mapfile -t extra < "$D_LOC"/lists/package.list
-PACKAGES+=("${extra[@]}")
+PACKAGES=(fd-find clang editorconfig ShellCheck openssh-clients openssl-devel pkg-config gcc cmake curl fontconfig p7zip)
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
     sudo dnf makecache
 fi
 sudo dnf install -y "${PACKAGES[@]}"
-
-prompt "flatpak setup"
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo

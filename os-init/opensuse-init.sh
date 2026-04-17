@@ -16,16 +16,8 @@ prompt() {
 }
 
 prompt "system package installations"
-prompt "wezterm COPR repo"
-sudo zypper ar -fG https://copr.fedorainfracloud.org/coprs/wezfurlong/wezterm-nightly/repo/opensuse-tumbleweed/wezfurlong-wezterm-nightly-opensuse-tumbleweed.repo || true
-
-PACKAGES=(fd dust emacs clang eza editorconfig ShellCheck openssh typst wezterm)
-mapfile -t extra < "$D_LOC"/lists/package.list
-PACKAGES+=("${extra[@]}")
+PACKAGES=(fd dust clang eza editorconfig ShellCheck openssh typst gcc cmake curl fontconfig p7zip)
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
     sudo zypper ref
 fi
 sudo zypper in -y "${PACKAGES[@]}"
-
-prompt "flatpak setup"
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo

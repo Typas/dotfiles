@@ -30,7 +30,6 @@ install_font() {
             fontpath=$(find "$TMPPATH" -name "$ff")
             source ./add-font-file.sh "$fontpath"
         done
-        fc-cache -f
         echo "successfully installed $FONTNAME"
     else
         echo "$FONTNAME has been installed"
@@ -43,7 +42,6 @@ remove_font() {
             fontpath=$(find "$TMPPATH" -name "$ff")
             source ./remove-font-file.sh  "$fontpath"
         done
-        fc-cache -f
         echo "removed $FONTNAME"
     else
         echo "$FONTNAME not found"
