@@ -95,7 +95,7 @@ export plugins=(
 
 # Which plugins would you like to conditionally load? (plugins can be found in ~/.oh-my-bash/plugins/*)
 # Custom plugins may be added to ~/.oh-my-bash/custom/plugins/
-# Example format: 
+# Example format:
 #  if [ "$DISPLAY" ] || [ "$SSH" ]; then
 #      plugins+=(tmux-autoattach)
 #  fi
@@ -159,6 +159,15 @@ case ":$PATH:" in
 esac
 
 # <<< juliaup initialize <<<
+
+case ":$PATH:" in
+    *:"$HOME"/.julia/bin:*)
+        ;;
+
+    *)
+        export PATH=$HOME/.julia/bin${PATH:+:${PATH}}
+        ;;
+esac
 
 # ble.sh attach and keybindings
 if [[ ${BLE_VERSION-} ]]; then
