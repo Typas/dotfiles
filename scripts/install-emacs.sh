@@ -50,17 +50,17 @@ ensure_build_deps() {
     local base_pkgs=() extra_pkgs=() pkgs=() missing=() pkg
     case "$os" in
         fedora)
-            base_pkgs=(gcc make autoconf texinfo libgccjit-devel libtree-sitter-devel sqlite-devel gnutls-devel libxml2-devel libvterm-devel ncurses-devel)
+            base_pkgs=(gcc make autoconf texinfo libgccjit-devel libtree-sitter-devel sqlite-devel gnutls-devel libxml2-devel libvterm-devel ncurses-devel zlib-devel)
             extra_pkgs=(gtk3-devel harfbuzz-devel ImageMagick-devel)
             ;;
         opensuse*)
-            base_pkgs=(gcc make autoconf texinfo libgccjit0 libtree-sitter-devel sqlite3-devel libgnutls-devel libxml2-devel libvterm-devel ncurses-devel)
+            base_pkgs=(gcc make autoconf texinfo libgccjit0 libtree-sitter-devel sqlite3-devel libgnutls-devel libxml2-devel libvterm-devel ncurses-devel zlib-devel)
             extra_pkgs=(gtk3-devel libharfbuzz-devel ImageMagick-devel)
             ;;
         ubuntu|debian)
             local gcc_major
             gcc_major=$(gcc -dumpversion | cut -d. -f1)
-            base_pkgs=(build-essential autoconf texinfo "libgccjit-${gcc_major}-dev" libtree-sitter-dev libsqlite3-dev libgnutls28-dev libxml2-dev libvterm-dev libncurses-dev)
+            base_pkgs=(build-essential autoconf texinfo "libgccjit-${gcc_major}-dev" libtree-sitter-dev libsqlite3-dev libgnutls28-dev libxml2-dev libvterm-dev libncurses-dev zlib1g-dev)
             extra_pkgs=(libgtk-3-dev libharfbuzz-dev libmagickwand-dev)
             ;;
         *)
