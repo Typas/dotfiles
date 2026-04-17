@@ -35,7 +35,6 @@ install_font() {
                 echo "font skipped: $ff"
             fi
         done
-        fc-cache -f
         echo "successfully installed $FONTNAME"
     else
         echo "$FONTNAME has been installed"
@@ -48,7 +47,6 @@ remove_font() {
             source ./remove-font-file.sh  "$ff"
         done
         rm -rf "$TMPPATH"
-        fc-cache -f
         echo "removed $FONTNAME"
     else
         echo "$FONTNAME not found"

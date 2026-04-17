@@ -16,16 +16,7 @@ prompt() {
 }
 
 prompt "system package installations"
-prompt "wezterm APT repo"
-if [ ! -f /usr/share/keyrings/wezterm-fury.gpg ]; then
-    curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
-    echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
-    sudo apt-get update
-fi
-
-PACKAGES=(fd-find clang flatpak gcc make gawk pkg-config libssl-dev editorconfig shellcheck openssh-client wezterm)
-mapfile -t extra < "$D_LOC"/lists/package.list
-PACKAGES+=("${extra[@]}")
+PACKAGES=(fd-find clang gcc make gawk pkg-config libssl-dev editorconfig shellcheck openssh-client unzip cmake curl fontconfig p7zip-full)
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
     sudo apt-get update
 fi
@@ -36,6 +27,3 @@ if ! command -v fd > /dev/null 2>&1; then
     source ~/.bashrc
     source ~/.profile
 fi
-
-prompt "flatpak setup"
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo

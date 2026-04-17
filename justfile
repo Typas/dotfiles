@@ -9,8 +9,8 @@ update := "true"
 help:
     @just --list
 
-# Full system setup: OS packages, rust, cargo tools, fonts, symlinks, and shell config
-init: (_os-packages os update) _common-init (_shell-setup os)
+# Core setup: OS packages, rust, cargo tools, fonts, symlinks, shell
+init: (_os-packages os update) _rust-setup (_parallel-fonts "required") _common-setup (_shell-setup os)
     @echo ""
     @echo "Done!"
 
@@ -28,8 +28,59 @@ _os-packages os update:
         *)         echo "unsupported OS: {{os}}"; exit 1 ;;
     esac
 
-_common-init:
-    cd {{root}}/scripts && D_LOC="{{root}}" bash common-init.sh
+_rust-setup:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd {{root}}/scripts
+    source ./rust-install.sh
+    source ./cargo-packages.sh
+
+_common-setup:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd "$HOME"
+    for f in "{{root}}/home/".*; do
+        if [ "${f##*/}" != "." ] && [ "${f##*/}" != ".." ]; then
+            echo "Linking $f"
+            ln -sf "$f" .
+        fi
+    done
+    mkdir -p "$HOME/.config"
+    cd "$HOME/.config"
+    for d in "{{root}}/config/"*/; do
+        echo "Linking $d"
+        ln -sf "$d" .
+    done
+
+_parallel-fonts scope:
+    bash {{root}}/scripts/parallel-fonts.sh {{scope}}
+
+_shell-setup os:
+    D_LOC="{{root}}" bash {{root}}/scripts/shell-init.sh {{os}}
+
+# Install ALL fonts (required + optional) in parallel with progress display
+font:
+    bash {{root}}/scripts/parallel-fonts.sh all
+
+# Install wezterm terminal emulator
+wezterm:
+    bash {{root}}/scripts/install-wezterm.sh {{os}}
+
+# Set up flatpak with flathub remote
+flatpak:
+    bash {{root}}/scripts/install-flatpak.sh {{os}}
+
+# Install modern unix tools (bat, delta, dust, fzf, etc.)
+modern:
+    bash {{root}}/scripts/install-modern.sh {{os}}
+
+# Install uv (Python package manager)
+python:
+    bash {{root}}/scripts/install-python.sh
+
+# Install or update Go (use: just go, just go update)
+go action="install":
+    bash {{root}}/scripts/install-go.sh {{action}}
 
 # Install Julia via juliaup
 julia:
@@ -39,13 +90,24 @@ julia:
 haskell:
     bash {{root}}/scripts/install-haskell.sh {{os}}
 
-# Install optional fonts (Fira Math, Fira Sans, Inconsolata, LXGW WenKai TC)
-font:
-    bash {{root}}/scripts/install-fonts.sh
-
 # Install LSP servers for available languages
 lsp:
     bash {{root}}/scripts/install-lsp.sh
 
-_shell-setup os:
-    D_LOC="{{root}}" bash {{root}}/scripts/shell-init.sh {{os}}
+# TODO: install LuaTeX
+tex:
+    @echo "tex: not yet implemented"
+
+# TODO: install Typst
+typst:
+    @echo "typst: not yet implemented"
+
+# TODO: install Emacs
+emacs:
+    @echo "emacs: not yet implemented"
+
+# TODO: install Neovim
+neovim:
+    @echo "neovim: not yet implemented"
+
+alias nvim := neovim

@@ -25,17 +25,8 @@ if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
     brew update
 fi
 
-prompt "installing wezterm"
-if ! command -v wezterm > /dev/null; then
-    brew tap wez/wezterm
-    brew install --cask wez/wezterm/wezterm
-else
-    echo "wezterm is already installed"
-fi
-
 prompt "installing packages"
-PACKAGES=(fd dust eza editorconfig shellcheck typst openssh)
-PACKAGES+=($(cat "$D_LOC"/lists/package.list))
+PACKAGES=(fd dust eza editorconfig shellcheck typst openssh gcc cmake curl fontconfig p7zip)
 for item in "${PACKAGES[@]}"
 do
     echo "checking $item, might be really slow"
@@ -43,14 +34,3 @@ do
         brew install $item
     fi
 done
-
-prompt "installing emacs"
-if ! brew ls --versions emacs-plus > /dev/null ; then
-    brew tap d12frosted/emacs-plus
-    brew install emacs-plus\
-        --with-memeplex-slim-icon\
-        --with-imagemagick\
-        --with-native-comp
-else
-    echo "emacs-plus is installed"
-fi
