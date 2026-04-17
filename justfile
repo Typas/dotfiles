@@ -102,12 +102,12 @@ tex:
 typst:
     @echo "typst: not yet implemented"
 
-# TODO: install Emacs
-emacs:
-    @echo "emacs: not yet implemented"
+# Install or update Emacs (use: just emacs, just emacs update, just emacs install home)
+emacs action="install" location="":
+    bash {{root}}/scripts/install-emacs.sh {{os}} {{action}} {{location}}
 
-# TODO: install Neovim
-neovim:
-    @echo "neovim: not yet implemented"
+# Install or update Neovim (use: just neovim, just neovim update, just neovim install home)
+neovim action="install" location="":
+    bash {{root}}/scripts/install-neovim.sh {{os}} {{action}} {{location}}
 
 alias nvim := neovim

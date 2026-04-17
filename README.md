@@ -19,6 +19,8 @@ bash init.sh
 | `just init` | Full setup: OS packages, Rust, cargo tools, fonts, symlinks, shell config |
 | `just julia` | Install Julia via juliaup |
 | `just haskell` | Install Haskell via ghcup |
+| `just neovim` / `just neovim update` | Install or update Neovim (pass `home` to install under `~/.local`) |
+| `just emacs` / `just emacs update` | Install or update Emacs (system build is pgtk, home build is nox) |
 | `just font` | Install optional fonts (Fira Sans, Inconsolata, LXGW WenKai TC) |
 | `just lsp` | Install LSP servers for available languages |
 | `just help` | List all recipes |
