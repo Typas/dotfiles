@@ -51,7 +51,7 @@ esac
 # install just if not present
 if ! command -v just &>/dev/null; then
     case "$OS" in
-        mac)       nix profile install nixpkgs#just ;;
+        mac)       nix profile add nixpkgs#just ;;
         fedora)    sudo dnf install -y just ;;
         opensuse-tumbleweed) sudo zypper in -y just ;;
         cachyos)   sudo pacman -S --noconfirm just ;;

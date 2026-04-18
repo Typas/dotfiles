@@ -22,9 +22,9 @@ _os-packages os update:
         mac)
             HOSTNAME="${HOSTNAME:-$(scutil --get LocalHostName)}"
             if command -v darwin-rebuild &>/dev/null; then
-                sudo "$(command -v darwin-rebuild)" switch --flake "{{root}}#${HOSTNAME}"
+                sudo -H "$(command -v darwin-rebuild)" switch --flake "{{root}}#${HOSTNAME}"
             else
-                sudo "$(command -v nix)" --extra-experimental-features 'nix-command flakes' \
+                sudo -H "$(command -v nix)" --extra-experimental-features 'nix-command flakes' \
                     run nix-darwin -- switch --flake "{{root}}#${HOSTNAME}"
             fi
             ;;
