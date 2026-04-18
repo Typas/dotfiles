@@ -20,16 +20,12 @@ _os-packages os update:
     export DOTFILES_SKIP_UPDATE={{ if update == "false" { "1" } else { "" } }}
     case "{{os}}" in
         mac)
-            export HOSTNAME="${HOSTNAME:-$(scutil --get LocalHostName)}"
-            # flake.nix reads HOSTNAME via builtins.getEnv under --impure;
-            # pass it through sudo explicitly since env_keep doesn't include it.
+            HOSTNAME="${HOSTNAME:-$(scutil --get LocalHostName)}"
             if command -v darwin-rebuild &>/dev/null; then
-                sudo -E HOSTNAME="$HOSTNAME" "$(command -v darwin-rebuild)" \
-                    switch --flake "{{root}}#${HOSTNAME}" --impure
+                sudo "$(command -v darwin-rebuild)" switch --flake "{{root}}#${HOSTNAME}"
             else
-                sudo -E HOSTNAME="$HOSTNAME" "$(command -v nix)" \
-                    --extra-experimental-features 'nix-command flakes' \
-                    run nix-darwin -- switch --flake "{{root}}#${HOSTNAME}" --impure
+                sudo "$(command -v nix)" --extra-experimental-features 'nix-command flakes' \
+                    run nix-darwin -- switch --flake "{{root}}#${HOSTNAME}"
             fi
             ;;
         fedora)    D_LOC="{{root}}" bash {{root}}/os-init/fedora-init.sh ;;
