@@ -72,8 +72,21 @@ jobs:
   mac:
     runs-on: macos-26
     env:
-      NIX_CONFIG: "access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}"
       HOSTNAME: ci
     steps:
       - uses: actions/checkout@v6
-      - run: bash init.sh
+      - name: Install Nix and seed GitHub access token
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Install nix up front (init.sh will skip its own install), then
+          # write the GitHub token into /etc/nix/nix.conf so flake fetches
+          # avoid api.github.com's anonymous rate limit. Sudo would strip
+          # the env var, so system-wide nix.conf is the reliable channel.
+          sh <(curl -L https://nixos.org/nix/install) --daemon </dev/null
+          echo "access-tokens = github.com=$GH_TOKEN" | sudo tee -a /etc/nix/nix.conf > /dev/null
+      - name: bash init.sh
+        run: |
+          # shellcheck disable=SC1091
+          . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+          bash init.sh
