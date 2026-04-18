@@ -24,6 +24,4 @@ sudo apt-get install -y "${PACKAGES[@]}"
 if ! command -v fd > /dev/null 2>&1; then
     mkdir -p ~/.local/bin
     ln -sf "$(which fdfind)" ~/.local/bin/fd
-    source ~/.bashrc
-    source ~/.profile
 fi
