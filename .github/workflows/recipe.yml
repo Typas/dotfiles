@@ -67,9 +67,8 @@ jobs:
     name: ${{ matrix.name }}
     container:
       image: ${{ matrix.image }}
-      options: --user root
     steps:
-      - name: Install base tools
+      - name: Install base tools and create ci user
         run: |
           set -eu
           case "${{ matrix.pkg }}" in
@@ -89,11 +88,14 @@ jobs:
               pacman -Sy --noconfirm --needed sudo curl git ca-certificates
               ;;
           esac
+          id ci >/dev/null 2>&1 || useradd -m -s /bin/bash ci
+          echo "ci ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ci
+          chmod 0440 /etc/sudoers.d/ci
       - uses: actions/checkout@v4
       - name: bootstrap + just ${{ needs.setup.outputs.recipe }}
         run: |
-          bash init.sh
-          just ${{ needs.setup.outputs.recipe }}
+          chown -R ci:ci "$GITHUB_WORKSPACE"
+          su - ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh && just ${{ needs.setup.outputs.recipe }}"
 
   mac:
     needs: setup
