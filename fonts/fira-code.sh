@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mapfile -t FONTFILES < fira-code.txt
+# shellcheck disable=SC2207
+FONTFILES=($(cat fira-code.txt))
 TMPPATH=/tmp/FiraCode
 URL="https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip"
 ZIPFILE="${URL##*/}"

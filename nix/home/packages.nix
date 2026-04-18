@@ -6,6 +6,7 @@
     fd
     dust
     eza
+    ripgrep
     editorconfig-core-c
     shellcheck
     typst

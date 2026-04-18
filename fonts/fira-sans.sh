@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mapfile -t FONTFILES < fira-sans.txt
+# shellcheck disable=SC2207
+FONTFILES=($(cat fira-sans.txt))
 TMPPATH=/tmp/FiraSans
 BASEURL="https://raw.githubusercontent.com/bBoxType/FiraSans/master/Fira_Sans_4_3/Fonts/Fira_Sans_OTF_4301/Normal"
 FONTNAME="Fira Sans"

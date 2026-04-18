@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mapfile -t FONTFILES < fira-math.txt
+# shellcheck disable=SC2207
+FONTFILES=($(cat fira-math.txt))
 TMPPATH=/tmp/FiraMath
 URL="https://github.com/firamath/firamath/releases/download/v0.3.4/FiraMath-Regular.otf"
 FONTNAME="Fira Math"

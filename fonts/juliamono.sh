@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mapfile -t FONTFILES < juliamono.txt
+# shellcheck disable=SC2207
+FONTFILES=($(cat juliamono.txt))
 TMPPATH=/tmp/JuliaMono
 URL="https://github.com/cormullion/juliamono/releases/latest/download/JuliaMono-ttf.zip"
 ZIPFILE="${URL##*/}"

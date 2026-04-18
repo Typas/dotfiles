@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mapfile -t FONTFILES < typas-code.txt
+# shellcheck disable=SC2207
+FONTFILES=($(cat typas-code.txt))
 TMPPATH=/tmp/TypasCode
 URL="https://github.com/Typas/Typas-Font/releases/latest/download/Typas-Code.zip"
 ZIPFILE="${URL##*/}"
