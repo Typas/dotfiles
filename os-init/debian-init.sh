@@ -16,7 +16,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd-find clang gcc make gawk pkg-config libssl-dev editorconfig shellcheck openssh-client unzip cmake curl fontconfig p7zip-full)
+PACKAGES=(fd-find eza ripgrep clang gcc make gawk pkg-config libssl-dev editorconfig shellcheck openssh-client unzip cmake curl fontconfig p7zip-full)
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
     sudo apt-get update
 fi

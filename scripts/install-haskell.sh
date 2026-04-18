@@ -12,7 +12,7 @@ else
             sudo pacman -S --needed --noconfirm gmp ncurses make pkg-config 2>&1 | grep -v 'is up to date -- skipping' ;;
         fedora)
             sudo dnf install -y gmp-devel ncurses-devel make pkgconfig gcc-c++ xz ;;
-        opensuse*)
+        opensuse-tumbleweed)
             sudo zypper in -y gmp-devel ncurses-devel make pkg-config gcc-c++ xz ;;
         ubuntu|debian)
             sudo apt-get install -y libgmp-dev libncurses-dev make pkg-config g++ xz-utils ;;

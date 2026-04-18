@@ -13,7 +13,7 @@ case "$os" in
     cachyos)
         sudo pacman -S --needed --noconfirm flatpak
         ;;
-    fedora|opensuse*)
+    fedora|opensuse-tumbleweed)
         ;; # flatpak pre-installed
 esac
 

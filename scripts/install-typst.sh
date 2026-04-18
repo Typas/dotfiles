@@ -40,7 +40,7 @@ if [[ "$os" == "cachyos" ]]; then
 fi
 
 case "$os" in
-    fedora|opensuse*|ubuntu|debian) ;;
+    fedora|opensuse-tumbleweed|ubuntu|debian) ;;
     *) echo "unsupported OS for typst: $os" >&2; exit 1 ;;
 esac
 

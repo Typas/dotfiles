@@ -6,5 +6,5 @@ os="${1:?usage: shell-init.sh <os>}"
 
 case "$os" in
     mac)                                    export D_LOC; zsh "$D_LOC/scripts/zimfw-install.sh" ;;
-    fedora|opensuse*|cachyos|debian|ubuntu) export D_LOC; bash "$D_LOC/scripts/oh-my-bash-install.sh" ;;
+    fedora|opensuse-tumbleweed|cachyos|debian|ubuntu) export D_LOC; bash "$D_LOC/scripts/oh-my-bash-install.sh" ;;
 esac

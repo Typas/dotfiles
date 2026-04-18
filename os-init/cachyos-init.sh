@@ -16,7 +16,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(dust clang shellcheck typst openssh gcc cmake curl fontconfig p7zip)
+PACKAGES=(fd eza ripgrep dust clang shellcheck typst openssh gcc cmake curl fontconfig p7zip)
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
     sudo pacman -Syu --noconfirm
 fi
