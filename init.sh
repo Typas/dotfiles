@@ -34,7 +34,7 @@ case "$OS" in
     fedora)
         sudo dnf update -y
         ;;
-    opensuse*)
+    opensuse-tumbleweed)
         sudo zypper ref
         ;;
     cachyos)
@@ -53,7 +53,7 @@ if ! command -v just &>/dev/null; then
     case "$OS" in
         mac)       nix profile install nixpkgs#just ;;
         fedora)    sudo dnf install -y just ;;
-        opensuse*) sudo zypper in -y just ;;
+        opensuse-tumbleweed) sudo zypper in -y just ;;
         cachyos)   sudo pacman -S --noconfirm just ;;
         ubuntu|debian) sudo apt-get install -y just ;;
     esac

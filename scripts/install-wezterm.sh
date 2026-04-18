@@ -17,7 +17,7 @@ case "$os" in
         fi
         sudo dnf install -y wezterm
         ;;
-    opensuse*)
+    opensuse-tumbleweed)
         sudo zypper ar -fG https://copr.fedorainfracloud.org/coprs/wezfurlong/wezterm-nightly/repo/opensuse-tumbleweed/wezfurlong-wezterm-nightly-opensuse-tumbleweed.repo || true
         sudo zypper in -y wezterm
         ;;

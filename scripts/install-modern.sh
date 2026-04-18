@@ -44,7 +44,7 @@ fi
 echo "installing system packages: jq duf fzf"
 case "$os" in
     fedora)        sudo dnf install -y jq duf fzf ;;
-    opensuse*)     sudo zypper in -y jq duf fzf ;;
+    opensuse-tumbleweed)     sudo zypper in -y jq duf fzf ;;
     cachyos)       sudo pacman -S --needed --noconfirm jq duf fzf ;;
     debian|ubuntu) sudo apt-get install -y jq fzf ;;
 esac

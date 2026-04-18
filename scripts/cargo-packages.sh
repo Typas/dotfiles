@@ -21,6 +21,13 @@ if ! command -v fd > /dev/null; then
 fi
 
 if (( ${#CARGO_PACKAGES[@]} != 0 )) ; then
-    echo "cargo install ${CARGO_PACKAGES[*]}"
-    cargo install "${CARGO_PACKAGES[@]}"
+    # Prefer prebuilt binaries via cargo-binstall; it falls back to
+    # `cargo install` automatically when no prebuilt is available.
+    if command -v cargo-binstall > /dev/null; then
+        echo "cargo binstall ${CARGO_PACKAGES[*]}"
+        cargo binstall --no-confirm "${CARGO_PACKAGES[@]}"
+    else
+        echo "cargo install ${CARGO_PACKAGES[*]}"
+        cargo install "${CARGO_PACKAGES[@]}"
+    fi
 fi

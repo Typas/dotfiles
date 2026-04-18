@@ -53,7 +53,7 @@ ensure_build_deps() {
             base_pkgs=(gcc make autoconf texinfo libgccjit-devel libtree-sitter-devel sqlite-devel gnutls-devel libxml2-devel libvterm-devel ncurses-devel zlib-devel)
             extra_pkgs=(gtk3-devel harfbuzz-devel ImageMagick-devel)
             ;;
-        opensuse*)
+        opensuse-tumbleweed)
             base_pkgs=(gcc make autoconf texinfo libgccjit0 libtree-sitter-devel sqlite3-devel libgnutls-devel libxml2-devel libvterm-devel ncurses-devel zlib-devel)
             extra_pkgs=(gtk3-devel libharfbuzz-devel ImageMagick-devel)
             ;;
@@ -75,14 +75,14 @@ ensure_build_deps() {
     fi
 
     case "$os" in
-        fedora|opensuse*)
+        fedora|opensuse-tumbleweed)
             for pkg in "${pkgs[@]}"; do
                 rpm -q "$pkg" >/dev/null 2>&1 || missing+=("$pkg")
             done
             [[ ${#missing[@]} -eq 0 ]] && return 0
             case "$os" in
                 fedora)    sudo dnf install -y "${missing[@]}" ;;
-                opensuse*) sudo zypper in -y "${missing[@]}" ;;
+                opensuse-tumbleweed) sudo zypper in -y "${missing[@]}" ;;
             esac
             ;;
         ubuntu|debian)

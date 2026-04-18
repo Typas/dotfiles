@@ -29,7 +29,7 @@ _os-packages os update:
             fi
             ;;
         fedora)    D_LOC="{{root}}" bash {{root}}/os-init/fedora-init.sh ;;
-        opensuse*) D_LOC="{{root}}" bash {{root}}/os-init/opensuse-init.sh ;;
+        opensuse-tumbleweed) D_LOC="{{root}}" bash {{root}}/os-init/opensuse-init.sh ;;
         cachyos)   D_LOC="{{root}}" bash {{root}}/os-init/cachyos-init.sh ;;
         ubuntu)    D_LOC="{{root}}" bash {{root}}/os-init/ubuntu-init.sh ;;
         debian)    D_LOC="{{root}}" bash {{root}}/os-init/debian-init.sh ;;

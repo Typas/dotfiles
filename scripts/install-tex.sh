@@ -51,14 +51,14 @@ fi
 ensure_build_deps() {
     local pkgs=(perl wget fontconfig) missing=() pkg
     case "$os" in
-        fedora|opensuse*)
+        fedora|opensuse-tumbleweed)
             for pkg in "${pkgs[@]}"; do
                 rpm -q "$pkg" >/dev/null 2>&1 || missing+=("$pkg")
             done
             [[ ${#missing[@]} -eq 0 ]] && return 0
             case "$os" in
                 fedora)    sudo dnf install -y "${missing[@]}" ;;
-                opensuse*) sudo zypper in -y "${missing[@]}" ;;
+                opensuse-tumbleweed) sudo zypper in -y "${missing[@]}" ;;
             esac
             ;;
         ubuntu|debian)
