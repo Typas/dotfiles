@@ -1,0 +1,94 @@
+name: recipe
+
+on:
+  push:
+    branches: ['dev/**']
+  pull_request:
+    branches: ['dev/**']
+  workflow_dispatch:
+
+jobs:
+  setup:
+    runs-on: ubuntu-24.04
+    outputs:
+      recipe: ${{ steps.parse.outputs.recipe }}
+    steps:
+      - id: parse
+        env:
+          REF: ${{ github.ref_name }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          set -euo pipefail
+          branch="${HEAD_REF:-$REF}"
+          recipe="${branch#dev/}"
+          if [[ "$recipe" == "pacman-mask-cicku" ]]; then
+            echo "pacman-mask-cicku is excluded from CI" >&2
+            exit 1
+          fi
+          if [[ -z "$recipe" || "$recipe" == "$branch" ]]; then
+            echo "branch '$branch' is not of the form dev/<recipe>" >&2
+            exit 1
+          fi
+          echo "recipe=$recipe" >> "$GITHUB_OUTPUT"
+          echo "Recipe: $recipe"
+
+  ubuntu:
+    needs: setup
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create ci user with passwordless sudo
+        run: |
+          sudo useradd -m -s /bin/bash ci
+          echo "ci ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ci >/dev/null
+          sudo chmod 0440 /etc/sudoers.d/ci
+          sudo chown -R ci:ci "$GITHUB_WORKSPACE"
+      - name: bootstrap + just ${{ needs.setup.outputs.recipe }}
+        run: |
+          sudo -u ci bash -lc "cd '$GITHUB_WORKSPACE' && bash init.sh && just ${{ needs.setup.outputs.recipe }}"
+
+  linux-container:
+    needs: setup
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: debian-trixie
+            image: docker.io/library/debian:trixie
+            pkg: apt
+          - name: fedora-43
+            image: quay.io/fedora/fedora:43
+            pkg: dnf
+          - name: fedora-44
+            image: quay.io/fedora/fedora:44
+            pkg: dnf
+          - name: opensuse-tumbleweed
+            image: registry.opensuse.org/opensuse/tumbleweed:latest
+            pkg: zypper
+          - name: cachyos
+            image: docker.io/cachyos/cachyos:latest
+            pkg: pacman
+    name: ${{ matrix.name }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/linux-container
+        with:
+          image: ${{ matrix.image }}
+          pkg-manager: ${{ matrix.pkg }}
+          script: |
+            bash init.sh
+            just ${{ needs.setup.outputs.recipe }}
+
+  mac:
+    needs: setup
+    if: needs.setup.outputs.recipe != 'flatpak'
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: bootstrap + just ${{ needs.setup.outputs.recipe }}
+        run: |
+          bash init.sh
+          # Ensure nix-installed binaries (just, etc.) are visible in this step.
+          export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
+          just ${{ needs.setup.outputs.recipe }}
