@@ -10,7 +10,7 @@ help:
     @just --list
 
 # Core setup: OS packages, rust, cargo tools, fonts, symlinks, shell
-init: (_os-packages os update) _rust-setup (_parallel-fonts "required") _common-setup (_shell-setup os)
+init: (_os-packages os update) (_rust-setup os) (_parallel-fonts "required") _common-setup (_shell-setup os)
     @echo ""
     @echo "Done!"
 
@@ -36,9 +36,13 @@ _os-packages os update:
         *)         echo "unsupported OS: {{os}}"; exit 1 ;;
     esac
 
-_rust-setup:
+_rust-setup os:
     #!/usr/bin/env bash
     set -euo pipefail
+    # mac manages eza/fd/ripgrep via nix; rustup stays an opt-in per-user install.
+    if [ "{{os}}" = "mac" ]; then
+        exit 0
+    fi
     cd {{root}}/scripts
     source ./rust-install.sh
     source ./cargo-packages.sh

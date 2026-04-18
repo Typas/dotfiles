@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mapfile -t FONTFILES < lxgw-wenkai-tc.txt
+# shellcheck disable=SC2207
+FONTFILES=($(cat lxgw-wenkai-tc.txt))
 TMPPATH=/tmp/LXGWWenKaiTC
 URL="https://github.com/lxgw/LxgwWenkaiTC/releases/download/v1.000/lxgw-wenkai-tc-v1.000.zip"
 ZIPFILE="${URL##*/}"

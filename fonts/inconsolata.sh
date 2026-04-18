@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mapfile -t FONTFILES < inconsolata.txt
+# shellcheck disable=SC2207
+FONTFILES=($(cat inconsolata.txt))
 TMPPATH=/tmp/inconsolata
 URL="https://github.com/googlefonts/Inconsolata/releases/download/v3.000/Inconsolata-VF.ttf"
 FONTNAME="Inconsolata"

@@ -2,7 +2,7 @@
 set -euo pipefail
 D_LOC="${D_LOC:?D_LOC must be set}"
 
-ZIM_HOME=${ZIM_HOME:-${XDG_DATA_HOME:-${HOME}/.local/share}/zim}
+export ZIM_HOME=${ZIM_HOME:-${XDG_DATA_HOME:-${HOME}/.local/share}/zim}
 
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
     mkdir -p "${ZIM_HOME}"

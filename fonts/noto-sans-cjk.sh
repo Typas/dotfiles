@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mapfile -t FONTFILES < noto-sans-cjk.txt
+# shellcheck disable=SC2207
+FONTFILES=($(cat noto-sans-cjk.txt))
 TMPPATH=/tmp/NotoSansCJK
 URL="https://github.com/notofonts/noto-cjk/releases/download/Sans2.004/01_NotoSansCJK-OTF-VF.zip"
 ZIPFILE="${URL##*/}"

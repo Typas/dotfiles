@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mapfile -t FONTFILES < typas-mono-cjk-tc.txt
+# shellcheck disable=SC2207
+FONTFILES=($(cat typas-mono-cjk-tc.txt))
 TMPPATH=/tmp/TypasMonoCJKTC
 URL="https://github.com/Typas/Typas-Font/releases/latest/download/Typas-Mono-CJK-TC.zip"
 ZIPFILE="${URL##*/}"
