@@ -1,0 +1,27 @@
+# zimfw modules — order matters for the last three.
+
+# Sets sane Zsh built-in environment options.
+zmodule environment
+
+# Applies correct bindkeys for input events and enables Zsh's line editor niceties.
+zmodule input
+
+# Sets terminal window and tab titles.
+zmodule termtitle
+
+# Utility aliases and functions.
+zmodule utility
+
+# Additional completion definitions — must come before the completion module.
+zmodule zsh-users/zsh-completions --fpath src
+
+# Enables and configures smart completion.
+zmodule completion
+
+# Prompt.
+zmodule romkatv/powerlevel10k --use degit
+
+# The following must be sourced last, in this order.
+zmodule zdharma-continuum/fast-syntax-highlighting
+zmodule zsh-users/zsh-history-substring-search
+zmodule zsh-users/zsh-autosuggestions
