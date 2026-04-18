@@ -20,10 +20,16 @@ esac
 # update package manager and install just
 case "$OS" in
     mac)
-        if ! command -v brew &>/dev/null; then
-            curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash
+        if ! command -v nix &>/dev/null; then
+            sh <(curl -L https://nixos.org/nix/install) --daemon
+            if [ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+                . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+            fi
         fi
-        brew update
+        mkdir -p "$HOME/.config/nix"
+        if ! grep -q "experimental-features" "$HOME/.config/nix/nix.conf" 2>/dev/null; then
+            echo "experimental-features = nix-command flakes" >> "$HOME/.config/nix/nix.conf"
+        fi
         ;;
     fedora)
         sudo dnf update -y
@@ -45,7 +51,7 @@ esac
 # install just if not present
 if ! command -v just &>/dev/null; then
     case "$OS" in
-        mac)       brew install just ;;
+        mac)       nix profile install nixpkgs#just ;;
         fedora)    sudo dnf install -y just ;;
         opensuse*) sudo zypper in -y just ;;
         cachyos)   sudo pacman -S --noconfirm just ;;

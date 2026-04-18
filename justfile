@@ -19,7 +19,15 @@ _os-packages os update:
     set -euo pipefail
     export DOTFILES_SKIP_UPDATE={{ if update == "false" { "1" } else { "" } }}
     case "{{os}}" in
-        mac)       D_LOC="{{root}}" zsh {{root}}/os-init/mac-init.sh ;;
+        mac)
+            export HOSTNAME="${HOSTNAME:-$(scutil --get LocalHostName)}"
+            if command -v darwin-rebuild &>/dev/null; then
+                darwin-rebuild switch --flake "{{root}}#${HOSTNAME}" --impure
+            else
+                nix --extra-experimental-features 'nix-command flakes' \
+                    run nix-darwin -- switch --flake "{{root}}#${HOSTNAME}" --impure
+            fi
+            ;;
         fedora)    D_LOC="{{root}}" bash {{root}}/os-init/fedora-init.sh ;;
         opensuse*) D_LOC="{{root}}" bash {{root}}/os-init/opensuse-init.sh ;;
         cachyos)   D_LOC="{{root}}" bash {{root}}/os-init/cachyos-init.sh ;;
