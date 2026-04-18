@@ -1,0 +1,145 @@
+name: distro
+
+on:
+  push:
+    branches: ['bootstrap/**']
+  pull_request:
+    branches: ['bootstrap/**']
+  workflow_dispatch:
+
+jobs:
+  setup:
+    runs-on: ubuntu-24.04
+    outputs:
+      distro: ${{ steps.parse.outputs.distro }}
+    steps:
+      - id: parse
+        env:
+          REF: ${{ github.ref_name }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          set -euo pipefail
+          branch="${HEAD_REF:-$REF}"
+          distro="${branch#bootstrap/}"
+          case "$distro" in
+            mac|ubuntu|debian|fedora|opensuse-tumbleweed|cachyos) ;;
+            *)
+              echo "branch '$branch' is not of the form bootstrap/<distro>" >&2
+              echo "valid distros: mac, ubuntu, debian, fedora, opensuse-tumbleweed, cachyos" >&2
+              exit 1
+              ;;
+          esac
+          echo "distro=$distro" >> "$GITHUB_OUTPUT"
+          echo "Distro: $distro"
+
+  ubuntu:
+    needs: setup
+    if: needs.setup.outputs.distro == 'ubuntu'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - run: bash init.sh
+
+  debian:
+    needs: setup
+    if: needs.setup.outputs.distro == 'debian'
+    runs-on: ubuntu-24.04
+    container:
+      image: docker.io/library/debian:trixie
+    steps:
+      - name: Install base tools and create ci user
+        run: |
+          set -eu
+          export DEBIAN_FRONTEND=noninteractive
+          apt-get update
+          apt-get install -y sudo curl git ca-certificates gnupg
+          id ci >/dev/null 2>&1 || useradd -m -s /bin/bash ci
+          echo "ci ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+      - uses: actions/checkout@v6
+      - name: bash init.sh
+        run: |
+          chown -R ci:ci "$GITHUB_WORKSPACE"
+          su - ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh"
+
+  fedora:
+    needs: setup
+    if: needs.setup.outputs.distro == 'fedora'
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ['43', '44']
+    name: fedora-${{ matrix.version }}
+    container:
+      image: quay.io/fedora/fedora:${{ matrix.version }}
+    steps:
+      - name: Install base tools and create ci user
+        run: |
+          set -eu
+          dnf install -y sudo curl git ca-certificates
+          id ci >/dev/null 2>&1 || useradd -m -s /bin/bash ci
+          echo "ci ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+      - uses: actions/checkout@v6
+      - name: bash init.sh
+        run: |
+          chown -R ci:ci "$GITHUB_WORKSPACE"
+          su - ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh"
+
+  opensuse-tumbleweed:
+    needs: setup
+    if: needs.setup.outputs.distro == 'opensuse-tumbleweed'
+    runs-on: ubuntu-24.04
+    container:
+      image: registry.opensuse.org/opensuse/tumbleweed:latest
+    steps:
+      - name: Install base tools and create ci user
+        run: |
+          set -eu
+          zypper --non-interactive refresh
+          zypper --non-interactive install sudo curl git ca-certificates
+          id ci >/dev/null 2>&1 || useradd -m -s /bin/bash ci
+          echo "ci ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+      - uses: actions/checkout@v6
+      - name: bash init.sh
+        run: |
+          chown -R ci:ci "$GITHUB_WORKSPACE"
+          su - ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh"
+
+  cachyos:
+    needs: setup
+    if: needs.setup.outputs.distro == 'cachyos'
+    runs-on: ubuntu-24.04
+    container:
+      image: docker.io/cachyos/cachyos:latest
+    steps:
+      - name: Install base tools and create ci user
+        run: |
+          set -eu
+          pacman -Sy --noconfirm --needed sudo curl git ca-certificates
+          id ci >/dev/null 2>&1 || useradd -m -s /bin/bash ci
+          echo "ci ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+      - uses: actions/checkout@v6
+      - name: bash init.sh
+        run: |
+          chown -R ci:ci "$GITHUB_WORKSPACE"
+          su - ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh"
+
+  mac:
+    needs: setup
+    if: needs.setup.outputs.distro == 'mac'
+    runs-on: macos-26
+    env:
+      HOSTNAME: ci
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install Nix and seed GitHub access token
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          sh <(curl -L https://nixos.org/nix/install) --daemon </dev/null
+          echo "access-tokens = github.com=$GH_TOKEN" | sudo tee -a /etc/nix/nix.conf > /dev/null
+      - name: bash init.sh
+        run: |
+          # shellcheck disable=SC1091
+          . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+          bash init.sh
