@@ -11,7 +11,7 @@ jobs:
   ubuntu:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: bash init.sh
 
   linux-container:
@@ -62,7 +62,7 @@ jobs:
           id ci >/dev/null 2>&1 || useradd -m -s /bin/bash ci
           echo "ci ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ci
           chmod 0440 /etc/sudoers.d/ci
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: bash init.sh
         run: |
           chown -R ci:ci "$GITHUB_WORKSPACE"
@@ -73,5 +73,5 @@ jobs:
     env:
       NIX_CONFIG: "access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: bash init.sh
