@@ -15,26 +15,24 @@
 
   outputs = { self, nixpkgs, nix-darwin, home-manager, ... }:
     let
-      username = builtins.getEnv "USER";
-      hostname = builtins.getEnv "HOSTNAME";
       system = "aarch64-darwin";
-    in
-    {
-      darwinConfigurations.${hostname} = nix-darwin.lib.darwinSystem {
+      lib = nixpkgs.lib;
+
+      hostsDir = ./hosts;
+      hosts = lib.attrNames
+        (lib.filterAttrs (_: t: t == "directory") (builtins.readDir hostsDir));
+
+      mkDarwin = hostname: nix-darwin.lib.darwinSystem {
         inherit system;
-        specialArgs = { inherit username; };
+        specialArgs = { inherit hostname; };
         modules = [
           ./nix/darwin/default.nix
           home-manager.darwinModules.home-manager
-          {
-            users.users.${username}.home = "/Users/${username}";
-
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit username; };
-            home-manager.users.${username} = import ./nix/home/default.nix;
-          }
+          (hostsDir + "/${hostname}")
         ];
       };
+    in
+    {
+      darwinConfigurations = lib.genAttrs hosts mkDarwin;
     };
 }
