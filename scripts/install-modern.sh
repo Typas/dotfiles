@@ -2,14 +2,9 @@
 set -euo pipefail
 os="${1:?usage: install-modern.sh <os>}"
 
-# --- macOS: use brew for everything ---
+# --- macOS: managed declaratively by nix-darwin (nix/home/packages.nix) ---
 if [ "$os" = "mac" ]; then
-    BREW_PKGS=(bat git-delta dust duf fzf mcfly jq yq sd tealdeer bottom gping hyperfine procs curlie xh zoxide doggo)
-    for pkg in "${BREW_PKGS[@]}"; do
-        if ! brew ls --versions "$pkg" &>/dev/null; then
-            brew install "$pkg"
-        fi
-    done
+    echo "modern tools are managed by nix-darwin; edit nix/home/packages.nix and run 'just init'"
     exit 0
 fi
 

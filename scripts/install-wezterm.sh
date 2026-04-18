@@ -9,8 +9,7 @@ fi
 
 case "$os" in
     mac)
-        brew tap wez/wezterm
-        brew install --cask wez/wezterm/wezterm
+        echo "wezterm is managed by nix-darwin (nix/home/packages.nix); edit and run 'just init'"
         ;;
     fedora)
         if ! dnf copr list --enabled 2>/dev/null | grep -q "wezfurlong/wezterm-nightly"; then
