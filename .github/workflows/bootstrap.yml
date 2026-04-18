@@ -12,14 +12,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - name: Create ci user with passwordless sudo
-        run: |
-          sudo useradd -m -s /bin/bash ci
-          echo "ci ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ci >/dev/null
-          sudo chmod 0440 /etc/sudoers.d/ci
-          sudo chown -R ci:ci "$GITHUB_WORKSPACE"
-      - name: bash init.sh
-        run: sudo -u ci bash -lc "cd '$GITHUB_WORKSPACE' && bash init.sh"
+      - run: bash init.sh
 
   linux-container:
     runs-on: ubuntu-24.04
@@ -43,17 +36,37 @@ jobs:
             image: docker.io/cachyos/cachyos:latest
             pkg: pacman
     name: ${{ matrix.name }}
+    container:
+      image: ${{ matrix.image }}
+      options: --user root
     steps:
+      - name: Install base tools
+        run: |
+          set -eu
+          case "${{ matrix.pkg }}" in
+            apt)
+              export DEBIAN_FRONTEND=noninteractive
+              apt-get update
+              apt-get install -y sudo curl git ca-certificates gnupg
+              ;;
+            dnf)
+              dnf install -y sudo curl git ca-certificates
+              ;;
+            zypper)
+              zypper --non-interactive refresh
+              zypper --non-interactive install sudo curl git ca-certificates
+              ;;
+            pacman)
+              pacman -Sy --noconfirm --needed sudo curl git ca-certificates
+              ;;
+          esac
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/linux-container
-        with:
-          image: ${{ matrix.image }}
-          pkg-manager: ${{ matrix.pkg }}
-          script: bash init.sh
+      - run: bash init.sh
 
   mac:
     runs-on: macos-26
+    env:
+      NIX_CONFIG: "access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}"
     steps:
       - uses: actions/checkout@v4
-      - name: bash init.sh
-        run: bash init.sh
+      - run: bash init.sh
