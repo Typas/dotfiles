@@ -21,6 +21,9 @@ bash init.sh
 | `just haskell` | Install Haskell via ghcup |
 | `just neovim` / `just neovim update` | Install or update Neovim (pass `home` to install under `~/.local`) |
 | `just emacs` / `just emacs update` | Install or update Emacs (system build is pgtk, home build is nox) |
+| `just typst` / `just typst update` | Install or update Typst (nix on mac, pacman on CachyOS, cargo elsewhere) |
+| `just tex` / `just tex update` | Install or update TeX Live with LuaLaTeX + CJK (pass `home` for ~/.local install) |
+| `just pacman-mask-cicku` | Comment out cicku.me mirrors in pacman mirrorlists (CachyOS only; idempotent) |
 | `just font` | Install optional fonts (Fira Sans, Inconsolata, LXGW WenKai TC) |
 | `just lsp` | Install LSP servers for available languages |
 | `just help` | List all recipes |
@@ -35,5 +38,4 @@ bash init.sh
 
 ## Notes
 
-- Install LaTeX separately; there is no consistent cross-distro install method.
 - Run `just font` to install fonts listed in the `fonts/` directory.

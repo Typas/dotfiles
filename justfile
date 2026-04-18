@@ -94,13 +94,17 @@ haskell:
 lsp:
     bash {{root}}/scripts/install-lsp.sh
 
-# TODO: install LuaTeX
-tex:
-    @echo "tex: not yet implemented"
+# Install or update TeX Live with LuaLaTeX + CJK (use: just tex, just tex update, just tex install home)
+tex action="install" location="":
+    bash {{root}}/scripts/install-tex.sh {{os}} {{action}} {{location}}
 
-# TODO: install Typst
-typst:
-    @echo "typst: not yet implemented"
+# Install or update Typst (use: just typst, just typst update)
+typst action="install":
+    bash {{root}}/scripts/install-typst.sh {{os}} {{action}}
+
+# Comment out cicku.me mirrors in pacman mirrorlists (idempotent; CachyOS/arch-like only)
+pacman-mask-cicku:
+    bash {{root}}/scripts/pacman-mask-cicku.sh {{os}}
 
 # Install or update Emacs (use: just emacs, just emacs update, just emacs install home)
 emacs action="install" location="":
