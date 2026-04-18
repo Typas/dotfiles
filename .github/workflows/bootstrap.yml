@@ -60,8 +60,9 @@ jobs:
               ;;
           esac
           id ci >/dev/null 2>&1 || useradd -m -s /bin/bash ci
-          echo "ci ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ci
-          chmod 0440 /etc/sudoers.d/ci
+          # Append directly to /etc/sudoers; not all base images include
+          # /etc/sudoers.d (opensuse tumbleweed's default does not).
+          echo "ci ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
       - uses: actions/checkout@v6
       - name: bash init.sh
         run: |

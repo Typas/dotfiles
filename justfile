@@ -21,10 +21,14 @@ _os-packages os update:
     case "{{os}}" in
         mac)
             export HOSTNAME="${HOSTNAME:-$(scutil --get LocalHostName)}"
+            # flake.nix reads HOSTNAME via builtins.getEnv under --impure;
+            # pass it through sudo explicitly since env_keep doesn't include it.
             if command -v darwin-rebuild &>/dev/null; then
-                sudo -E "$(command -v darwin-rebuild)" switch --flake "{{root}}#${HOSTNAME}" --impure
+                sudo -E HOSTNAME="$HOSTNAME" "$(command -v darwin-rebuild)" \
+                    switch --flake "{{root}}#${HOSTNAME}" --impure
             else
-                sudo -E "$(command -v nix)" --extra-experimental-features 'nix-command flakes' \
+                sudo -E HOSTNAME="$HOSTNAME" "$(command -v nix)" \
+                    --extra-experimental-features 'nix-command flakes' \
                     run nix-darwin -- switch --flake "{{root}}#${HOSTNAME}" --impure
             fi
             ;;
