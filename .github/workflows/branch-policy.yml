@@ -1,0 +1,56 @@
+name: branch-policy
+
+on:
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  policy:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Check branch scope
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          branch="$HEAD_REF"
+          echo "Branch: $branch"
+
+          mapfile -t files < <(git diff --name-only "$BASE_SHA" "$HEAD_SHA")
+          printf 'Changed files:\n'
+          printf '  %s\n' "${files[@]}"
+
+          is_doc() { [[ "$1" == *.md || "$1" == *.org ]]; }
+          is_ci()  { [[ "$1" == .github/* ]]; }
+
+          case "$branch" in
+            docs/*)
+              for f in "${files[@]}"; do
+                if ! is_doc "$f"; then
+                  echo "docs/ branch must only touch *.md or *.org: $f" >&2
+                  exit 1
+                fi
+              done
+              ;;
+            ci/*)
+              for f in "${files[@]}"; do
+                if ! is_ci "$f" && ! is_doc "$f"; then
+                  echo "ci/ branch must only touch .github/ or *.md/*.org: $f" >&2
+                  exit 1
+                fi
+              done
+              ;;
+            bootstrap/*|dev/*)
+              ;;
+            *)
+              echo "branch '$branch' does not match an allowed prefix (docs/, ci/, bootstrap/, dev/)" >&2
+              exit 1
+              ;;
+          esac
+          echo "OK"
