@@ -3,9 +3,9 @@ name: bootstrap
 on:
   pull_request:
     branches: [master]
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.org'
+    paths:
+      - 'init.sh'
+      - 'scripts/shell-init.sh'
   workflow_dispatch:
 
 jobs:
