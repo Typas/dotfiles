@@ -96,5 +96,3 @@ install_from_github() {
 install_from_github "yq" "mikefarah/yq" "yq_${GOOS}_${ARCH}.tar.gz"
 install_from_github "doggo" "mr-karan/doggo" "doggo.*${GOOS}_${ARCH}.tar.gz"
 install_from_github "curlie" "rs/curlie" "curlie.*${GOOS}_${ARCH}.tar.gz"
-
-# probe: verify dev/modern triggers recipe.yml on push
