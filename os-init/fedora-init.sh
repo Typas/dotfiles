@@ -27,3 +27,5 @@ if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
     sudo dnf makecache
 fi
 sudo dnf install -y "${PACKAGES[@]}"
+
+# probe: verify bootstrap/fedora scope (pass case)
