@@ -27,6 +27,7 @@ To protect `master`, follow these rules:
 - Short-lived branches (`docs/*`, `ci/*`) should be deleted by a human after their PR merges. Long-lived branches (`bootstrap/*`, `dev/*`) must be kept.
 - Do not reuse long-lived branch names (`bootstrap/*`, `dev/*`) for throwaway test pushes. If a verification probe must push to such a name, land a revert commit after the probe PR is closed — do not force-reset or delete the branch.
 - Before editing, `git fetch` and fast-forward the target branch. Long-lived branches may have advanced since last local sync.
+- Never `git commit --amend` a pushed commit and never `git push --force` (including `--force-with-lease`). If a pushed commit needs fixing, add a follow-up commit or open a new branch.
 
 ## GitHub Actions
 
