@@ -2,7 +2,9 @@ name: distro
 
 on:
   push:
-    branches: ['bootstrap/**']
+    branches:
+      - 'bootstrap/**'
+      - '!bootstrap/shared'
   workflow_dispatch:
 
 jobs:
