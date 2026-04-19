@@ -1,23 +1,20 @@
 name: bootstrap
 
 on:
-  pull_request:
-    branches: [master]
-    paths:
-      - 'init.sh'
-      - 'scripts/shell-init.sh'
+  push:
+    branches:
+      - 'bootstrap/shared'
+      - 'ci/**'
   workflow_dispatch:
 
 jobs:
   ubuntu:
-    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'bootstrap/shared'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - run: bash init.sh
 
   linux-container:
-    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'bootstrap/shared'
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
@@ -52,7 +49,6 @@ jobs:
           su - ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh"
 
   mac:
-    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'bootstrap/shared'
     runs-on: macos-26
     env:
       HOSTNAME: ci
