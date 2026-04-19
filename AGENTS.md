@@ -24,6 +24,7 @@ To protect `master`, follow these rules:
 - Any other branch name is rejected by the `policy` status check on PRs to `master`.
 - Never commit directly to `master`. All changes must land via a pull request.
 - Do not merge PRs or delete branches automatically. Merging a PR and deleting the source branch are human-triggered actions.
+- Short-lived branches (`docs/*`, `ci/*`) should be deleted by a human after their PR merges. Long-lived branches (`bootstrap/*`, `dev/*`) must be kept.
 - Do not reuse long-lived branch names (`bootstrap/*`, `dev/*`) for throwaway test pushes. If a verification probe must push to such a name, land a revert commit after the probe PR is closed — do not force-reset or delete the branch.
 - Before editing, `git fetch` and fast-forward the target branch. Long-lived branches may have advanced since last local sync.
 
