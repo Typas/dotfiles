@@ -1,0 +1,31 @@
+name: mac-nix-setup
+description: Install Nix on macOS, seed the GitHub access token, and rename /etc shell files so nix-darwin activation can proceed.
+
+inputs:
+  github-token:
+    description: GitHub token used for authenticated flake fetches.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Install Nix and seed GitHub access token
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+      run: |
+        sh <(curl -L https://nixos.org/nix/install) --daemon </dev/null
+        # Put the token in user-level nix configs (both runner and root)
+        # so flake fetches authenticate whether nix runs as runner or
+        # under sudo. We avoid /etc/nix/nix.conf because nix-darwin
+        # activation refuses to overwrite it if we've modified it.
+        mkdir -p "$HOME/.config/nix"
+        echo "access-tokens = github.com=$GH_TOKEN" >> "$HOME/.config/nix/nix.conf"
+        sudo mkdir -p /var/root/.config/nix
+        echo "access-tokens = github.com=$GH_TOKEN" | sudo tee -a /var/root/.config/nix/nix.conf > /dev/null
+        # The nix installer writes /etc/bashrc and /etc/zshrc; nix-darwin
+        # refuses to take them over with unrecognized content, so rename
+        # them as the error message instructs.
+        for f in /etc/bashrc /etc/zshrc; do
+            test -e "$f" && sudo mv "$f" "$f.before-nix-darwin"
+        done
