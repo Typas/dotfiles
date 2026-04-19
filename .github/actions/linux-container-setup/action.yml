@@ -1,0 +1,40 @@
+name: linux-container-setup
+description: Install base tools (sudo, curl, git, ca-certificates) via the given package manager and create a passwordless-sudo ci user for running init.sh as non-root. Must run after actions/checkout (which uses its REST-API tarball fallback when git is absent from the container).
+
+inputs:
+  pkg:
+    description: Package manager for the container image (apt, dnf, zypper, or pacman).
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Install base tools and create ci user
+      shell: bash
+      run: |
+        set -eu
+        case "${{ inputs.pkg }}" in
+          apt)
+            export DEBIAN_FRONTEND=noninteractive
+            apt-get update
+            apt-get install -y sudo curl git ca-certificates gnupg
+            ;;
+          dnf)
+            dnf install -y sudo curl git ca-certificates
+            ;;
+          zypper)
+            zypper --non-interactive refresh
+            zypper --non-interactive install sudo curl git ca-certificates
+            ;;
+          pacman)
+            pacman -Sy --noconfirm --needed sudo curl git ca-certificates
+            ;;
+          *)
+            echo "unknown pkg manager: ${{ inputs.pkg }}" >&2
+            exit 1
+            ;;
+        esac
+        id ci >/dev/null 2>&1 || useradd -m -s /bin/bash ci
+        # Append directly to /etc/sudoers; not all base images include
+        # /etc/sudoers.d (opensuse tumbleweed's default does not).
+        echo "ci ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers

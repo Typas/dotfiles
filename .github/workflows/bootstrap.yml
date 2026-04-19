@@ -42,31 +42,10 @@ jobs:
     container:
       image: ${{ matrix.image }}
     steps:
-      - name: Install base tools and create ci user
-        run: |
-          set -eu
-          case "${{ matrix.pkg }}" in
-            apt)
-              export DEBIAN_FRONTEND=noninteractive
-              apt-get update
-              apt-get install -y sudo curl git ca-certificates gnupg
-              ;;
-            dnf)
-              dnf install -y sudo curl git ca-certificates
-              ;;
-            zypper)
-              zypper --non-interactive refresh
-              zypper --non-interactive install sudo curl git ca-certificates
-              ;;
-            pacman)
-              pacman -Sy --noconfirm --needed sudo curl git ca-certificates
-              ;;
-          esac
-          id ci >/dev/null 2>&1 || useradd -m -s /bin/bash ci
-          # Append directly to /etc/sudoers; not all base images include
-          # /etc/sudoers.d (opensuse tumbleweed's default does not).
-          echo "ci ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
       - uses: actions/checkout@v6
+      - uses: ./.github/actions/linux-container-setup
+        with:
+          pkg: ${{ matrix.pkg }}
       - name: bash init.sh
         run: |
           chown -R ci:ci "$GITHUB_WORKSPACE"
@@ -79,25 +58,9 @@ jobs:
       HOSTNAME: ci
     steps:
       - uses: actions/checkout@v6
-      - name: Install Nix and seed GitHub access token
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          sh <(curl -L https://nixos.org/nix/install) --daemon </dev/null
-          # Put the token in user-level nix configs (both runner and root)
-          # so flake fetches authenticate whether nix runs as runner or
-          # under sudo. We avoid /etc/nix/nix.conf because nix-darwin
-          # activation refuses to overwrite it if we've modified it.
-          mkdir -p "$HOME/.config/nix"
-          echo "access-tokens = github.com=$GH_TOKEN" >> "$HOME/.config/nix/nix.conf"
-          sudo mkdir -p /var/root/.config/nix
-          echo "access-tokens = github.com=$GH_TOKEN" | sudo tee -a /var/root/.config/nix/nix.conf > /dev/null
-          # The nix installer writes /etc/bashrc and /etc/zshrc; nix-darwin
-          # refuses to take them over with unrecognized content, so rename
-          # them as the error message instructs.
-          for f in /etc/bashrc /etc/zshrc; do
-              test -e "$f" && sudo mv "$f" "$f.before-nix-darwin"
-          done
+      - uses: ./.github/actions/mac-nix-setup
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: bash init.sh
         run: |
           # shellcheck disable=SC1091
