@@ -62,5 +62,3 @@ fi
 # hand off to justfile
 cd "$D_LOC"
 just update="false" init
-
-# probe: verify bootstrap/debian rejects shared edits
