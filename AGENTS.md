@@ -14,7 +14,10 @@ Common types: `feat`, `fix`, `chore`, `refactor`, `docs`, `style`, `test`.
 
 To protect `master`, follow these rules:
 
-- When developing any OS-specific bootstrap, check out to a `bootstrap/<name>` branch (e.g., `bootstrap/ubuntu`). Long-lived.
+- When developing any OS-specific bootstrap, check out to a `bootstrap/<name>` branch (e.g., `bootstrap/ubuntu`). Long-lived. Scope is restricted by `branch-policy`:
+  - `bootstrap/<distro>` (where `<distro>` is `ubuntu`, `debian`, `fedora`, `opensuse-tumbleweed`, or `cachyos`): only `os-init/<distro>-init.sh` (plus `*.md`/`*.org`).
+  - `bootstrap/mac`: only `flake.nix`, `flake.lock`, `nix/**`, `hosts/**` (plus `*.md`/`*.org`).
+  - `bootstrap/shared`: only `init.sh` and `scripts/shell-init.sh` (plus `*.md`/`*.org`). This is the only bootstrap branch whose PR triggers the full `bootstrap.yml` matrix — use it for edits that affect bootstrap across all distros.
 - When developing any recipe, check out to a `dev/<name>` branch (e.g., `dev/zsh`). Long-lived.
 - When writing or updating documentation, check out to a `docs/<name>` branch (e.g., `docs/readme`) to avoid merge conflicts with parallel code work. Short-lived. Only `*.md` and `*.org` files may change.
 - When updating CI config under `.github/**`, check out to a `ci/<name>` branch (e.g., `ci/branch-policy`). Short-lived. Only files under `.github/**` and `*.md`/`*.org` may change.
