@@ -28,6 +28,13 @@ jobs:
 
           is_doc() { [[ "$1" == *.md || "$1" == *.org ]]; }
           is_ci()  { [[ "$1" == .github/* ]]; }
+          is_shared_bootstrap() {
+            [[ "$1" == init.sh || "$1" == scripts/shell-init.sh ]]
+          }
+          is_mac_bootstrap() {
+            [[ "$1" == flake.nix || "$1" == flake.lock \
+               || "$1" == nix/* || "$1" == hosts/* ]]
+          }
 
           case "$branch" in
             docs/*)
@@ -46,7 +53,32 @@ jobs:
                 fi
               done
               ;;
-            bootstrap/*|dev/*)
+            bootstrap/shared)
+              for f in "${files[@]}"; do
+                if ! is_shared_bootstrap "$f" && ! is_doc "$f"; then
+                  echo "bootstrap/shared must only touch init.sh, scripts/shell-init.sh, or *.md/*.org: $f" >&2
+                  exit 1
+                fi
+              done
+              ;;
+            bootstrap/mac)
+              for f in "${files[@]}"; do
+                if ! is_mac_bootstrap "$f" && ! is_doc "$f"; then
+                  echo "bootstrap/mac must only touch flake.nix, flake.lock, nix/**, hosts/**, or *.md/*.org: $f" >&2
+                  exit 1
+                fi
+              done
+              ;;
+            bootstrap/*)
+              distro="${branch#bootstrap/}"
+              for f in "${files[@]}"; do
+                if [[ "$f" != "os-init/${distro}-init.sh" ]] && ! is_doc "$f"; then
+                  echo "bootstrap/${distro} must only touch os-init/${distro}-init.sh or *.md/*.org: $f" >&2
+                  exit 1
+                fi
+              done
+              ;;
+            dev/*)
               ;;
             *)
               echo "branch '$branch' does not match an allowed prefix (docs/, ci/, bootstrap/, dev/)" >&2
