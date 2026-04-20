@@ -68,7 +68,7 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 # Go
-export PATH="/usr/local/go/bin:$HOME/.local/go/bin:$PATH"
+export PATH="/usr/local/go/bin:$HOME/.local/go/bin:$HOME/go/bin:$PATH"
 
 # >>> juliaup initialize >>>
 
