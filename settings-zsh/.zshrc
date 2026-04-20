@@ -67,6 +67,9 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# Go
+export PATH="/usr/local/go/bin:$HOME/.local/go/bin:$PATH"
+
 # >>> juliaup initialize >>>
 
 # !! Contents within this block are managed by juliaup !!
