@@ -142,7 +142,7 @@ export PATH
 [ -f "$HOME"/.cargo/env ] && source "$HOME"/.cargo/env
 
 # Go
-export PATH="/usr/local/go/bin:$HOME/.local/go/bin:$PATH"
+export PATH="/usr/local/go/bin:$HOME/.local/go/bin:$HOME/go/bin:$PATH"
 
 [ -f "$HOME"/.ghcup/env ] && source "$HOME"/.ghcup/env # ghcup-env
 
