@@ -20,4 +20,4 @@ PACKAGES=(fd eza ripgrep dust clang shellcheck typst openssh gcc cmake curl font
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
     sudo pacman -Syu --noconfirm
 fi
-sudo pacman -S --needed --noconfirm --ask=4 "${PACKAGES[@]}" 2>&1 | grep -Ev 'is up to date -- skipping|there is nothing to do'
+sudo pacman -S --needed --noconfirm --ask=4 "${PACKAGES[@]}" 2>&1 | { grep -Ev 'is up to date -- skipping|there is nothing to do' || true; }
