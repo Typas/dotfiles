@@ -212,17 +212,25 @@ install_emacs() {
         echo "emacs is already installed: $(emacs --version | head -1)"
         exit 0
     fi
-    do_build "${location:-system}"
+    if [[ "${location:-system}" == "home" ]]; then
+        do_build home
+    else
+        install_package
+    fi
 }
 
 update_emacs() {
     if [[ -n "$location" ]]; then
-        do_build "$location"
+        if [[ "$location" == "home" ]]; then
+            do_build home
+        else
+            install_package
+        fi
         return
     fi
     local did_any=0
     if [[ -x "$SYSTEM_BIN" ]]; then
-        do_build system
+        install_package
         did_any=1
     fi
     if [[ -x "$HOME_BIN" ]]; then
