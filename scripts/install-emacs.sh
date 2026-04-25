@@ -10,9 +10,8 @@ usage() {
     exit 1
 }
 
-SYSTEM_PREFIX="/usr/local"
 HOME_PREFIX="$HOME/.local"
-SYSTEM_BIN="$SYSTEM_PREFIX/bin/emacs"
+SYSTEM_BIN="/usr/local/bin/emacs"
 HOME_BIN="$HOME_PREFIX/bin/emacs"
 
 if [[ "$os" == "mac" ]]; then
@@ -55,29 +54,21 @@ if [[ "$os" == "opensuse-tumbleweed" ]]; then
 fi
 
 ensure_build_deps() {
-    local flavor="$1"
-    local base_pkgs=() extra_pkgs=() pkgs=() missing=() pkg
+    local pkgs=() missing=() pkg
     case "$os" in
         fedora)
-            base_pkgs=(gcc make autoconf texinfo libgccjit-devel libtree-sitter-devel sqlite-devel gnutls-devel libxml2-devel libvterm-devel ncurses-devel zlib-devel)
-            extra_pkgs=(gtk3-devel harfbuzz-devel ImageMagick-devel)
+            pkgs=(gcc make autoconf texinfo libgccjit-devel libtree-sitter-devel sqlite-devel gnutls-devel libxml2-devel libvterm-devel ncurses-devel zlib-devel)
             ;;
         ubuntu|debian)
             local gcc_major
             gcc_major=$(gcc -dumpversion | cut -d. -f1)
-            base_pkgs=(build-essential autoconf texinfo "libgccjit-${gcc_major}-dev" libtree-sitter-dev libsqlite3-dev libgnutls28-dev libxml2-dev libvterm-dev libncurses-dev zlib1g-dev)
-            extra_pkgs=(libgtk-3-dev libharfbuzz-dev libmagickwand-dev)
+            pkgs=(build-essential autoconf texinfo "libgccjit-${gcc_major}-dev" libtree-sitter-dev libsqlite3-dev libgnutls28-dev libxml2-dev libvterm-dev libncurses-dev zlib1g-dev)
             ;;
         *)
             echo "unsupported OS for emacs source build: $os" >&2
             exit 1
             ;;
     esac
-
-    pkgs=("${base_pkgs[@]}")
-    if [[ "$flavor" == "pgtk" ]]; then
-        pkgs+=("${extra_pkgs[@]}")
-    fi
 
     case "$os" in
         fedora)
@@ -154,19 +145,7 @@ install_package() {
 }
 
 do_build() {
-    local loc="$1"
-    local prefix flavor
-    local sudo_cmd=()
-    if [[ "$loc" == "home" ]]; then
-        prefix="$HOME_PREFIX"
-        flavor="nox"
-    else
-        prefix="$SYSTEM_PREFIX"
-        flavor="pgtk"
-        sudo_cmd=(sudo)
-    fi
-
-    ensure_build_deps "$flavor"
+    ensure_build_deps
 
     local tarball srcdir
     tarball=$(get_latest_tarball)
@@ -176,35 +155,27 @@ do_build() {
     fi
     srcdir="/tmp/${tarball%.tar.xz}"
 
-    echo "building emacs ${tarball%.tar.xz} (${flavor}, prefix=${prefix})..."
+    echo "building emacs ${tarball%.tar.xz} (nox, prefix=${HOME_PREFIX})..."
     curl -fsSL "https://ftp.gnu.org/gnu/emacs/${tarball}" -o "/tmp/${tarball}"
     rm -rf "$srcdir"
     tar -C /tmp -xJf "/tmp/${tarball}"
 
-    local shared_flags=(
-        "--prefix=$prefix"
-        --with-native-compilation
-        --with-tree-sitter
-        --with-sqlite3
-        --with-modules
-        --enable-link-time-optimization
-    )
-    local flavor_flags=()
-    if [[ "$flavor" == "pgtk" ]]; then
-        flavor_flags=(--with-pgtk --with-harfbuzz --with-imagemagick)
-    else
-        flavor_flags=(--without-x)
-    fi
-
     (
         cd "$srcdir"
-        ./configure "${shared_flags[@]}" "${flavor_flags[@]}"
+        ./configure \
+            "--prefix=$HOME_PREFIX" \
+            --disable-build-details \
+            --with-native-compilation=aot \
+            --with-tree-sitter \
+            --with-small-ja-dic \
+            --without-included-regex \
+            --without-x
         make -j"$(nproc)"
-        "${sudo_cmd[@]}" make install
+        make install
     )
 
     rm -rf "$srcdir" "/tmp/${tarball}"
-    echo "installed $("$prefix/bin/emacs" --version | head -1)"
+    echo "installed $("$HOME_PREFIX/bin/emacs" --version | head -1)"
 }
 
 install_emacs() {
@@ -213,7 +184,7 @@ install_emacs() {
         exit 0
     fi
     if [[ "${location:-system}" == "home" ]]; then
-        do_build home
+        do_build
     else
         install_package
     fi
@@ -222,7 +193,7 @@ install_emacs() {
 update_emacs() {
     if [[ -n "$location" ]]; then
         if [[ "$location" == "home" ]]; then
-            do_build home
+            do_build
         else
             install_package
         fi
@@ -234,7 +205,7 @@ update_emacs() {
         did_any=1
     fi
     if [[ -x "$HOME_BIN" ]]; then
-        do_build home
+        do_build
         did_any=1
     fi
     if [[ $did_any -eq 0 ]]; then
