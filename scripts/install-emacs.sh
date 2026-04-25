@@ -112,34 +112,41 @@ get_release_tag() {
 }
 
 install_package() {
-    local tag version asset url
+    local tag version asset url tmpfile
     tag=$(get_release_tag)
     if [[ -z "$tag" ]]; then
         echo "failed to detect latest emacs release" >&2
         exit 1
     fi
-    version="${tag#v}"
+    version="${tag#emacs-}"
 
     case "$os" in
         ubuntu|debian)
             asset="emacs-typas_${version}_${os}_amd64.deb"
-            url="https://github.com/Typas/emacs-build/releases/download/${tag}/${asset}"
-            echo "installing emacs ${version} (${os} package)..."
-            curl -fsSL "$url" -o "/tmp/${asset}"
-            sudo apt-get install -y "/tmp/${asset}"
-            rm -f "/tmp/${asset}"
             ;;
         fedora)
             asset="emacs-typas-${version}-1.x86_64.rpm"
-            url="https://github.com/Typas/emacs-build/releases/download/${tag}/${asset}"
-            echo "installing emacs ${version} (fedora package)..."
-            curl -fsSL "$url" -o "/tmp/${asset}"
-            sudo dnf install -y "/tmp/${asset}"
-            rm -f "/tmp/${asset}"
             ;;
         *)
             echo "install_package: unsupported OS: $os" >&2
             exit 1
+            ;;
+    esac
+
+    tmpfile="/tmp/${asset}"
+    trap 'rm -f "$tmpfile"' EXIT
+    url="https://github.com/Typas/emacs-build/releases/download/${tag}/${asset}"
+
+    case "$os" in
+        ubuntu|debian)
+            echo "installing emacs ${version} (${os} package)..."
+            curl -fsSL "$url" -o "$tmpfile"
+            sudo apt-get install -y "$tmpfile"
+            ;;
+        fedora)
+            echo "installing emacs ${version} (fedora package)..."
+            curl -fsSL "$url" -o "$tmpfile"
+            sudo dnf install -y "$tmpfile"
             ;;
     esac
 
