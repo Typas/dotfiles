@@ -45,6 +45,15 @@ if [[ "$os" == "cachyos" ]]; then
     exit 0
 fi
 
+if [[ "$os" == "opensuse-tumbleweed" ]]; then
+    case "$action" in
+        install) sudo zypper in -y emacs ;;
+        update)  sudo zypper up -y emacs ;;
+        *) usage ;;
+    esac
+    exit 0
+fi
+
 ensure_build_deps() {
     local flavor="$1"
     local base_pkgs=() extra_pkgs=() pkgs=() missing=() pkg
@@ -52,10 +61,6 @@ ensure_build_deps() {
         fedora)
             base_pkgs=(gcc make autoconf texinfo libgccjit-devel libtree-sitter-devel sqlite-devel gnutls-devel libxml2-devel libvterm-devel ncurses-devel zlib-devel)
             extra_pkgs=(gtk3-devel harfbuzz-devel ImageMagick-devel)
-            ;;
-        opensuse-tumbleweed)
-            base_pkgs=(gcc make autoconf texinfo libgccjit0 libtree-sitter-devel sqlite3-devel libgnutls-devel libxml2-devel libvterm-devel ncurses-devel zlib-devel)
-            extra_pkgs=(gtk3-devel libharfbuzz-devel ImageMagick-devel)
             ;;
         ubuntu|debian)
             local gcc_major
@@ -75,15 +80,12 @@ ensure_build_deps() {
     fi
 
     case "$os" in
-        fedora|opensuse-tumbleweed)
+        fedora)
             for pkg in "${pkgs[@]}"; do
                 rpm -q "$pkg" >/dev/null 2>&1 || missing+=("$pkg")
             done
             [[ ${#missing[@]} -eq 0 ]] && return 0
-            case "$os" in
-                fedora)    sudo dnf install -y "${missing[@]}" ;;
-                opensuse-tumbleweed) sudo zypper in -y "${missing[@]}" ;;
-            esac
+            sudo dnf install -y "${missing[@]}"
             ;;
         ubuntu|debian)
             for pkg in "${pkgs[@]}"; do
