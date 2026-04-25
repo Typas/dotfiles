@@ -103,7 +103,7 @@ get_release_tag() {
 }
 
 install_package() {
-    local tag version asset url tmpfile
+    local tag version asset url
     tag=$(get_release_tag)
     if [[ -z "$tag" ]]; then
         echo "failed to detect latest emacs release" >&2
