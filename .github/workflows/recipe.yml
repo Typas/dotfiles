@@ -44,7 +44,7 @@ jobs:
     needs: setup
     runs-on: ubuntu-24.04
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         include:
           - name: debian-trixie
