@@ -96,7 +96,9 @@ get_latest_tarball() {
 }
 
 get_release_tag() {
-    curl -fsSL https://api.github.com/repos/Typas/emacs-build/releases/latest \
+    local args=(-fsSL)
+    [[ -n "${GITHUB_TOKEN:-}" ]] && args+=(-H "Authorization: Bearer ${GITHUB_TOKEN}")
+    curl "${args[@]}" https://api.github.com/repos/Typas/emacs-build/releases/latest \
         | grep '"tag_name"' \
         | head -1 \
         | sed -E 's/.*"tag_name"[[:space:]]*:[[:space:]]*"([^"]+)".*/\1/'
