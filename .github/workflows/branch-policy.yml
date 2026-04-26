@@ -7,7 +7,7 @@ on:
 
 jobs:
   policy:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-slim
     steps:
       - uses: actions/checkout@v6
         with:
@@ -33,7 +33,11 @@ jobs:
           }
           is_mac_bootstrap() {
             [[ "$1" == flake.nix || "$1" == flake.lock \
-               || "$1" == nix/* || "$1" == hosts/* ]]
+               || "$1" == nix/* || "$1" == hosts/* \
+               || "$1" == .github/actions/mac-nix-setup/* ]]
+          }
+          is_linux_container_setup() {
+            [[ "$1" == .github/actions/linux-container-setup/* ]]
           }
 
           case "$branch" in
@@ -64,7 +68,7 @@ jobs:
             bootstrap/mac)
               for f in "${files[@]}"; do
                 if ! is_mac_bootstrap "$f" && ! is_doc "$f"; then
-                  echo "bootstrap/mac must only touch flake.nix, flake.lock, nix/**, hosts/**, or *.md/*.org: $f" >&2
+                  echo "bootstrap/mac must only touch flake.nix, flake.lock, nix/**, hosts/**, .github/actions/mac-nix-setup/**, or *.md/*.org: $f" >&2
                   exit 1
                 fi
               done
@@ -72,8 +76,8 @@ jobs:
             bootstrap/*)
               distro="${branch#bootstrap/}"
               for f in "${files[@]}"; do
-                if [[ "$f" != "os-init/${distro}-init.sh" ]] && ! is_doc "$f"; then
-                  echo "bootstrap/${distro} must only touch os-init/${distro}-init.sh or *.md/*.org: $f" >&2
+                if [[ "$f" != "os-init/${distro}-init.sh" ]] && ! is_linux_container_setup "$f" && ! is_doc "$f"; then
+                  echo "bootstrap/${distro} must only touch os-init/${distro}-init.sh, .github/actions/linux-container-setup/**, or *.md/*.org: $f" >&2
                   exit 1
                 fi
               done
