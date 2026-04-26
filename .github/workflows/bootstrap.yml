@@ -57,13 +57,12 @@ jobs:
       - uses: ./.github/actions/mac-nix-setup
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: nix-community/cache-nix-action@v6
+      - uses: nix-community/cache-nix-action@v7
         with:
-          primary-key: nix-${{ runner.os }}-${{ hashFiles('init.sh') }}
+          primary-key: nix-${{ runner.os }}-${{ hashFiles('flake.lock', 'init.sh') }}
           restore-prefixes-first-match: nix-${{ runner.os }}-
-          gc-max-store-size-macos: 1073741824
+          paths-macos: |
+            ~/.cache/nix
+          gc-max-store-size-macos: 5368709120
       - name: bash init.sh
-        run: |
-          # shellcheck disable=SC1091
-          . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-          bash init.sh
+        run: bash init.sh
