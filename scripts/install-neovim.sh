@@ -45,25 +45,30 @@ if [[ "$os" == "cachyos" ]]; then
     exit 0
 fi
 
+if [[ "$os" == "opensuse-tumbleweed" ]]; then
+    case "$action" in
+        install) sudo zypper in -y neovim ;;
+        update)  sudo zypper up -y neovim ;;
+        *) usage ;;
+    esac
+    exit 0
+fi
+
 ensure_runtime_deps() {
     local pkgs=() missing=() pkg
     case "$os" in
         fedora)        pkgs=(luajit gettext-libs fontconfig) ;;
-        opensuse-tumbleweed)     pkgs=(luajit gettext-runtime fontconfig) ;;
         ubuntu|debian) pkgs=(libluajit-5.1-2 gettext fontconfig) ;;
         *)             return 0 ;;
     esac
 
     case "$os" in
-        fedora|opensuse-tumbleweed)
+        fedora)
             for pkg in "${pkgs[@]}"; do
                 rpm -q "$pkg" >/dev/null 2>&1 || missing+=("$pkg")
             done
             [[ ${#missing[@]} -eq 0 ]] && return 0
-            case "$os" in
-                fedora)    sudo dnf install -y "${missing[@]}" ;;
-                opensuse-tumbleweed) sudo zypper in -y "${missing[@]}" ;;
-            esac
+            sudo dnf install -y "${missing[@]}"
             ;;
         ubuntu|debian)
             for pkg in "${pkgs[@]}"; do

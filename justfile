@@ -121,6 +121,7 @@ pacman-mask-cicku:
 # Install or update Emacs (use: just emacs, just emacs update, just emacs install home)
 emacs action="install" location="":
     bash {{root}}/scripts/install-emacs.sh {{os}} {{action}} {{location}}
+    emacs --version
 
 # Install or update Neovim (use: just neovim, just neovim update, just neovim install home)
 neovim action="install" location="":
