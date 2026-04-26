@@ -57,7 +57,7 @@ jobs:
       - uses: ./.github/actions/mac-nix-setup
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: nix-community/cache-nix-action@v6
+      - uses: nix-community/cache-nix-action@v7
         with:
           primary-key: nix-${{ runner.os }}-${{ hashFiles('init.sh') }}
           restore-prefixes-first-match: nix-${{ runner.os }}-
