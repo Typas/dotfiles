@@ -37,6 +37,20 @@ Use these pinned major versions for official actions — do not use older ones:
 - `actions/upload-artifact@v7`
 - `actions/download-artifact@v8`
 
+## Smoke Testing
+
+When working on a `dev/*` branch, verify the CI smoke test passes for all relevant targets. The workflow (`recipe.yml`) runs bootstrap + recipe installation across: `ubuntu`, `mac`, `fedora-44`, `fedora-43`, `cachyos`, `opensuse-tumbleweed`, and `debian-trixie`.
+
+To inspect failures:
+
+```sh
+gh run view <run-id> --log-failed
+```
+
+Fix the recipe and push a follow-up commit until all targets pass.
+
+The CI only checks that `just <recipe>` exits 0, not that the binary works. If the justfile target lacks a verification command (e.g., `emacs --version`), add one.
+
 ## Shell Scripts
 
 Run `shellcheck` on any shell script that is added or modified.

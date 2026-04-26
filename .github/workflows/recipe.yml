@@ -36,6 +36,8 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: bootstrap + just ${{ needs.setup.outputs.recipe }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           bash init.sh
           just ${{ needs.setup.outputs.recipe }}
@@ -71,9 +73,11 @@ jobs:
         with:
           pkg: ${{ matrix.pkg }}
       - name: bootstrap + just ${{ needs.setup.outputs.recipe }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           chown -R ci:ci "$GITHUB_WORKSPACE"
-          su - ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh && just ${{ needs.setup.outputs.recipe }}"
+          su ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh && just ${{ needs.setup.outputs.recipe }}"
 
   mac:
     needs: setup
@@ -87,6 +91,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: bootstrap + just ${{ needs.setup.outputs.recipe }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # shellcheck disable=SC1091
           . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
