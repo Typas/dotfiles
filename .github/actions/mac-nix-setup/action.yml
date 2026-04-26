@@ -29,3 +29,4 @@ runs:
         for f in /etc/bashrc /etc/zshrc; do
             test -e "$f" && sudo mv "$f" "$f.before-nix-darwin"
         done
+        echo "/nix/var/nix/profiles/default/bin" >> "$GITHUB_PATH"

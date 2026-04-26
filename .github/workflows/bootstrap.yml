@@ -65,7 +65,4 @@ jobs:
             ~/.cache/nix
           gc-max-store-size-macos: 5368709120
       - name: bash init.sh
-        run: |
-          # shellcheck disable=SC1091
-          . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-          bash init.sh
+        run: bash init.sh
