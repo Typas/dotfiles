@@ -17,7 +17,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd-find ripgrep sd clang editorconfig ShellCheck openssh-clients openssl-devel pkg-config gcc cmake curl fontconfig p7zip)
+PACKAGES=(fd-find ripgrep rust-sd clang editorconfig ShellCheck openssh-clients openssl-devel pkg-config gcc cmake curl fontconfig p7zip)
 # eza packaging on Fedora is inconsistent across releases; only add it if
 # the active repos actually expose it, otherwise leave it for cargo-binstall.
 if dnf info eza &>/dev/null; then
