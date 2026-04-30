@@ -17,6 +17,12 @@ return {
   },
 
   {
+    "eliseshaffer/darklight.nvim",
+    lazy = false,
+    config = true,
+  },
+
+  {
     "navarasu/onedark.nvim",
     lazy = true,
     opts = {
