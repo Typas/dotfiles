@@ -16,7 +16,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd-find rust-sd clang gcc pkg-config libssl-dev editorconfig shellcheck openssh-client cmake curl fontconfig p7zip-full)
+PACKAGES=(fd-find sd clang gcc pkg-config libssl-dev editorconfig shellcheck openssh-client cmake curl fontconfig p7zip-full)
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
     sudo apt-get update
 fi
