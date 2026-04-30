@@ -84,8 +84,10 @@ jobs:
               ;;
             dev/*)
               ;;
+            unsafe/*)
+              ;;
             *)
-              echo "branch '$branch' does not match an allowed prefix (docs/, ci/, bootstrap/, dev/)" >&2
+              echo "branch '$branch' does not match an allowed prefix (docs/, ci/, bootstrap/, dev/, unsafe/)" >&2
               exit 1
               ;;
           esac
@@ -105,6 +107,7 @@ jobs:
             ci/*|bootstrap/shared) required="bootstrap" ;;
             bootstrap/*)           required="distro" ;;
             dev/*)                 required="recipe" ;;
+            unsafe/*)              required="bootstrap" ;;
             *) echo "unexpected branch '$branch'" >&2; exit 1 ;;
           esac
 
