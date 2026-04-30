@@ -16,7 +16,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd-find clang gcc pkg-config libssl-dev editorconfig shellcheck openssh-client cmake curl fontconfig p7zip-full)
+PACKAGES=(fd-find sd clang gcc pkg-config libssl-dev editorconfig shellcheck openssh-client cmake curl fontconfig p7zip-full)
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
     sudo apt-get update
 fi
@@ -24,6 +24,4 @@ sudo apt-get install -y "${PACKAGES[@]}"
 if ! command -v fd > /dev/null 2>&1; then
     mkdir -p ~/.local/bin
     ln -sf "$(which fdfind)" ~/.local/bin/fd
-    source ~/.bashrc
-    source ~/.profile
 fi
