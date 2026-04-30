@@ -21,10 +21,11 @@ To protect `master`, follow these rules:
 - When developing any recipe, check out to a `dev/<name>` branch (e.g., `dev/zsh`). Long-lived.
 - When writing or updating documentation, check out to a `docs/<name>` branch (e.g., `docs/readme`) to avoid merge conflicts with parallel code work. Short-lived. Only `*.md` and `*.org` files may change.
 - When updating CI config under `.github/**`, check out to a `ci/<name>` branch (e.g., `ci/branch-policy`). Short-lived. Only files under `.github/**` and `*.md`/`*.org` may change.
+- For cross-cutting changes that cannot fit any other prefix (e.g., renaming files across multiple scopes), check out to an `unsafe/<name>` branch. Short-lived. No file-scope restriction — analogous to Rust's `unsafe`, requires extra scrutiny on review.
 - Any other branch name is rejected by the `policy` status check on PRs to `master`.
 - Never commit directly to `master`. All changes must land via a pull request.
 - Do not open, merge, or auto-close PRs, or delete branches. These are human-triggered actions.
-- Short-lived branches (`docs/*`, `ci/*`) should be deleted by a human after their PR merges. Long-lived branches (`bootstrap/*`, `dev/*`) must be kept.
+- Short-lived branches (`docs/*`, `ci/*`, `unsafe/*`) should be deleted by a human after their PR merges. Long-lived branches (`bootstrap/*`, `dev/*`) must be kept.
 - Do not reuse long-lived branch names (`bootstrap/*`, `dev/*`) for throwaway test pushes. If a verification probe must push to such a name, land a revert commit after the probe PR is closed — do not force-reset or delete the branch.
 - Before editing, `git fetch` and fast-forward the target branch. Long-lived branches may have advanced since last local sync.
 - Never `git commit --amend` a pushed commit and never `git push --force` (including `--force-with-lease`). If a pushed commit needs fixing, add a follow-up commit or open a new branch.
