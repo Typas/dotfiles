@@ -10,9 +10,8 @@ usage() {
     exit 1
 }
 
-SYSTEM_PREFIX="/usr/local"
 HOME_PREFIX="$HOME/.local"
-SYSTEM_BIN="$SYSTEM_PREFIX/bin/emacs"
+SYSTEM_BIN="/usr/local/bin/emacs"
 HOME_BIN="$HOME_PREFIX/bin/emacs"
 
 if [[ "$os" == "mac" ]]; then
@@ -45,23 +44,25 @@ if [[ "$os" == "cachyos" ]]; then
     exit 0
 fi
 
+if [[ "$os" == "opensuse-tumbleweed" ]]; then
+    case "$action" in
+        install) sudo zypper in -y emacs ;;
+        update)  sudo zypper up -y emacs ;;
+        *) usage ;;
+    esac
+    exit 0
+fi
+
 ensure_build_deps() {
-    local flavor="$1"
-    local base_pkgs=() extra_pkgs=() pkgs=() missing=() pkg
+    local pkgs=() missing=() pkg
     case "$os" in
         fedora)
-            base_pkgs=(gcc make autoconf texinfo libgccjit-devel libtree-sitter-devel sqlite-devel gnutls-devel libxml2-devel libvterm-devel ncurses-devel zlib-devel)
-            extra_pkgs=(gtk3-devel harfbuzz-devel ImageMagick-devel)
-            ;;
-        opensuse-tumbleweed)
-            base_pkgs=(gcc make autoconf texinfo libgccjit0 libtree-sitter-devel sqlite3-devel libgnutls-devel libxml2-devel libvterm-devel ncurses-devel zlib-devel)
-            extra_pkgs=(gtk3-devel libharfbuzz-devel ImageMagick-devel)
+            pkgs=(gcc make autoconf texinfo libgccjit-devel libtree-sitter-devel sqlite-devel gnutls-devel libxml2-devel libvterm-devel ncurses-devel zlib-devel)
             ;;
         ubuntu|debian)
             local gcc_major
             gcc_major=$(gcc -dumpversion | cut -d. -f1)
-            base_pkgs=(build-essential autoconf texinfo "libgccjit-${gcc_major}-dev" libtree-sitter-dev libsqlite3-dev libgnutls28-dev libxml2-dev libvterm-dev libncurses-dev zlib1g-dev)
-            extra_pkgs=(libgtk-3-dev libharfbuzz-dev libmagickwand-dev)
+            pkgs=(build-essential autoconf texinfo "libgccjit-${gcc_major}-dev" libtree-sitter-dev libsqlite3-dev libgnutls28-dev libxml2-dev libvterm-dev libncurses-dev zlib1g-dev)
             ;;
         *)
             echo "unsupported OS for emacs source build: $os" >&2
@@ -69,21 +70,13 @@ ensure_build_deps() {
             ;;
     esac
 
-    pkgs=("${base_pkgs[@]}")
-    if [[ "$flavor" == "pgtk" ]]; then
-        pkgs+=("${extra_pkgs[@]}")
-    fi
-
     case "$os" in
-        fedora|opensuse-tumbleweed)
+        fedora)
             for pkg in "${pkgs[@]}"; do
                 rpm -q "$pkg" >/dev/null 2>&1 || missing+=("$pkg")
             done
             [[ ${#missing[@]} -eq 0 ]] && return 0
-            case "$os" in
-                fedora)    sudo dnf install -y "${missing[@]}" ;;
-                opensuse-tumbleweed) sudo zypper in -y "${missing[@]}" ;;
-            esac
+            sudo dnf install -y "${missing[@]}"
             ;;
         ubuntu|debian)
             for pkg in "${pkgs[@]}"; do
@@ -102,20 +95,59 @@ get_latest_tarball() {
         | tail -1
 }
 
-do_build() {
-    local loc="$1"
-    local prefix flavor
-    local sudo_cmd=()
-    if [[ "$loc" == "home" ]]; then
-        prefix="$HOME_PREFIX"
-        flavor="nox"
-    else
-        prefix="$SYSTEM_PREFIX"
-        flavor="pgtk"
-        sudo_cmd=(sudo)
-    fi
+get_release_tag() {
+    local args=(-fsSL)
+    [[ -n "${GITHUB_TOKEN:-}" ]] && args+=(-H "Authorization: Bearer ${GITHUB_TOKEN}")
+    curl "${args[@]}" https://api.github.com/repos/Typas/emacs-build/releases/latest \
+        | grep '"tag_name"' \
+        | head -1 \
+        | sed -E 's/.*"tag_name"[[:space:]]*:[[:space:]]*"([^"]+)".*/\1/'
+}
 
-    ensure_build_deps "$flavor"
+install_package() {
+    local tag version asset url
+    tag=$(get_release_tag)
+    if [[ -z "$tag" ]]; then
+        echo "failed to detect latest emacs release" >&2
+        exit 1
+    fi
+    version="${tag#emacs-}"
+
+    case "$os" in
+        ubuntu|debian)
+            asset="emacs-typas_${version}_${os}_amd64.deb"
+            ;;
+        fedora)
+            asset="emacs-typas-${version}-1.x86_64.rpm"
+            ;;
+        *)
+            echo "install_package: unsupported OS: $os" >&2
+            exit 1
+            ;;
+    esac
+
+    tmpfile="/tmp/${asset}"
+    trap 'rm -f "$tmpfile"' EXIT
+    url="https://github.com/Typas/emacs-build/releases/download/${tag}/${asset}"
+
+    case "$os" in
+        ubuntu|debian)
+            echo "installing emacs ${version} (${os} package)..."
+            curl -fsSL "$url" -o "$tmpfile"
+            sudo apt-get install -y "$tmpfile"
+            ;;
+        fedora)
+            echo "installing emacs ${version} (fedora package)..."
+            curl -fsSL "$url" -o "$tmpfile"
+            sudo dnf install -y "$tmpfile"
+            ;;
+    esac
+
+    echo "installed $(emacs --version | head -1)"
+}
+
+do_build() {
+    ensure_build_deps
 
     local tarball srcdir
     tarball=$(get_latest_tarball)
@@ -125,35 +157,27 @@ do_build() {
     fi
     srcdir="/tmp/${tarball%.tar.xz}"
 
-    echo "building emacs ${tarball%.tar.xz} (${flavor}, prefix=${prefix})..."
+    echo "building emacs ${tarball%.tar.xz} (nox, prefix=${HOME_PREFIX})..."
     curl -fsSL "https://ftp.gnu.org/gnu/emacs/${tarball}" -o "/tmp/${tarball}"
     rm -rf "$srcdir"
     tar -C /tmp -xJf "/tmp/${tarball}"
 
-    local shared_flags=(
-        "--prefix=$prefix"
-        --with-native-compilation
-        --with-tree-sitter
-        --with-sqlite3
-        --with-modules
-        --enable-link-time-optimization
-    )
-    local flavor_flags=()
-    if [[ "$flavor" == "pgtk" ]]; then
-        flavor_flags=(--with-pgtk --with-harfbuzz --with-imagemagick)
-    else
-        flavor_flags=(--without-x)
-    fi
-
     (
         cd "$srcdir"
-        ./configure "${shared_flags[@]}" "${flavor_flags[@]}"
+        ./configure \
+            "--prefix=$HOME_PREFIX" \
+            --disable-build-details \
+            --with-native-compilation=aot \
+            --with-tree-sitter \
+            --with-small-ja-dic \
+            --without-included-regex \
+            --without-x
         make -j"$(nproc)"
-        "${sudo_cmd[@]}" make install
+        make install
     )
 
     rm -rf "$srcdir" "/tmp/${tarball}"
-    echo "installed $("$prefix/bin/emacs" --version | head -1)"
+    echo "installed $("$HOME_PREFIX/bin/emacs" --version | head -1)"
 }
 
 install_emacs() {
@@ -161,21 +185,29 @@ install_emacs() {
         echo "emacs is already installed: $(emacs --version | head -1)"
         exit 0
     fi
-    do_build "${location:-system}"
+    if [[ "${location:-system}" == "home" ]]; then
+        do_build
+    else
+        install_package
+    fi
 }
 
 update_emacs() {
     if [[ -n "$location" ]]; then
-        do_build "$location"
+        if [[ "$location" == "home" ]]; then
+            do_build
+        else
+            install_package
+        fi
         return
     fi
     local did_any=0
     if [[ -x "$SYSTEM_BIN" ]]; then
-        do_build system
+        install_package
         did_any=1
     fi
     if [[ -x "$HOME_BIN" ]]; then
-        do_build home
+        do_build
         did_any=1
     fi
     if [[ $did_any -eq 0 ]]; then
