@@ -107,7 +107,7 @@ jobs:
             ci/*|bootstrap/shared) required="bootstrap" ;;
             bootstrap/*)           required="distro" ;;
             dev/*)                 required="recipe" ;;
-            unsafe/*)              required="" ;;
+            unsafe/*)              required="bootstrap" ;;
             *) echo "unexpected branch '$branch'" >&2; exit 1 ;;
           esac
 
