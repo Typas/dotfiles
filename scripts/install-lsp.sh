@@ -6,6 +6,15 @@ SCRIPTS_DIR="$(dirname "$0")"
 # shellcheck source=parallel-progress.sh
 source "$SCRIPTS_DIR/parallel-progress.sh"
 
+# Prints a skip message and returns 1 if actual version < required version
+_require_version() {
+    local label="$1" actual="$2" required="$3"
+    if ! printf '%s\n%s\n' "$required" "$actual" | sort -V -C; then
+        echo "$label $required+ required, found $label $actual, skipping"
+        return 1
+    fi
+}
+
 # rust-analyzer
 install_rust_analyzer() {
     if ! command -v rustup &>/dev/null; then echo "rustup not found, skipping rust-analyzer"
@@ -16,14 +25,24 @@ install_rust_analyzer() {
 # JETLS.jl (Julia LSP)
 install_jetls() {
     if ! command -v julia &>/dev/null; then echo "julia not found, skipping JETLS.jl"
-    else julia -e 'using Pkg; Pkg.Apps.add(; url="https://github.com/aviatesk/JETLS.jl", rev="release")'; fi
+    else
+        local ver
+        ver=$(julia --version 2>/dev/null | grep -oP 'julia version \K[0-9]+\.[0-9]+')
+        _require_version "julia" "$ver" "1.9" || return
+        julia -e 'using Pkg; Pkg.Apps.add(; url="https://github.com/aviatesk/JETLS.jl", rev="release")'
+    fi
 }
 
 # gopls
 install_gopls() {
     if ! command -v go &>/dev/null; then echo "go not found, skipping gopls"
     elif command -v gopls &>/dev/null; then echo "gopls already installed"
-    else go install golang.org/x/tools/gopls@latest; fi
+    else
+        local ver
+        ver=$(go version 2>/dev/null | grep -oP 'go\K[0-9]+\.[0-9]+')
+        _require_version "go" "$ver" "1.21" || return
+        go install golang.org/x/tools/gopls@latest
+    fi
 }
 
 # hls
@@ -55,7 +74,12 @@ install_tinymist() {
 install_bash_lsp() {
     if command -v bash-language-server &>/dev/null; then echo "bash-language-server already installed"
     elif ! command -v npm &>/dev/null; then echo "npm not found, skipping bash-language-server"
-    else npm i -g bash-language-server; fi
+    else
+        local ver
+        ver=$(node --version 2>/dev/null | tr -d 'v')
+        _require_version "node" "$ver" "18.0" || return
+        npm i -g bash-language-server
+    fi
 }
 
 # ruff (Python linter/LSP)
