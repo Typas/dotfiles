@@ -59,7 +59,7 @@ The CI only checks that `just <recipe>` exits 0, not that the binary works. If t
 
 ## Shell Scripts
 
-Run `shellcheck` on any shell script that is added or modified.
+Run `shellcheck -x` from the script's directory on any shell script that is added or modified.
 
 - **Error / Warning**: fix before committing.
 - **Info**: ask the user whether to fix.
