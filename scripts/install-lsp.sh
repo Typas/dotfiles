@@ -37,16 +37,18 @@ install_hls() {
 install_texlab() {
     if ! command -v latex &>/dev/null; then echo "latex not found, skipping texlab"
     elif command -v texlab &>/dev/null; then echo "texlab already installed"
-    elif ! command -v cargo &>/dev/null; then echo "cargo not found, skipping texlab"
-    else cargo binstall --no-confirm texlab; fi
+    elif command -v cargo-binstall &>/dev/null; then cargo binstall --no-confirm texlab
+    elif command -v cargo &>/dev/null; then cargo install texlab
+    else echo "cargo not found, skipping texlab"; fi
 }
 
 # tinymist
 install_tinymist() {
     if ! command -v typst &>/dev/null; then echo "typst not found, skipping tinymist"
     elif command -v tinymist &>/dev/null; then echo "tinymist already installed"
-    elif ! command -v cargo &>/dev/null; then echo "cargo not found, skipping tinymist"
-    else cargo binstall --no-confirm tinymist; fi
+    elif command -v cargo-binstall &>/dev/null; then cargo binstall --no-confirm tinymist
+    elif command -v cargo &>/dev/null; then cargo install tinymist
+    else echo "cargo not found, skipping tinymist"; fi
 }
 
 # bash-language-server
@@ -60,8 +62,7 @@ install_bash_lsp() {
 install_ruff() {
     if command -v ruff &>/dev/null; then echo "ruff already installed"
     elif command -v uv &>/dev/null; then uv tool install ruff
-    elif command -v cargo &>/dev/null; then cargo binstall --no-confirm ruff
-    else echo "neither uv nor cargo found, skipping ruff"; fi
+    else echo "uv not found, skipping ruff"; fi
 }
 
 run_parallel "rust-analyzer" install_rust_analyzer
