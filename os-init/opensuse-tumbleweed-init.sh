@@ -18,6 +18,6 @@ prompt() {
 prompt "system package installations"
 PACKAGES=(fd dust clang eza editorconfig ripgrep ShellCheck openssh typst gawk gcc make cmake curl fontconfig 7zip)
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
-    sudo zypper ref
+    sudo zypper dup -y
 fi
 sudo zypper in -y "${PACKAGES[@]}"
