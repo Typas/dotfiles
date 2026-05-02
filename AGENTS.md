@@ -57,6 +57,10 @@ The CI only checks that `just <recipe>` exits 0, not that the binary works. If t
 - `git commit` must always run alone — never chain it with other commands.
 - All other command chains are limited to 2 commands maximum.
 
+## Available Tools
+
+`fd` and `rg` are available as standard search tools. Prefer them over `find` and `grep`.
+
 ## Shell Scripts
 
 Run `shellcheck -x` from the script's directory on any shell script that is added or modified.
