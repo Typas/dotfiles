@@ -35,13 +35,14 @@ case "$OS" in
         sudo dnf update -y
         ;;
     opensuse-tumbleweed)
-        sudo zypper ref
+        sudo zypper dup -y
         ;;
     cachyos)
         sudo pacman -Syu --noconfirm
         ;;
     ubuntu|debian)
         sudo apt-get update
+        sudo apt-get upgrade -y
         ;;
     *)
         echo "unsupported system ($OS)"
