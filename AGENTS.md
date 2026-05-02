@@ -52,6 +52,11 @@ Fix the recipe and push a follow-up commit until all targets pass.
 
 The CI only checks that `just <recipe>` exits 0, not that the binary works. If the justfile target lacks a verification command (e.g., `emacs --version`), add one.
 
+## Command Chaining
+
+- `git commit` must always run alone — never chain it with other commands.
+- All other command chains are limited to 2 commands maximum.
+
 ## Shell Scripts
 
 Run `shellcheck` on any shell script that is added or modified.
