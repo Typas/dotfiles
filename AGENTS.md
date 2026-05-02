@@ -27,8 +27,8 @@ To protect `master`, follow these rules:
 - Do not open, merge, or auto-close PRs, or delete branches. These are human-triggered actions.
 - Short-lived branches (`docs/*`, `ci/*`, `unsafe/*`) should be deleted by a human after their PR merges. Long-lived branches (`bootstrap/*`, `dev/*`) must be kept.
 - Do not reuse long-lived branch names (`bootstrap/*`, `dev/*`) for throwaway test pushes. If a verification probe must push to such a name, land a revert commit after the probe PR is closed — do not force-reset or delete the branch.
-- Before editing, `git fetch`, fast-forward the target branch (long-lived branches may have advanced since last local sync), and rebase it onto `master` so it picks up recent changes.
-- Never `git commit --amend` a pushed commit. Never `git push --force` (including `--force-with-lease`), **except** when force-pushing a long-lived branch after rebasing it onto `master`. If a pushed commit needs fixing for any other reason, add a follow-up commit or open a new branch.
+- Before editing: `git pull` on `master`, checkout the target branch, `git pull --ff-only`, then `git rebase master` and immediately `git push --force-with-lease`.
+- Never `git commit --amend` a pushed commit. Never `git push --force` (including `--force-with-lease`) except immediately after rebasing a long-lived branch onto `master` as described above. If a pushed commit needs fixing for any other reason, add a follow-up commit or open a new branch.
 
 ## GitHub Actions
 
