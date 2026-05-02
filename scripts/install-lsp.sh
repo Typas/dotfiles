@@ -35,22 +35,24 @@ install_hls() {
 
 # texlab
 install_texlab() {
-    if ! command -v cargo &>/dev/null; then echo "cargo not found, skipping texlab"
+    if ! command -v latex &>/dev/null; then echo "latex not found, skipping texlab"
     elif command -v texlab &>/dev/null; then echo "texlab already installed"
-    else cargo install texlab; fi
+    elif ! command -v cargo &>/dev/null; then echo "cargo not found, skipping texlab"
+    else cargo binstall --no-confirm texlab; fi
 }
 
 # tinymist
 install_tinymist() {
-    if ! command -v cargo &>/dev/null; then echo "cargo not found, skipping tinymist"
+    if ! command -v typst &>/dev/null; then echo "typst not found, skipping tinymist"
     elif command -v tinymist &>/dev/null; then echo "tinymist already installed"
-    else cargo install tinymist; fi
+    elif ! command -v cargo &>/dev/null; then echo "cargo not found, skipping tinymist"
+    else cargo binstall --no-confirm tinymist; fi
 }
 
 # bash-language-server
 install_bash_lsp() {
-    if ! command -v npm &>/dev/null; then echo "npm not found, skipping bash-language-server"
-    elif npm view bash-language-server &>/dev/null 2>&1; then echo "bash-language-server already installed"
+    if command -v bash-language-server &>/dev/null; then echo "bash-language-server already installed"
+    elif ! command -v npm &>/dev/null; then echo "npm not found, skipping bash-language-server"
     else npm i -g bash-language-server; fi
 }
 
@@ -58,7 +60,7 @@ install_bash_lsp() {
 install_ruff() {
     if command -v ruff &>/dev/null; then echo "ruff already installed"
     elif command -v uv &>/dev/null; then uv tool install ruff
-    elif command -v cargo &>/dev/null; then cargo install ruff
+    elif command -v cargo &>/dev/null; then cargo binstall --no-confirm ruff
     else echo "neither uv nor cargo found, skipping ruff"; fi
 }
 
