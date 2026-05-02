@@ -17,7 +17,12 @@ prompt() {
 
 prompt "system package installations"
 PACKAGES=(fd dust clang eza editorconfig ripgrep ShellCheck openssh typst gawk gcc make cmake curl fontconfig 7zip)
+# Always dup to resolve container/repo glibc skew; init.sh only does zypper ref.
+# TODO: remove once init.sh runs zypper dup for openSUSE (bootstrap/shared).
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
+    sudo zypper dup -y
+else
+    # TODO: remove once init.sh runs zypper dup for openSUSE (bootstrap/shared).
     sudo zypper dup -y
 fi
 sudo zypper in -y "${PACKAGES[@]}"
