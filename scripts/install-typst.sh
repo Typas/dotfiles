@@ -44,6 +44,8 @@ case "$os" in
     *) echo "unsupported OS for typst: $os" >&2; exit 1 ;;
 esac
 
+# shellcheck source=/dev/null
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 if ! command -v cargo >/dev/null 2>&1; then
     echo "cargo not found on PATH; run 'just init' first" >&2
     exit 1
@@ -55,10 +57,18 @@ case "$action" in
             echo "typst is already installed: $(typst --version)"
             exit 0
         fi
-        cargo install --locked typst-cli
+        if command -v cargo-binstall &>/dev/null; then
+            cargo binstall --no-confirm typst-cli
+        else
+            cargo install --locked typst-cli
+        fi
         ;;
     update)
-        cargo install --locked typst-cli
+        if command -v cargo-binstall &>/dev/null; then
+            cargo binstall --no-confirm typst-cli
+        else
+            cargo install --locked typst-cli
+        fi
         ;;
     *) usage ;;
 esac
