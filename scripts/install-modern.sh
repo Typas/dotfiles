@@ -33,8 +33,13 @@ if command -v cargo &>/dev/null; then
         fi
     done
     if (( ${#CARGO_PKGS[@]} > 0 )); then
-        echo "cargo install ${CARGO_PKGS[*]}"
-        cargo install "${CARGO_PKGS[@]}"
+        if command -v cargo-binstall &>/dev/null; then
+            echo "cargo binstall ${CARGO_PKGS[*]}"
+            cargo binstall --no-confirm "${CARGO_PKGS[@]}"
+        else
+            echo "cargo install ${CARGO_PKGS[*]}"
+            cargo install "${CARGO_PKGS[@]}"
+        fi
     fi
 else
     echo "cargo not found, skipping cargo-based tools"
