@@ -14,21 +14,20 @@ Common types: `feat`, `fix`, `chore`, `refactor`, `docs`, `style`, `test`.
 
 To protect `master`, follow these rules:
 
-- When developing any OS-specific bootstrap, check out to a `bootstrap/<name>` branch (e.g., `bootstrap/ubuntu`). Long-lived. Scope is restricted by `branch-policy`:
+- When developing any OS-specific bootstrap, check out to a `bootstrap/<name>` branch (e.g., `bootstrap/ubuntu`). Scope is restricted by `branch-policy`:
   - `bootstrap/<distro>` (where `<distro>` is `ubuntu`, `debian`, `fedora`, `opensuse-tumbleweed`, or `cachyos`): only `os-init/<distro>-init.sh` and `.github/actions/linux-container-setup/**` (plus `*.md`/`*.org`).
   - `bootstrap/mac`: only `flake.nix`, `flake.lock`, `nix/**`, `hosts/**`, and `.github/actions/mac-nix-setup/**` (plus `*.md`/`*.org`).
-  - `bootstrap/shared`: only `init.sh` and `scripts/shell-init.sh` (plus `*.md`/`*.org`). This is the only bootstrap branch whose PR triggers the full `bootstrap.yml` matrix — use it for edits that affect bootstrap across all distros.
-- When developing any recipe, check out to a `dev/<name>` branch (e.g., `dev/zsh`). Long-lived.
-- When writing or updating documentation, check out to a `docs/<name>` branch (e.g., `docs/readme`) to avoid merge conflicts with parallel code work. Short-lived. Only `*.md` and `*.org` files may change.
-- When updating CI config under `.github/**`, check out to a `ci/<name>` branch (e.g., `ci/branch-policy`). Short-lived. Only files under `.github/**` and `*.md`/`*.org` may change.
-- For cross-cutting changes that cannot fit any other prefix (e.g., renaming files across multiple scopes), check out to an `unsafe/<name>` branch. Short-lived. No file-scope restriction — analogous to Rust's `unsafe`, requires extra scrutiny on review.
+  - `bootstrap/shared`: only `init.sh`, `scripts/shell-init.sh`, and `justfile` (plus `*.md`/`*.org`). This is the only bootstrap branch whose PR triggers the full `bootstrap.yml` matrix — use it for edits that affect bootstrap across all distros.
+- When developing any recipe, check out to a `dev/<name>` branch (e.g., `dev/zsh`). `<name>` must match a public recipe declared in `justfile` (verified by `branch-policy`); `dev/*` PRs cannot touch bootstrap-scope paths (`init.sh`, `scripts/shell-init.sh`, `justfile`, `os-init/**`, mac/linux-container action paths).
+- When writing or updating documentation, check out to a `docs/<name>` branch (e.g., `docs/readme`) to avoid merge conflicts with parallel code work. Only `*.md` and `*.org` files may change.
+- When updating CI config under `.github/**`, check out to a `ci/<name>` branch (e.g., `ci/branch-policy`). Only files under `.github/**` and `*.md`/`*.org` may change.
+- For cross-cutting changes that cannot fit any other prefix (e.g., renaming files across multiple scopes), check out to an `unsafe/<name>` branch. No file-scope restriction — analogous to Rust's `unsafe`, requires extra scrutiny on review.
 - Any other branch name is rejected by the `policy` status check on PRs to `master`.
 - Never commit directly to `master`. All changes must land via a pull request.
 - Do not open, merge, or auto-close PRs, or delete branches. These are human-triggered actions.
-- Short-lived branches (`docs/*`, `ci/*`, `unsafe/*`) should be deleted by a human after their PR merges. Long-lived branches (`bootstrap/*`, `dev/*`) must be kept.
-- Do not reuse long-lived branch names (`bootstrap/*`, `dev/*`) for throwaway test pushes. If a verification probe must push to such a name, land a revert commit after the probe PR is closed — do not force-reset or delete the branch.
+- All branches should be deleted by a human after their PR merges.
 - Before editing: `git pull` on `master`, checkout the target branch, `git pull --ff-only`, then `git rebase master` and immediately `git push --force-with-lease`.
-- Never `git commit --amend` a pushed commit. Never `git push --force` (including `--force-with-lease`) except immediately after rebasing a long-lived branch onto `master` as described above. If a pushed commit needs fixing for any other reason, add a follow-up commit or open a new branch.
+- Never `git commit --amend` a pushed commit. Never `git push --force` (including `--force-with-lease`) except immediately after rebasing a branch onto `master` as described above. If a pushed commit needs fixing for any other reason, add a follow-up commit or open a new branch.
 
 ## GitHub Actions
 
