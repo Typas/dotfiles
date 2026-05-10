@@ -52,16 +52,23 @@ _common-setup:
     set -euo pipefail
     cd "$HOME"
     for f in "{{root}}/home/".*; do
-        if [ "${f##*/}" != "." ] && [ "${f##*/}" != ".." ]; then
-            echo "Linking $f"
-            ln -sf "$f" .
+        name="${f##*/}"
+        case "$name" in .|..) continue;; esac
+        if [ -d "$name" ] && [ ! -L "$name" ]; then
+            echo "skip $name (real dir)"; continue
         fi
+        echo "Linking $f"
+        ln -snf "$f" .
     done
     mkdir -p "$HOME/.config"
     cd "$HOME/.config"
     for d in "{{root}}/config/"*/; do
+        name="$(basename "$d")"
+        if [ -d "$name" ] && [ ! -L "$name" ]; then
+            echo "skip $name (real dir)"; continue
+        fi
         echo "Linking $d"
-        ln -sf "$d" .
+        ln -snf "$d" .
     done
 
 _parallel-fonts scope:
