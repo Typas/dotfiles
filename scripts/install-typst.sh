@@ -55,10 +55,18 @@ case "$action" in
             echo "typst is already installed: $(typst --version)"
             exit 0
         fi
-        cargo install --locked typst-cli
+        if command -v cargo-binstall &>/dev/null; then
+            cargo binstall --no-confirm typst-cli
+        else
+            cargo install --locked typst-cli
+        fi
         ;;
     update)
-        cargo install --locked typst-cli
+        if command -v cargo-binstall &>/dev/null; then
+            cargo binstall --no-confirm typst-cli
+        else
+            cargo install --locked typst-cli
+        fi
         ;;
     *) usage ;;
 esac
