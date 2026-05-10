@@ -44,6 +44,8 @@ case "$os" in
     *) echo "unsupported OS for typst: $os" >&2; exit 1 ;;
 esac
 
+# shellcheck source=/dev/null
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 if ! command -v cargo >/dev/null 2>&1; then
     echo "cargo not found on PATH; run 'just init' first" >&2
     exit 1
