@@ -77,7 +77,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           chown -R ci:ci "$GITHUB_WORKSPACE"
-          su ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh && just ${{ needs.setup.outputs.recipe }}"
+          su -l ci -c "export GITHUB_TOKEN='$GITHUB_TOKEN'; cd '$GITHUB_WORKSPACE' && bash init.sh && just ${{ needs.setup.outputs.recipe }}"
 
   mac:
     needs: setup
