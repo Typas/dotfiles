@@ -59,7 +59,7 @@ jobs:
       - name: bash init.sh
         run: |
           chown -R ci:ci "$GITHUB_WORKSPACE"
-          su - ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh"
+          su -l ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh"
 
   fedora:
     needs: setup
@@ -83,7 +83,7 @@ jobs:
       - name: bash init.sh
         run: |
           chown -R ci:ci "$GITHUB_WORKSPACE"
-          su - ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh"
+          su -l ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh"
 
   opensuse-tumbleweed:
     needs: setup
@@ -103,7 +103,7 @@ jobs:
       - name: bash init.sh
         run: |
           chown -R ci:ci "$GITHUB_WORKSPACE"
-          su - ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh"
+          su -l ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh"
 
   cachyos:
     needs: setup
@@ -122,7 +122,7 @@ jobs:
       - name: bash init.sh
         run: |
           chown -R ci:ci "$GITHUB_WORKSPACE"
-          su - ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh"
+          su -l ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh"
 
   mac:
     needs: setup
