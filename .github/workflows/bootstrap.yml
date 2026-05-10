@@ -46,7 +46,7 @@ jobs:
       - name: bash init.sh
         run: |
           chown -R ci:ci "$GITHUB_WORKSPACE"
-          su - ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh"
+          su -l ci -c "cd '$GITHUB_WORKSPACE' && bash init.sh"
 
   mac:
     runs-on: macos-26
