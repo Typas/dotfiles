@@ -37,8 +37,8 @@ fi
 
 if [[ "$os" == "cachyos" ]]; then
     case "$action" in
-        install) sudo pacman -S --needed --noconfirm emacs ;;
-        update)  sudo pacman -S --noconfirm emacs ;;
+        install) sudo pacman -S --needed --noconfirm emacs-wayland ;;
+        update)  sudo pacman -S --noconfirm emacs-wayland ;;
         *) usage ;;
     esac
     exit 0
