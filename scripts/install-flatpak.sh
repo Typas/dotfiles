@@ -11,10 +11,22 @@ case "$os" in
         sudo apt-get install -y flatpak
         ;;
     cachyos)
+        if [ ! -S /run/dbus/system_bus_socket ]; then
+            sudo mkdir -p /run/dbus
+            sudo dbus-daemon --system --fork
+        fi
         sudo pacman -S --needed --noconfirm flatpak
         ;;
-    fedora|opensuse-tumbleweed)
-        ;; # flatpak pre-installed
+    fedora)
+        sudo dnf install -y flatpak
+        ;;
+    opensuse-tumbleweed)
+        sudo zypper install -y flatpak
+        ;;
+    *)
+        echo "unsupported OS: $os" >&2
+        exit 1
+        ;;
 esac
 
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak --version
