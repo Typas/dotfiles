@@ -114,7 +114,7 @@ lsp:
     bash {{root}}/scripts/install-lsp.sh
 
 # Install or update TeX Live with LuaLaTeX + CJK (use: just tex, just tex update, just tex install home)
-tex action="install" location="":
+tex action="install" location="system":
     bash {{root}}/scripts/install-tex.sh {{os}} {{action}} {{location}}
 
 # Install or update Typst (use: just typst, just typst update)
@@ -126,12 +126,11 @@ pacman-mask-cicku:
     bash {{root}}/scripts/pacman-mask-cicku.sh {{os}}
 
 # Install or update Emacs (use: just emacs, just emacs update, just emacs install home)
-emacs action="install" location="":
+emacs action="install" location="system":
     bash {{root}}/scripts/install-emacs.sh {{os}} {{action}} {{location}}
-    emacs --version
 
 # Install or update Neovim (use: just neovim, just neovim update, just neovim install home)
-neovim action="install" location="":
+neovim action="install" location="system":
     bash {{root}}/scripts/install-neovim.sh {{os}} {{action}} {{location}}
 
 alias nvim := neovim
