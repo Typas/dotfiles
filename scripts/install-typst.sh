@@ -41,7 +41,7 @@ fi
 
 case "$os" in
     fedora|opensuse-tumbleweed|ubuntu|debian) ;;
-    *) echo "unsupported OS for typst: $os" >&2; exit 1 ;;
+    *) echo "unsupported OS: $os" >&2; exit 1 ;;
 esac
 
 # shellcheck source=/dev/null
