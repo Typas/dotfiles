@@ -126,7 +126,7 @@ pacman-mask-cicku:
     bash {{root}}/scripts/pacman-mask-cicku.sh {{os}}
 
 # Install or update Emacs (use: just emacs, just emacs update, just emacs install home)
-emacs action="install" location="system":
+emacs action="install" location="":
     bash {{root}}/scripts/install-emacs.sh {{os}} {{action}} {{location}}
     emacs --version
 
