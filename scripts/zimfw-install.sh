@@ -14,7 +14,7 @@ cd "$HOME"
 for setting in "$D_LOC"/settings-zsh/.*
 do
     [[ "${setting##*/}" == "." || "${setting##*/}" == ".." ]] && continue
-    ln -sf "$setting" .
+    ln -snf "$setting" .
 done
 
 zsh -c "source ${ZIM_HOME}/zimfw.zsh install && source ${ZIM_HOME}/zimfw.zsh update"

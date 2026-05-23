@@ -177,3 +177,5 @@ if [[ ${BLE_VERSION-} ]]; then
     ble-bind -m auto_complete -f 'S-TAB' auto_complete/insert
     ble-attach
 fi
+
+[ -f "$HOME/.bashrc.local" ] && source "$HOME/.bashrc.local"
