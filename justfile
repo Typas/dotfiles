@@ -120,6 +120,7 @@ tex action="install" location="":
 # Install or update Typst (use: just typst, just typst update)
 typst action="install":
     bash {{root}}/scripts/install-typst.sh {{os}} {{action}}
+    typst --version
 
 # Comment out cicku.me mirrors in pacman mirrorlists (idempotent; CachyOS/arch-like only)
 pacman-mask-cicku:
