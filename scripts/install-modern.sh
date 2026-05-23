@@ -52,6 +52,7 @@ case "$os" in
     opensuse-tumbleweed)     sudo zypper in -y jq duf fzf ;;
     cachyos)       sudo pacman -S --needed --noconfirm jq duf fzf ;;
     debian|ubuntu) sudo apt-get install -y jq fzf ;;
+    *)             echo "unsupported OS: $os" >&2; exit 1 ;;
 esac
 
 # Tier 3: pre-built binaries from GitHub releases (yq, doggo, curlie)
@@ -101,3 +102,7 @@ install_from_github() {
 install_from_github "yq" "mikefarah/yq" "yq_${GOOS}_${ARCH}.tar.gz"
 install_from_github "doggo" "mr-karan/doggo" "doggo.*${GOOS}_${ARCH}.tar.gz"
 install_from_github "curlie" "rs/curlie" "curlie.*${GOOS}_${ARCH}.tar.gz"
+
+if command -v bat &>/dev/null; then
+    bat --version
+fi
