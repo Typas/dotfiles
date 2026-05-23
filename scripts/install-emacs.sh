@@ -65,7 +65,7 @@ ensure_build_deps() {
             pkgs=(build-essential autoconf texinfo "libgccjit-${gcc_major}-dev" libtree-sitter-dev libsqlite3-dev libgnutls28-dev libxml2-dev libvterm-dev libncurses-dev zlib1g-dev)
             ;;
         *)
-            echo "unsupported OS for emacs source build: $os" >&2
+            echo "unsupported OS: $os" >&2
             exit 1
             ;;
     esac
@@ -121,7 +121,7 @@ install_package() {
             asset="emacs-typas-${version}-1.x86_64.rpm"
             ;;
         *)
-            echo "install_package: unsupported OS: $os" >&2
+            echo "unsupported OS: $os" >&2
             exit 1
             ;;
     esac
