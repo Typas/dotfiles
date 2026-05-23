@@ -108,6 +108,7 @@ julia:
 # Install Haskell via ghcup (with required system dependencies)
 haskell:
     bash {{root}}/scripts/install-haskell.sh {{os}}
+    bash -lc 'ghc --version'
 
 # Install LSP servers for available languages
 lsp:

@@ -16,8 +16,10 @@ else
             sudo zypper in -y gmp-devel ncurses-devel make pkg-config gcc-c++ xz ;;
         ubuntu|debian)
             sudo apt-get install -y libgmp-dev libncurses-dev make pkg-config g++ xz-utils ;;
+        *) echo "unsupported OS: $os" >&2; exit 1 ;;
     esac
     curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh -s -- -y
+    # shellcheck disable=SC1090
     case "$os" in
         mac) source ~/.zshrc ;;
         *)   source ~/.bashrc ;;
