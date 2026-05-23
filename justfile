@@ -100,6 +100,7 @@ python:
 # Install or update Go (use: just go, just go update)
 go action="install":
     bash {{root}}/scripts/install-go.sh {{action}}
+    bash -lc 'go version'
 
 # Install Julia via juliaup
 julia:
