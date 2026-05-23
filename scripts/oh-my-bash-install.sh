@@ -17,5 +17,9 @@ fi
 cd "$HOME"
 for setting in "$D_LOC"/settings-bash/.*
 do
-    ln -sf "$setting" .
+    # bash <5.2 lacks globskipdots: .* expands to include . and ..,
+    # which would make ln error under `set -e` before reaching .bashrc.
+    name="${setting##*/}"
+    case "$name" in .|..) continue;; esac
+    ln -snf "$setting" .
 done

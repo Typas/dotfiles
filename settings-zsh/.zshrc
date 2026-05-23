@@ -82,3 +82,5 @@ export PATH
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-envexport PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
