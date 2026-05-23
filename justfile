@@ -131,7 +131,8 @@ emacs action="install" location="":
     emacs --version
 
 # Install or update Neovim (use: just neovim, just neovim update, just neovim install home)
-neovim action="install" location="":
+neovim action="install" location="system":
     bash {{root}}/scripts/install-neovim.sh {{os}} {{action}} {{location}}
+    nvim --version | head -1
 
 alias nvim := neovim
