@@ -15,6 +15,11 @@ case "$os" in
         ;;
     fedora|opensuse-tumbleweed)
         ;; # flatpak pre-installed
+    *)
+        echo "unsupported OS: $os" >&2
+        exit 1
+        ;;
 esac
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak --version
