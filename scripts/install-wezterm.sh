@@ -33,7 +33,11 @@ case "$os" in
         sudo apt-get install -y wezterm
         ;;
     *)
-        echo "unsupported OS: $os"
+        echo "unsupported OS: $os" >&2
         exit 1
         ;;
 esac
+
+if command -v wezterm &>/dev/null; then
+    wezterm --version
+fi
