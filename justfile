@@ -104,7 +104,6 @@ go action="install":
 # Install Julia via juliaup
 julia:
     bash {{root}}/scripts/install-julia.sh {{os}}
-    bash -lc 'julia --version'
 
 # Install Haskell via ghcup (with required system dependencies)
 haskell:
