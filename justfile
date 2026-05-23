@@ -96,6 +96,7 @@ modern:
 # Install uv (Python package manager)
 python:
     bash {{root}}/scripts/install-python.sh
+    bash -lc 'uv --version'
 
 # Install or update Go (use: just go, just go update)
 go action="install":
