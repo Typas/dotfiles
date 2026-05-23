@@ -69,7 +69,7 @@ ensure_build_deps() {
             sudo apt-get install -y "${missing[@]}"
             ;;
         *)
-            echo "unsupported OS for TeX Live source install: $os" >&2
+            echo "unsupported OS: $os" >&2
             exit 1
             ;;
     esac

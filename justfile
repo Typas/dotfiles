@@ -114,8 +114,9 @@ lsp:
     bash {{root}}/scripts/install-lsp.sh
 
 # Install or update TeX Live with LuaLaTeX + CJK (use: just tex, just tex update, just tex install home)
-tex action="install" location="":
+tex action="install" location="system":
     bash {{root}}/scripts/install-tex.sh {{os}} {{action}} {{location}}
+    bash -lc 'lualatex --version | head -1'
 
 # Install or update Typst (use: just typst, just typst update)
 typst action="install":
