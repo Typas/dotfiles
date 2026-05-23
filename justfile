@@ -96,22 +96,18 @@ modern:
 # Install uv (Python package manager)
 python:
     bash {{root}}/scripts/install-python.sh
-    bash -lc 'uv --version'
 
 # Install or update Go (use: just go, just go update)
 go action="install":
     bash {{root}}/scripts/install-go.sh {{action}}
-    bash -lc 'go version'
 
 # Install Julia via juliaup
 julia:
     bash {{root}}/scripts/install-julia.sh {{os}}
-    bash -lc 'julia --version'
 
 # Install Haskell via ghcup (with required system dependencies)
 haskell:
     bash {{root}}/scripts/install-haskell.sh {{os}}
-    bash -lc 'ghc --version'
 
 # Install LSP servers for available languages
 lsp:
@@ -120,12 +116,10 @@ lsp:
 # Install or update TeX Live with LuaLaTeX + CJK (use: just tex, just tex update, just tex install home)
 tex action="install" location="system":
     bash {{root}}/scripts/install-tex.sh {{os}} {{action}} {{location}}
-    bash -lc 'lualatex --version | head -1'
 
 # Install or update Typst (use: just typst, just typst update)
 typst action="install":
     bash {{root}}/scripts/install-typst.sh {{os}} {{action}}
-    typst --version
 
 # Comment out cicku.me mirrors in pacman mirrorlists (idempotent; CachyOS/arch-like only)
 pacman-mask-cicku:
@@ -134,11 +128,9 @@ pacman-mask-cicku:
 # Install or update Emacs (use: just emacs, just emacs update, just emacs install home)
 emacs action="install" location="system":
     bash {{root}}/scripts/install-emacs.sh {{os}} {{action}} {{location}}
-    emacs --version
 
 # Install or update Neovim (use: just neovim, just neovim update, just neovim install home)
 neovim action="install" location="system":
     bash {{root}}/scripts/install-neovim.sh {{os}} {{action}} {{location}}
-    nvim --version | head -1
 
 alias nvim := neovim
