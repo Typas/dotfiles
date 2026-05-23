@@ -11,6 +11,7 @@ case "$os" in
         sudo apt-get install -y flatpak
         ;;
     cachyos)
+        [ -S /run/dbus/system_bus_socket ] || sudo dbus-daemon --system --fork
         sudo pacman -S --needed --noconfirm flatpak
         ;;
     fedora|opensuse-tumbleweed)
