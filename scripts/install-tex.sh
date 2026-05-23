@@ -15,7 +15,25 @@ HOME_PREFIX="$HOME/.local/texlive"
 SYSTEM_BIN_DIR="/usr/local/bin"
 HOME_BIN_DIR="$HOME/.local/bin"
 TL_BINS=(lualatex luatex pdflatex pdftex xelatex xetex tex latex tlmgr kpsewhich latexmk fmtutil-sys updmap-sys mktexlsr texhash)
-TLNET_URL="https://ctan.mirror.twds.com.tw/tex-archive/systems/texlive/tlnet"
+TLNET_URLS=(
+    "https://ctan.mirror.twds.com.tw/tex-archive/systems/texlive/tlnet"
+    "https://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet"
+)
+TLNET_URL=""
+
+pick_tlnet_url() {
+    local url
+    for url in "${TLNET_URLS[@]}"; do
+        if curl -fsSL --head --max-time 10 "$url/install-tl-unx.tar.gz" >/dev/null 2>&1; then
+            TLNET_URL="$url"
+            echo "using TeX Live mirror: $url"
+            return 0
+        fi
+        echo "mirror unreachable, trying next: $url" >&2
+    done
+    echo "no TeX Live mirror reachable" >&2
+    return 1
+}
 
 if [[ "$os" == "mac" ]]; then
     if ! command -v nix >/dev/null 2>&1; then
@@ -128,6 +146,7 @@ do_install() {
     fi
 
     ensure_build_deps
+    pick_tlnet_url
 
     local tmpdir
     tmpdir=$(mktemp -d)
