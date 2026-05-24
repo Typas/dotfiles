@@ -90,6 +90,7 @@ jobs:
         name: bootstrap + just ${{ needs.setup.outputs.recipe }} (mac)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HOSTNAME: ci
         run: |
           # shellcheck disable=SC1091
           . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
