@@ -3,7 +3,7 @@
 root := justfile_directory()
 
 os := if os() == "macos" { "mac" } else { `grep "^ID=" /etc/os-release | sed 's/ID=//;s/^"//;s/"$//'` }
-update := "true"
+update := "false"
 
 # Show available recipes
 help:
