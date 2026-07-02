@@ -16,7 +16,7 @@ prompt() {
 }
 
 prompt "system package installations"
-PACKAGES=(fd dust clang eza editorconfig ripgrep ShellCheck openssh typst gcc make cmake curl fontconfig 7zip)
+PACKAGES=(fd dust clang eza editorconfig ripgrep ShellCheck openssh typst gcc make cmake curl fontconfig 7zip unzip)
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
   sudo zypper dup -y
 fi
