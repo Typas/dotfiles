@@ -5,23 +5,23 @@ D_LOC="${D_LOC:?D_LOC must be set}"
 sudo -v
 
 prompt() {
-    local available=$(($(tput cols) - ${#1} - 2))
-    local left=$((available / 2))
-    local right=$((available - left))
+  local available=$(($(tput cols) - ${#1} - 2))
+  local left=$((available / 2))
+  local right=$((available - left))
 
-    test $left -gt 0 && printf -- "=%.0s" $(seq 1 $left)
-    printf " %s " "$1"
-    test $right -gt 0 && printf -- "=%.0s" $(seq 1 $right)
-    echo ""
+  test $left -gt 0 && printf -- "=%.0s" $(seq 1 $left)
+  printf " %s " "$1"
+  test $right -gt 0 && printf -- "=%.0s" $(seq 1 $right)
+  echo ""
 }
 
 prompt "system package installations"
-PACKAGES=(fd-find sd clang gcc pkg-config libssl-dev editorconfig shellcheck openssh-client cmake curl fontconfig p7zip-full)
+PACKAGES=(fd-find sd clang gcc pkg-config libssl-dev editorconfig shellcheck openssh-client cmake curl fontconfig p7zip-full unzip)
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
-    sudo apt-get update
+  sudo apt-get update
 fi
 sudo apt-get install -y "${PACKAGES[@]}"
-if ! command -v fd > /dev/null 2>&1; then
-    mkdir -p ~/.local/bin
-    ln -sf "$(which fdfind)" ~/.local/bin/fd
+if ! command -v fd >/dev/null 2>&1; then
+  mkdir -p ~/.local/bin
+  ln -sf "$(which fdfind)" ~/.local/bin/fd
 fi
