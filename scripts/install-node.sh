@@ -11,8 +11,15 @@ if ! command -v fnm &>/dev/null; then
   curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
 fi
 
+# On Linux the installer drops fnm in ~/.local/share/fnm; on mac it uses Homebrew,
+# which is already on PATH (this prepend is then a harmless no-op).
 export PATH="$HOME/.local/share/fnm:$PATH"
-eval "$(fnm env)"
+# --shell bash: this script always runs under bash (shebang + `bash ...` in the
+# recipe), and fnm's process-tree shell detection is unreliable in CI
+# (su -l ci -c ... just), emitting nothing so a later `fnm use` aborts with
+# "We can't find the necessary environment variables". Forcing the shell is safe
+# regardless of the user's interactive shell.
+eval "$(fnm env --shell bash)"
 
 # Already fully set up (fnm present with Node + pnpm) — nothing to do.
 if command -v pnpm &>/dev/null; then
