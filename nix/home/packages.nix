@@ -36,5 +36,8 @@
     # from init.sh + scripts/install-wezterm.sh
     just
     wezterm
+
+    # from scripts/install-node.sh
+    fnm
   ];
 }
