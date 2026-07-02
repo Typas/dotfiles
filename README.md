@@ -10,23 +10,28 @@ cd ~/.config/dotfiles
 bash init.sh
 ```
 
-`init.sh` updates the system package manager, installs [just](https://github.com/casey/just), and runs `just init`.
+`init.sh` refreshes the system package index, installs [just](https://github.com/casey/just), and runs `just init`.
 
 ## Available Recipes
 
-| Recipe | Description |
-|--------|-------------|
-| `just init` | Full setup: OS packages, Rust, cargo tools, fonts, symlinks, shell config |
-| `just julia` | Install Julia via juliaup |
-| `just haskell` | Install Haskell via ghcup |
-| `just neovim` / `just neovim update` | Install or update Neovim (pass `home` to install under `~/.local`) |
-| `just emacs` / `just emacs update` | Install or update Emacs (system build is pgtk, home build is nox) |
-| `just typst` / `just typst update` | Install or update Typst (nix on mac, pacman on CachyOS, cargo elsewhere) |
-| `just tex` / `just tex update` | Install or update TeX Live with LuaLaTeX + CJK (pass `home` for ~/.local install) |
-| `just pacman-mask-cicku` | Comment out cicku.me mirrors in pacman mirrorlists (CachyOS only; idempotent) |
-| `just font` | Install optional fonts (Fira Sans, Inconsolata, LXGW WenKai TC) |
-| `just lsp` | Install LSP servers for available languages |
-| `just help` | List all recipes |
+| Recipe                               | Description                                                                       |
+|--------------------------------------|-----------------------------------------------------------------------------------|
+| `just init`                          | Full setup: OS packages, Rust, cargo tools, fonts, symlinks, shell config         |
+| `just julia`                         | Install Julia via juliaup                                                         |
+| `just haskell`                       | Install Haskell via ghcup                                                         |
+| `just python`                        | Install uv (Python package manager)                                               |
+| `just go` / `just go update`         | Install or update Go                                                              |
+| `just neovim` / `just neovim update` | Install or update Neovim (pass `home` to install under `~/.local`)                |
+| `just emacs` / `just emacs update`   | Install or update Emacs (system build is pgtk, home build is nox)                 |
+| `just typst` / `just typst update`   | Install or update Typst (nix on mac, pacman on CachyOS, cargo elsewhere)          |
+| `just tex` / `just tex update`       | Install or update TeX Live with LuaLaTeX + CJK (pass `home` for ~/.local install) |
+| `just modern`                        | Install modern unix tools (bat, delta, dust, fzf, etc.)                           |
+| `just wezterm`                       | Install wezterm terminal emulator                                                 |
+| `just flatpak`                       | Set up flatpak with the flathub remote                                            |
+| `just pacman-mask-cicku`             | Comment out cicku.me mirrors in pacman mirrorlists (CachyOS only; idempotent)     |
+| `just font`                          | Install optional fonts (Fira Sans, Inconsolata, LXGW WenKai TC)                   |
+| `just lsp`                           | Install LSP servers for available languages                                       |
+| `just help`                          | List all recipes                                                                  |
 
 ## Supported OS Distributions
 
@@ -35,6 +40,7 @@ bash init.sh
 - openSUSE
 - CachyOS (Arch-based)
 - Ubuntu
+- Debian
 
 ## Notes
 
