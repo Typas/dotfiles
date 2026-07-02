@@ -97,6 +97,10 @@ modern:
 python:
     bash {{root}}/scripts/install-python.sh
 
+# Install fnm (Node version manager) with Node LTS and enable pnpm via corepack
+node:
+    bash {{root}}/scripts/install-node.sh {{os}}
+
 # Install or update Go (use: just go, just go update)
 go action="install":
     bash {{root}}/scripts/install-go.sh {{action}}
