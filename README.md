@@ -20,6 +20,7 @@ bash init.sh
 | `just julia`                         | Install Julia via juliaup                                                         |
 | `just haskell`                       | Install Haskell via ghcup                                                         |
 | `just python`                        | Install uv (Python package manager)                                               |
+| `just node`                          | Install fnm (Node version manager) with Node LTS and enable pnpm via corepack     |
 | `just go` / `just go update`         | Install or update Go                                                              |
 | `just neovim` / `just neovim update` | Install or update Neovim (pass `home` to install under `~/.local`)                |
 | `just emacs` / `just emacs update`   | Install or update Emacs (system build is pgtk, home build is nox)                 |
