@@ -6,24 +6,24 @@ sudo -v
 
 #shellcheck disable=SC2004
 prompt() {
-    local available=$(($(tput cols) - ${#1} - 2))
-    local left=$((available / 2))
-    local right=$((available - left))
+  local available=$(($(tput cols) - ${#1} - 2))
+  local left=$((available / 2))
+  local right=$((available - left))
 
-    test $left -gt 0 && printf -- "=%.0s" $(seq 1 $left)
-    printf " %s " "$1"
-    test $right -gt 0 && printf -- "=%.0s" $(seq 1 $right)
-    echo ""
+  test $left -gt 0 && printf -- "=%.0s" $(seq 1 $left)
+  printf " %s " "$1"
+  test $right -gt 0 && printf -- "=%.0s" $(seq 1 $right)
+  echo ""
 }
 
 prompt "system package installations"
-PACKAGES=(fd-find ripgrep clang editorconfig ShellCheck openssh-clients openssl-devel pkg-config gcc cmake curl fontconfig p7zip)
+PACKAGES=(fd-find ripgrep clang editorconfig ShellCheck openssh-clients openssl-devel pkg-config gcc cmake curl fontconfig p7zip unzip)
 # eza packaging on Fedora is inconsistent across releases; only add it if
 # the active repos actually expose it, otherwise leave it for cargo-binstall.
 if dnf info eza &>/dev/null; then
-    PACKAGES+=(eza)
+  PACKAGES+=(eza)
 fi
 if [[ -z "${DOTFILES_SKIP_UPDATE:-}" ]]; then
-    sudo dnf makecache
+  sudo dnf makecache
 fi
 sudo dnf install -y "${PACKAGES[@]}"
