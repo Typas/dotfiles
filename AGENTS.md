@@ -14,22 +14,22 @@ Common types: `feat`, `fix`, `chore`, `refactor`, `docs`, `style`, `test`.
 
 **Before touching any file: pick the branch prefix, derive the name, check it out.** Editing on `master` is forbidden — no exceptions.
 
-| Prefix | When | `<name>` rule | Allowed files |
-|--------|------|---------------|---------------|
-| `bootstrap/<distro>` | OS bootstrap (`ubuntu` `debian` `fedora` `opensuse-tumbleweed` `cachyos`) | distro name exactly | `os-init/<distro>-init.sh`, `.github/actions/linux-container-setup/**`, `*.md`/`*.org` |
-| `bootstrap/mac` | macOS bootstrap | `mac` exactly | `flake.nix`, `flake.lock`, `nix/**`, `hosts/**`, `.github/actions/mac-nix-setup/**`, `*.md`/`*.org` |
-| `bootstrap/shared` | cross-distro bootstrap | `shared` exactly | `init.sh`, `scripts/shell-init.sh`, `justfile`, `*.md`/`*.org` |
-| `dev/<recipe>` | recipe work | must be a public recipe in `justfile` — check with `just --list` before naming | recipe scripts; no bootstrap-scope paths |
-| `docs/<stem>` | docs only | stem of the primary file changed (e.g. `agents` for `AGENTS.md`) | `*.md`, `*.org` |
-| `ci/<stem>` | CI config | stem of the workflow/action file changed | `.github/**`, `*.md`/`*.org` |
-| `unsafe/<name>` | **last resort** — change spans scopes and **cannot be split** | descriptive | anything |
+| Prefix               | When                                                                      | `<name>` rule                                                                  | Allowed files                                                                                       |
+|----------------------|---------------------------------------------------------------------------|--------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| `bootstrap/<distro>` | OS bootstrap (`ubuntu` `debian` `fedora` `opensuse-tumbleweed` `cachyos`) | distro name exactly                                                            | `os-init/<distro>-init.sh`, `.github/actions/linux-container-setup/**`, `*.md`/`*.org`              |
+| `bootstrap/mac`      | macOS bootstrap                                                           | `mac` exactly                                                                  | `flake.nix`, `flake.lock`, `nix/**`, `hosts/**`, `.github/actions/mac-nix-setup/**`, `*.md`/`*.org` |
+| `bootstrap/shared`   | cross-distro bootstrap                                                    | `shared` exactly                                                               | `init.sh`, `scripts/shell-init.sh`, `justfile`, `*.md`/`*.org`                                      |
+| `dev/<recipe>`       | recipe work                                                               | must be a public recipe in `justfile` — check with `just --list` before naming | recipe scripts; no bootstrap-scope paths                                                            |
+| `docs/<stem>`        | docs only                                                                 | stem of the primary file changed (e.g. `agents` for `AGENTS.md`)               | `*.md`, `*.org`                                                                                     |
+| `ci/<stem>`          | CI config                                                                 | stem of the workflow/action file changed                                       | `.github/**`, `*.md`/`*.org`                                                                        |
+| `unsafe/<name>`      | **last resort** — change spans scopes and **cannot be split**             | descriptive                                                                    | anything                                                                                            |
 
 `unsafe` is not a catch-all. If a task touches multiple recipes, use one `dev/<recipe>` branch per recipe. Only use `unsafe` when splitting is genuinely impossible.
 
 - Never commit directly to `master`. All changes must land via PR.
 - Do not open, merge, close PRs, or delete branches — human actions only.
-- Before editing: `git pull` on `master`, checkout target branch, `git pull --ff-only`, `git rebase master`, then `git push --force-with-lease` immediately.
-- Never amend a pushed commit. Never force-push except immediately after the rebase above. Fix pushed commits with a follow-up commit instead.
+- Before editing: `git pull` on `master`, checkout the target branch, then `git merge master` to bring it up to date. Push with a plain `git push`.
+- Never amend a pushed commit. Never force-push. Keep branches current by merging `master` in, not rebasing. Fix pushed commits with a follow-up commit instead.
 
 ## GitHub Actions
 
