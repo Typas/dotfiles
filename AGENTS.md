@@ -53,6 +53,10 @@ Fix the recipe and push a follow-up commit until all targets pass.
 
 The CI only checks that `just <recipe>` exits 0, not that the binary works. If the justfile target lacks a verification command (e.g., `emacs --version`), add one.
 
+## macOS: never use Homebrew
+
+Mac tooling comes from nix (`nix/home/packages.nix`), never brew. If an installer brews on macOS (e.g. fnm), add the tool to nix and gate the installer behind `command -v <tool>`.
+
 ## Command Chaining
 
 - `git commit` must always run alone — never chain it with other commands.
