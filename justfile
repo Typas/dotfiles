@@ -99,7 +99,7 @@ python:
 
 # Install fnm (Node version manager) with Node LTS and enable pnpm via corepack
 node:
-    bash {{root}}/scripts/install-node.sh {{os}}
+    bash {{root}}/scripts/install-node.sh
 
 # Install or update Go (use: just go, just go update)
 go action="install":
