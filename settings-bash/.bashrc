@@ -172,6 +172,10 @@ case ":$PATH:" in
         ;;
 esac
 
+# fnm (Node version manager)
+export PATH="$HOME/.local/share/fnm:$PATH"
+command -v fnm >/dev/null && eval "$(fnm env --use-on-cd)"
+
 # ble.sh attach and keybindings
 if [[ ${BLE_VERSION-} ]]; then
     ble-bind -m auto_complete -f 'S-TAB' auto_complete/insert
