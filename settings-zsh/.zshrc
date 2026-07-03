@@ -79,6 +79,10 @@ export PATH
 
 # <<< juliaup initialize <<<
 
+# fnm (Node version manager)
+export PATH="$HOME/.local/share/fnm:$PATH"
+command -v fnm >/dev/null && eval "$(fnm env --use-on-cd)"
+
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-envexport PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
